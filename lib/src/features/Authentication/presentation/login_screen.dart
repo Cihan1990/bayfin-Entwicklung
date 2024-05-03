@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Positioned(
             left: 10,
             top: 288.74,
-            child: Container(
+            child: SizedBox(
               width: 372,
               height: 126,
               child: Stack(
@@ -185,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 136,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage("https://via.placeholder.com/385x136"),
+                  image: AssetImage("lib/assets/images/bayfinlogo.png"),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -194,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Positioned(
             left: 16,
             top: 753,
-            child: Container(
+            child: SizedBox(
               width: 361,
               child: Stack(
                 children: [
@@ -396,7 +396,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Positioned(
             left: 0,
             top: 854,
-            child: Container(
+            child: SizedBox(
               width: 393,
               height: 521,
               child: Stack(
@@ -476,8 +476,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 72.72,
                       decoration: ShapeDecoration(
                         image: DecorationImage(
-                          image:
-                              NetworkImage("https://via.placeholder.com/72x73"),
+                          image: AssetImage("lib/assets/images/bayfinlogo.png"),
                           fit: BoxFit.fill,
                         ),
                         shape: RoundedRectangleBorder(
@@ -743,8 +742,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 89,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image:
-                              NetworkImage("https://via.placeholder.com/87x89"),
+                          image: AssetImage("lib/assets/images/bayfinlogo.png"),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -857,274 +855,274 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          LoginButton()
+          // LoginButton()
         ],
       ),
     );
   }
 }
 
-class LoginButton extends StatelessWidget {
-  const LoginButton({super.key});
+// class LoginButton extends StatelessWidget {
+//   const LoginButton({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-      Text(
-        'Passwort',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Color(0x72010000),
-          fontSize: 10,
-          fontFamily: 'SF Pro',
-          fontWeight: FontWeight.w400,
-          height: 0,
-        ),
-      ),
-      Text('Passwort vergessen',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white.withOpacity(0.6000000238418579),
-            fontSize: 10,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w400,
-            decoration: TextDecoration.underline,
-            height: 0,
-          )),
-      Text('Benutzername /  Telefonnummer',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Color(0x72010000),
-            fontSize: 10,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w400,
-            height: 0,
-          )),
-      Text('Oder',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Color(0xFFCBD5E3),
-            fontSize: 10,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w400,
-            decoration: TextDecoration.underline,
-            height: 0,
-          )),
-      Text('Login',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 15,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w700,
-            height: 0,
-          )),
-      Text('Registrieren',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 17,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w700,
-            decoration: TextDecoration.underline,
-            height: 0,
-          )),
-      Text('Du hast noch keinen Account?',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w400,
-            height: 0,
-          )),
-      Text('Sign In with Apple',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontFamily: 'SF Pro Display',
-            fontWeight: FontWeight.w500,
-            height: 0,
-          )),
-      Text('Sign In with Google',
-          style: TextStyle(
-            color: Colors.black.withOpacity(0.5400000214576721),
-            fontSize: 20,
-            fontFamily: 'Roboto',
-            fontWeight: FontWeight.w500,
-            height: 0,
-          )),
-      Text('Face ID',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w500,
-            height: 0,
-          )),
-      Text('Apple-ID',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w600,
-            height: 0,
-          )),
-      Text('Abbrechen',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Color(0xFF1A73E8),
-            fontSize: 18,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w500,
-            decoration: TextDecoration.underline,
-            height: 0,
-          )),
-      Text(
-          'Erstelle für BAYFin einen Account mit deiner Apple-ID “Cihan.52@hotmail.de”',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w500,
-            height: 0,
-          )),
-      Text('Name:',
-          style: TextStyle(
-            color: Color(0xFF9D9D9D),
-            fontSize: 16,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w500,
-            height: 0,
-          )),
-      Text('E-Mail:',
-          style: TextStyle(
-            color: Color(0xFF9D9D9D),
-            fontSize: 16,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w500,
-            height: 0,
-          )),
-      Text('Cihan Özdemir',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w500,
-            height: 0,
-          )),
-      Text.rich(TextSpan(
-        children: [
-          TextSpan(
-            text: 'E-Mail Adresse teilen\n',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 15,
-              fontFamily: 'SF Pro',
-              fontWeight: FontWeight.w500,
-              height: 0,
-            ),
-          ),
-          TextSpan(
-            text: 'Cihan.52@hotmail.de\n',
-            style: TextStyle(
-              color: Color(0xFFA4A4A4),
-              fontSize: 15,
-              fontFamily: 'SF Pro',
-              fontWeight: FontWeight.w500,
-              height: 0,
-            ),
-          ),
-          TextSpan(
-            text: '\nE-Mail Adresse verbergen\n',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 15,
-              fontFamily: 'SF Pro',
-              fontWeight: FontWeight.w500,
-              height: 0,
-            ),
-          ),
-          TextSpan(
-            text: 'Weiterleiten an:\nCihan.52@hotmail.de',
-            style: TextStyle(
-              color: Color(0xFF9D9D9D),
-              fontSize: 15,
-              fontFamily: 'SF Pro',
-              fontWeight: FontWeight.w500,
-              height: 0,
-            ),
-          ),
-        ],
-      )),
-      Text('􀀳',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Color(0xFF9D9D9D),
-            fontSize: 15,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w500,
-            height: 0,
-          )),
-      Text('􀀀',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Color(0xFF9D9D9D),
-            fontSize: 15,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w500,
-            height: 0,
-          )),
-      Text('􀀀',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Color(0xFF9D9D9D),
-            fontSize: 15,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w500,
-            height: 0,
-          )),
-      Text('􀎽',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Color(0xFF1A73E8),
-            fontSize: 50,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w400,
-            height: 0,
-          )),
-      Text('E-Mail Adresse',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Color(0x72010000),
-            fontSize: 12,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w400,
-            height: 0,
-          )),
-      Text('Weiter',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontFamily: 'SF Pro',
-            fontWeight: FontWeight.w400,
-            height: 0,
-          )),
-      Text(
-        'Zurück',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Color(0x72010000),
-          fontSize: 12,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w400,
-          height: 0,
-        ),
-      )
-    ]);
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(children: [
+//       Text(
+//         'Passwort',
+//         textAlign: TextAlign.center,
+//         style: TextStyle(
+//           color: Color(0x72010000),
+//           fontSize: 10,
+//           fontFamily: 'SF Pro',
+//           fontWeight: FontWeight.w400,
+//           height: 0,
+//         ),
+//       ),
+//       Text('Passwort vergessen',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Colors.white.withOpacity(0.6000000238418579),
+//             fontSize: 10,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w400,
+//             decoration: TextDecoration.underline,
+//             height: 0,
+//           )),
+//       Text('Benutzername /  Telefonnummer',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Color(0x72010000),
+//             fontSize: 10,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w400,
+//             height: 0,
+//           )),
+//       Text('Oder',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Color(0xFFCBD5E3),
+//             fontSize: 10,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w400,
+//             decoration: TextDecoration.underline,
+//             height: 0,
+//           )),
+//       Text('Login',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Colors.black,
+//             fontSize: 15,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w700,
+//             height: 0,
+//           )),
+//       Text('Registrieren',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Colors.white,
+//             fontSize: 17,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w700,
+//             decoration: TextDecoration.underline,
+//             height: 0,
+//           )),
+//       Text('Du hast noch keinen Account?',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Colors.white,
+//             fontSize: 14,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w400,
+//             height: 0,
+//           )),
+//       Text('Sign In with Apple',
+//           style: TextStyle(
+//             color: Colors.white,
+//             fontSize: 20,
+//             fontFamily: 'SF Pro Display',
+//             fontWeight: FontWeight.w500,
+//             height: 0,
+//           )),
+//       Text('Sign In with Google',
+//           style: TextStyle(
+//             color: Colors.black.withOpacity(0.5400000214576721),
+//             fontSize: 20,
+//             fontFamily: 'Roboto',
+//             fontWeight: FontWeight.w500,
+//             height: 0,
+//           )),
+//       Text('Face ID',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Colors.black,
+//             fontSize: 24,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w500,
+//             height: 0,
+//           )),
+//       Text('Apple-ID',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Colors.black,
+//             fontSize: 18,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w600,
+//             height: 0,
+//           )),
+//       Text('Abbrechen',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Color(0xFF1A73E8),
+//             fontSize: 18,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w500,
+//             decoration: TextDecoration.underline,
+//             height: 0,
+//           )),
+//       Text(
+//           'Erstelle für BAYFin einen Account mit deiner Apple-ID “Cihan.52@hotmail.de”',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Colors.black,
+//             fontSize: 16,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w500,
+//             height: 0,
+//           )),
+//       Text('Name:',
+//           style: TextStyle(
+//             color: Color(0xFF9D9D9D),
+//             fontSize: 16,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w500,
+//             height: 0,
+//           )),
+//       Text('E-Mail:',
+//           style: TextStyle(
+//             color: Color(0xFF9D9D9D),
+//             fontSize: 16,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w500,
+//             height: 0,
+//           )),
+//       Text('Cihan Özdemir',
+//           style: TextStyle(
+//             color: Colors.black,
+//             fontSize: 16,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w500,
+//             height: 0,
+//           )),
+//       Text.rich(TextSpan(
+//         children: [
+//           TextSpan(
+//             text: 'E-Mail Adresse teilen\n',
+//             style: TextStyle(
+//               color: Colors.black,
+//               fontSize: 15,
+//               fontFamily: 'SF Pro',
+//               fontWeight: FontWeight.w500,
+//               height: 0,
+//             ),
+//           ),
+//           TextSpan(
+//             text: 'Cihan.52@hotmail.de\n',
+//             style: TextStyle(
+//               color: Color(0xFFA4A4A4),
+//               fontSize: 15,
+//               fontFamily: 'SF Pro',
+//               fontWeight: FontWeight.w500,
+//               height: 0,
+//             ),
+//           ),
+//           TextSpan(
+//             text: '\nE-Mail Adresse verbergen\n',
+//             style: TextStyle(
+//               color: Colors.black,
+//               fontSize: 15,
+//               fontFamily: 'SF Pro',
+//               fontWeight: FontWeight.w500,
+//               height: 0,
+//             ),
+//           ),
+//           TextSpan(
+//             text: 'Weiterleiten an:\nCihan.52@hotmail.de',
+//             style: TextStyle(
+//               color: Color(0xFF9D9D9D),
+//               fontSize: 15,
+//               fontFamily: 'SF Pro',
+//               fontWeight: FontWeight.w500,
+//               height: 0,
+//             ),
+//           ),
+//         ],
+//       )),
+//       Text('􀀳',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Color(0xFF9D9D9D),
+//             fontSize: 15,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w500,
+//             height: 0,
+//           )),
+//       Text('􀀀',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Color(0xFF9D9D9D),
+//             fontSize: 15,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w500,
+//             height: 0,
+//           )),
+//       Text('􀀀',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Color(0xFF9D9D9D),
+//             fontSize: 15,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w500,
+//             height: 0,
+//           )),
+//       Text('􀎽',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Color(0xFF1A73E8),
+//             fontSize: 50,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w400,
+//             height: 0,
+//           )),
+//       Text('E-Mail Adresse',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Color(0x72010000),
+//             fontSize: 12,
+//             fontFamily: 'Inter',
+//             fontWeight: FontWeight.w400,
+//             height: 0,
+//           )),
+//       Text('Weiter',
+//           textAlign: TextAlign.center,
+//           style: TextStyle(
+//             color: Colors.black,
+//             fontSize: 24,
+//             fontFamily: 'SF Pro',
+//             fontWeight: FontWeight.w400,
+//             height: 0,
+//           )),
+//       Text(
+//         'Zurück',
+//         textAlign: TextAlign.center,
+//         style: TextStyle(
+//           color: Color(0x72010000),
+//           fontSize: 12,
+//           fontFamily: 'Inter',
+//           fontWeight: FontWeight.w400,
+//           height: 0,
+//         ),
+//       )
+//     ]);
+//   }
+// }

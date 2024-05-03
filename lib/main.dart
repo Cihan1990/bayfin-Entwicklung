@@ -1,4 +1,4 @@
-import 'package:bayfin/src/features/Authentication/home_screen.dart';
+import 'package:bayfin/src/features/Authentication/presentation/home_screen.dart';
 import 'package:bayfin/src/features/Authentication/presentation/login_screen.dart';
 import 'package:flutter/material.dart';
 
