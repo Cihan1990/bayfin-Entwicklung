@@ -2,8 +2,8 @@
 
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/data/mock_database.dart';
-import 'package:bayfin/src/features/domain/benutzer.dart';
-import 'package:bayfin/src/features/domain/umsatz.dart';
+import 'package:bayfin/src/features/Authentication/domain/benutzer.dart';
+import 'package:bayfin/src/features/Authentication/domain/umsatz.dart';
 
 void main() {
   DatabaseRepository databaseRepository = MockDatabase();

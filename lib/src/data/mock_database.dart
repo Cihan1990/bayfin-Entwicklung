@@ -1,7 +1,7 @@
-import '../features/domain/benutzer.dart';
-import '../features/domain/kontoinformationen.dart';
-import '../features/domain/name.dart';
-import '../features/domain/umsatz.dart';
+import '../features/Authentication/domain/benutzer.dart';
+import '../features/Authentication/domain/kontoinformationen.dart';
+import '../features/Authentication/domain/name.dart';
+import '../features/Authentication/domain/umsatz.dart';
 import 'database_repository.dart';
 
 class MockDatabase implements DatabaseRepository {
