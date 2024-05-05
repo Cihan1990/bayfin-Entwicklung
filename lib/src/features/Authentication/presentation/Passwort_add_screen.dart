@@ -174,7 +174,7 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                                     const RegistrationScreen(),
                               ));
                         },
-                        child: const Text("Zurück zum Registrierem",
+                        child: const Text("Zurück zur Registrierung",
                             style: TextStyle(
                               shadows: [
                                 Shadow(
