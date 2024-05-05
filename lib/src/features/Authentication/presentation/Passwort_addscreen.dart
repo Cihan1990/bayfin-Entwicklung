@@ -1,3 +1,4 @@
+import 'package:bayfin/src/features/Authentication/presentation/account_exist.dart';
 import 'package:bayfin/src/features/Authentication/presentation/registration_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -140,11 +141,11 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                     ),
                     child: ElevatedButton(
                       onPressed: () {
-                        //   Navigator.pushReplacement(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //         builder: (context) => const PasswortAddScreen(),
-                        //       ));
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AccountExistScreen(),
+                            ));
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFD3D3D3),

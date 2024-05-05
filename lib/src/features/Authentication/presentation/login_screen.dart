@@ -46,7 +46,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     decoration: InputDecoration(
                       fillColor: const Color(0xFFD3D3D3),
-                      contentPadding: const EdgeInsets.only(top: 0.0),
+                      contentPadding:
+                          const EdgeInsets.only(top: 0.0, left: 10, right: 10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(11.0),
                       ),
@@ -58,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: const Color(0x72010000).withOpacity(0.45),
                       ),
                     ),
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.left,
                   ),
                 ),
                 const SizedBox(height: 26),
@@ -85,7 +86,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             : const Icon(Icons.visibility),
                       ),
                       fillColor: const Color(0xFFD3D3D3),
-                      contentPadding: const EdgeInsets.only(top: 0.0),
+                      contentPadding:
+                          const EdgeInsets.only(top: 0.0, left: 10, right: 10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(11.0),
                       ),
@@ -96,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontWeight: FontWeight.normal,
                           color: const Color(0x72010000).withOpacity(0.45)),
                     ),
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.left,
                   ),
                 ),
                 const SizedBox(height: 0),
