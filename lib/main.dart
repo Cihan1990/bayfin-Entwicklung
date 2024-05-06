@@ -1,5 +1,8 @@
 import 'package:bayfin/src/features/Authentication/presentation/home_screen.dart';
 import 'package:bayfin/src/features/Authentication/presentation/login_screen.dart';
+import 'package:bayfin/src/features/Authentication/presentation/passwort_return_accept_screen.dart';
+import 'package:bayfin/src/features/Authentication/presentation/passwort_return_screen.dart';
+import 'package:bayfin/src/features/Authentication/presentation/registration_screen.dart';
 
 import 'package:flutter/material.dart';
 
@@ -13,7 +16,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: LoginScreen(),
+      home: PasswortReturnScreen(),
     );
   }
 }

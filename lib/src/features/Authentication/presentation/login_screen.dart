@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:bayfin/src/features/Authentication/presentation/passwort_return_screen.dart';
 import 'package:bayfin/src/features/Authentication/presentation/registration_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -107,11 +108,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: <Widget>[
                       TextButton(
                           onPressed: () {
-                            // Navigator.pushReplacement(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => ForgetPasswordScreen(),
-                            //     ));
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PasswortReturnScreen(),
+                                ));
                           },
                           child: Text(
                             "Passwort vergessen",
@@ -146,14 +147,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          // TODO: login logik einbauen
-                          // Navigator.pushReplacement(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //       builder: (context) => OverviewScreen(
-                          //         databaseRepository: widget.databaseRepository,
-                          //       ),
-                          //     ));
+                          //  Navigator.pushReplacement(
+                          //      context,
+                          //      MaterialPageRoute(
+                          //        builder: (context) => OverviewScreen(
+                          //          databaseRepository: widget.databaseRepository,
+                          //        ),
+                          //      ));
                         },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFFD3D3D3),

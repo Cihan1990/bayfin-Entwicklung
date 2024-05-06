@@ -71,7 +71,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     children: <Widget>[
                       Container(
                           height: 45,
-                          width: 95,
+                          width: 110,
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 3),
                           decoration: BoxDecoration(
