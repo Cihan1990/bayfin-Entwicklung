@@ -15,7 +15,6 @@ flutter:
   uses-material-design: true
   assets:
     - lib/assets/images/bayfinlogo.png
-    - lib/assets/images/bayfinlogoneu.svg
     - lib/assets/images/googleimage.png
 flutter_launcher_icons:
   image_path: "assets/launcher_icon.png"
