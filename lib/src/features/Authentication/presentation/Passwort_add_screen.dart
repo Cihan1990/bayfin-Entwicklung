@@ -1,5 +1,6 @@
 import 'package:bayfin/src/features/Authentication/presentation/account_exist.dart';
 import 'package:bayfin/src/features/Authentication/presentation/registration_screen.dart';
+import 'package:bayfin/src/features/Authentication/presentation/widget/bay_fin_button.dart';
 import 'package:flutter/material.dart';
 
 class PasswortAddScreen extends StatefulWidget {
@@ -124,43 +125,12 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                 ),
               ),
               const SizedBox(height: 360),
-              SizedBox(
-                  width: 247,
-                  height: 50,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFD3D3D3),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.65),
-                          blurRadius: 15,
-                          offset: const Offset(0, 15),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const AccountExistScreen(),
-                            ));
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFD3D3D3),
-                          shadowColor: Colors.black.withOpacity(1)),
-                      child: const Text(
-                        "Benutzerkonto erstellen",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontFamily: "SF Pro",
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  )),
+              BayFinButton(
+                text: "Benutzerkonto erstellen",
+                height: 50,
+                width: 247,
+                navigationWidget: const AccountExistScreen(),
+              ),
               const SizedBox(height: 20),
               Row(
                   mainAxisAlignment: MainAxisAlignment.center,

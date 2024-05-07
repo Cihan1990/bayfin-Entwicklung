@@ -2,6 +2,8 @@
 
 import 'package:bayfin/src/features/Authentication/presentation/Passwort_add_screen.dart';
 import 'package:bayfin/src/features/Authentication/presentation/login_screen.dart';
+import 'package:bayfin/src/features/Authentication/presentation/widget/bay_fin_button.dart';
+import 'package:bayfin/src/features/Authentication/presentation/widget/logo_widget.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -27,16 +29,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             child: Form(
               child: Column(children: [
                 const SizedBox(height: 55),
-                Container(
-                  width: 217,
-                  height: 76,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/assets/images/bayfinlogo.png'),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
+                LogoWidget(width: 217, height: 76),
                 SizedBox(height: 10),
                 Text('Registrieren',
                     style: TextStyle(
@@ -217,43 +210,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   filled: true,
                 )),
                 const SizedBox(height: 90),
-                SizedBox(
-                    width: 247,
-                    height: 50,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xFFD3D3D3),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.65),
-                            blurRadius: 15,
-                            offset: Offset(0, 15),
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PasswortAddScreen(),
-                              ));
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFFD3D3D3),
-                            shadowColor: Colors.black.withOpacity(1)),
-                        child: Text(
-                          "Passwort erstellen",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontFamily: "SF Pro",
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    )),
+                BayFinButton(
+                  navigationWidget: PasswortAddScreen(),
+                  text: "Passwort erstellen",
+                  width: 247,
+                  height: 50,
+                ),
                 const SizedBox(height: 20),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -1,5 +1,6 @@
 import 'package:bayfin/src/features/Authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/Authentication/presentation/passwort_return_accept_screen.dart';
+import 'package:bayfin/src/features/Authentication/presentation/widget/bay_fin_button.dart';
 import 'package:flutter/material.dart';
 
 class PasswortReturnScreen extends StatefulWidget {
@@ -150,44 +151,11 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                 ),
               ),
               const SizedBox(height: 270),
-              SizedBox(
-                  width: 247,
+              BayFinButton(
+                  text: 'Passwort zurücksetzen',
                   height: 50,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFD3D3D3),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.65),
-                          blurRadius: 15,
-                          offset: const Offset(0, 15),
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const PasswortReturnAcceptScreen(),
-                            ));
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFD3D3D3),
-                          shadowColor: Colors.black.withOpacity(1)),
-                      child: const Text(
-                        "Passwort zurücksetzen",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontFamily: "SF Pro",
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  )),
+                  width: 247,
+                  navigationWidget: const PasswortReturnAcceptScreen()),
               const SizedBox(height: 20),
               Row(
                   mainAxisAlignment: MainAxisAlignment.center,
