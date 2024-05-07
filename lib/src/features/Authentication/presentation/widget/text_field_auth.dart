@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TextFieldAuth extends StatefulWidget {
-  TextFieldAuth({
+  const TextFieldAuth({
     super.key,
   });
 

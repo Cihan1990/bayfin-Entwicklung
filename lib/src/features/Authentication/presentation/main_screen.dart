@@ -14,7 +14,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 29,
-          backgroundColor: const Color.fromARGB(255, 191, 197, 244),
+          backgroundColor: const Color(0xFFE6E9FF),
           actions: [
             IconButton(
                 onPressed: () {
@@ -33,8 +33,7 @@ class _MainScreenState extends State<MainScreen> {
         body: Container(
             width: 393,
             height: 852,
-            decoration:
-                const BoxDecoration(color: Color.fromARGB(255, 191, 197, 244)),
+            decoration: const BoxDecoration(color: Color(0xFFE6E9FF)),
             child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Form(
