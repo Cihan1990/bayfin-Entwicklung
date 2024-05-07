@@ -20,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
                 padding: const EdgeInsets.all(10),
                 child: Form(
                   child: Column(children: [
-                    const SizedBox(height: 55),
+                    const SizedBox(height: 65),
                     Container(
                       width: 217,
                       height: 76,
