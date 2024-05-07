@@ -1,5 +1,6 @@
 // ignore_for_file: sort_child_properties_last
 
+import 'package:bayfin/src/features/Authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/Authentication/presentation/widget/bay_fin_button.dart';
 import 'package:flutter/material.dart';
 
@@ -52,7 +53,11 @@ class _AccountExistScreenState extends State<AccountExistScreen> {
                   textAlign: TextAlign.center,
                 )),
                 const SizedBox(height: 20),
-                BayFinButton(text: 'Bestätigen', height: 50, width: 247),
+                BayFinButton(
+                    text: 'Bestätigen',
+                    height: 50,
+                    width: 247,
+                    navigationWidget: const LoginScreen()),
               ]),
             ),
           )),

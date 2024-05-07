@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:bayfin/src/features/Authentication/presentation/main_screen.dart';
 import 'package:bayfin/src/features/Authentication/presentation/passwort_return_screen.dart';
 import 'package:bayfin/src/features/Authentication/presentation/registration_screen.dart';
 import 'package:bayfin/src/features/Authentication/presentation/widget/bay_fin_button.dart';
@@ -64,10 +65,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 18),
                 BayFinButton(
-                  text: "Login",
-                  height: 40,
-                  width: 92,
-                ),
+                    text: "Login",
+                    height: 40,
+                    width: 92,
+                    navigationWidget: MainScreen()),
                 const SizedBox(height: 42),
                 Row(children: <Widget>[
                   Expanded(
