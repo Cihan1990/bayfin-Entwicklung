@@ -79,7 +79,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
                   Container(
                     width: 361,
                     height: 80,
