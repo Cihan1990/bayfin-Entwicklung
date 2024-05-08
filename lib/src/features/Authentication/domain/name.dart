@@ -6,4 +6,7 @@ class Name {
     required this.vorname,
     required this.nachname,
   });
+  String getname() {
+    return vorname;
+  }
 }

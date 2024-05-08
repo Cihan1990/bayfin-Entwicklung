@@ -17,6 +17,7 @@ flutter:
   assets:
     - lib/assets/images/bayfinlogo.png
     - lib/assets/images/googleimage.png
+    - lib/assets/Images/aktienbild.png
 flutter_launcher_icons:
   image_path: "assets/launcher_icon.png"
   android: true
