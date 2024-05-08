@@ -49,6 +49,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 20),
                   const SizedBox(
                     width: 96,
                     height: 20,
@@ -79,7 +80,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
                   Container(
                     width: 361,
                     height: 80,
