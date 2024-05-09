@@ -1,5 +1,7 @@
 import 'package:bayfin/src/features/Authentication/presentation/login_screen.dart';
+import 'package:bayfin/src/features/Authentication/presentation/widget/bay_fin_button.dart';
 import 'package:bayfin/src/features/Authentication/presentation/widget/logo_widget.dart';
+import 'package:bayfin/src/features/Authentication/presentation/widget/operator_info.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -79,27 +81,22 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
-              Container(
-                width: 361,
+              const SizedBox(height: 15),
+              // w361 - h80 const Color(0xFF212C95)
+              BayFinButton(
+                text: 'Girokonto\n1.890,69€',
                 height: 80,
-                decoration: ShapeDecoration(
-                  color: const Color(0xFF212C95),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
+                width: 361,
+                navigationWidget: const LoginScreen(),
+                color: const Color(0xFF212C95),
+                textStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontFamily: 'SF Pro',
+                  fontWeight: FontWeight.w500,
+                  height: 0,
                 ),
-                child: const Text(
-                  'Girokonto\n1.890,69€',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 28,
-                    fontFamily: 'SF Pro',
-                    fontWeight: FontWeight.w500,
-                    height: 0,
-                  ),
-                ),
+                shadow: false,
               ),
               const SizedBox(height: 15),
               Container(
@@ -107,7 +104,7 @@ class _MainScreenState extends State<MainScreen> {
                 height: 226,
                 decoration: ShapeDecoration(
                   image: const DecorationImage(
-                    image: AssetImage('lib/assets/Images/aktienbild.png'),
+                    image: AssetImage('lib/assets/images/aktienbild.png'),
                     fit: BoxFit.fill,
                   ),
                   shape: RoundedRectangleBorder(
@@ -117,26 +114,43 @@ class _MainScreenState extends State<MainScreen> {
               ),
               const SizedBox(height: 15),
               Container(
-                width: 361,
-                height: 220,
-                decoration: ShapeDecoration(
-                  color: const Color(0xFF212C95),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                  width: 361,
+                  height: 220,
+                  decoration: ShapeDecoration(
+                    color: const Color(0xFF212C95),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
-                ),
-                padding: const EdgeInsets.all(12.0),
-                child: const Text(
-                  'Letzte Umsätze          ',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontFamily: 'SF Pro',
-                    fontWeight: FontWeight.w400,
-                    height: 0,
-                  ),
-                ),
-              )
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Text(
+                        'Letzte Umsätze          ',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontFamily: 'SF Pro',
+                          fontWeight: FontWeight.w400,
+                          height: 0,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      TransactionInfo(
+                          firmLogoPath: "lib/assets/images/vodafonelogo.png",
+                          amount: -100.00,
+                          firmName: "Vodafone"),
+                      TransactionInfo(
+                          firmLogoPath: "lib/assets/images/hmlogo.png",
+                          amount: -80.00,
+                          firmName: "H&M"),
+                      TransactionInfo(
+                          firmLogoPath: "lib/assets/images/amazonlogo.png",
+                          amount: -160.00,
+                          firmName: "Amazon")
+                    ],
+                  )),
             ])),
           ),
         ));

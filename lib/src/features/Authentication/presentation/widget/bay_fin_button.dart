@@ -7,11 +7,22 @@ class BayFinButton extends StatelessWidget {
   String text;
   double height;
   double width;
+  Color? color;
+  bool shadow;
+  TextStyle textStyle;
   BayFinButton(
       {super.key,
       this.navigationWidget,
+      this.color,
       required this.text,
       required this.height,
+      this.shadow = true,
+      this.textStyle = const TextStyle(
+        color: Colors.black,
+        fontSize: 15,
+        fontFamily: "SF Pro",
+        fontWeight: FontWeight.bold,
+      ),
       required this.width});
 
   @override
@@ -21,10 +32,12 @@ class BayFinButton extends StatelessWidget {
       height: height,
       child: Container(
           decoration: BoxDecoration(
-            color: const Color(0xFFD3D3D3),
+            color: color ?? const Color(0xFFD3D3D3),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.65),
+                color: shadow
+                    ? Colors.black.withOpacity(0.65)
+                    : Colors.transparent,
                 blurRadius: 15,
                 offset: const Offset(0, 15),
               ),
@@ -37,17 +50,11 @@ class BayFinButton extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => navigationWidget!));
             },
             style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFD3D3D3),
-                shadowColor: Colors.black.withOpacity(1)),
+                backgroundColor: color ?? const Color(0xFFD3D3D3)),
             child: Text(
               text,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 15,
-                fontFamily: "SF Pro",
-                fontWeight: FontWeight.bold,
-              ),
+              style: textStyle,
             ),
           )),
     );
