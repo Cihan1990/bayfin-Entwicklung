@@ -1,7 +1,8 @@
 import 'package:bayfin/src/features/Authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/Authentication/presentation/widget/bay_fin_button.dart';
 import 'package:bayfin/src/features/Authentication/presentation/widget/logo_widget.dart';
-import 'package:bayfin/src/features/Authentication/presentation/widget/operator_info.dart';
+import 'package:bayfin/src/features/Authentication/presentation/widget/transaction_info.dart';
+import 'package:bayfin/src/features/Bank%20balance/view_sales.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -87,7 +88,7 @@ class _MainScreenState extends State<MainScreen> {
                 text: 'Girokonto\n1.890,69€',
                 height: 80,
                 width: 361,
-                navigationWidget: const LoginScreen(),
+                navigationWidget: const SalesScreen(),
                 color: const Color(0xFF212C95),
                 textStyle: const TextStyle(
                   color: Colors.white,
@@ -100,7 +101,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               const SizedBox(height: 15),
               Container(
-                width: 365,
+                width: 361,
                 height: 226,
                 decoration: ShapeDecoration(
                   image: const DecorationImage(

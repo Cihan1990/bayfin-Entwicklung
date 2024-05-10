@@ -6,6 +6,7 @@ class TransactionInfo extends StatelessWidget {
   String firmLogoPath;
   String firmName;
   double amount;
+
   TransactionInfo({
     super.key,
     required this.amount,
@@ -21,8 +22,8 @@ class TransactionInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-                width: 28,
-                height: 28,
+                width: 29,
+                height: 29,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(firmLogoPath),
@@ -40,8 +41,8 @@ class TransactionInfo extends StatelessWidget {
               ),
             ),
             Text("${amount.toStringAsFixed(2)}€",
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: amount < 0 ? Colors.red : Colors.green,
                   fontSize: 14,
                   fontFamily: 'SF Pro',
                   fontWeight: FontWeight.w500,
