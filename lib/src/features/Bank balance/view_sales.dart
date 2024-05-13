@@ -29,7 +29,7 @@ class _SalesScreenState extends State<SalesScreen> {
                         ));
                   },
                   icon: const Icon(
-                    Icons.keyboard_return,
+                    Icons.arrow_back,
                     size: 24,
                   )),
               IconButton(
