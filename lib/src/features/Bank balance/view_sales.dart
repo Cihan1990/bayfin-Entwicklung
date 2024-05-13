@@ -1,3 +1,4 @@
+import 'package:bayfin/src/features/Authentication/presentation/main_screen.dart';
 import 'package:bayfin/src/features/Authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/Authentication/presentation/widget/transaction_info.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,18 @@ class _SalesScreenState extends State<SalesScreen> {
           leading: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MainScreen(),
+                        ));
+                  },
+                  icon: const Icon(
+                    Icons.keyboard_return,
+                    size: 24,
+                  )),
               IconButton(
                   onPressed: () {
                     // Navigator.pushReplacement(
