@@ -2,35 +2,40 @@ import 'package:bayfin/src/features/Authentication/presentation/widget/bay_fin_b
 import 'package:bayfin/src/features/Authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/Authentication/presentation/widget/transaction_info.dart';
 import 'package:bayfin/src/features/Bank%20balance/view_bankaccount.dart';
-import 'package:bayfin/src/features/Bank%20balance/view_sales.dart';
+import 'package:bayfin/src/features/Bank%20balance/view_sales2.dart';
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+class MainScreen2 extends StatefulWidget {
+  const MainScreen2({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<MainScreen2> createState() => _MainScreen2State();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreen2State extends State<MainScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
             toolbarHeight: 29,
             backgroundColor: const Color(0xFFE6E9FF),
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ViewBankaccount()),
-                  );
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                  size: 24,
-                ))),
+            leading: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ViewBankaccount(),
+                          ));
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      size: 24,
+                    )),
+              ],
+            )),
         body: Container(
           width: 393,
           height: 852,
@@ -82,10 +87,10 @@ class _MainScreenState extends State<MainScreen> {
               const SizedBox(height: 15),
               // w361 - h80 const Color(0xFF212C95)
               BayFinButton(
-                text: 'Girokonto\n1.890,69€',
+                text: 'Girokonto\n3.789,99€',
                 height: 80,
                 width: 361,
-                navigationWidget: const SalesScreen(),
+                navigationWidget: const SalesScreen2(),
                 color: const Color(0xFF212C95),
                 textStyle: const TextStyle(
                   color: Colors.white,
@@ -137,15 +142,15 @@ class _MainScreenState extends State<MainScreen> {
                       const SizedBox(height: 4),
                       TransactionInfo(
                           firmLogoPath: "lib/assets/images/vodafonelogo.png",
-                          amount: -100.00,
+                          amount: -80.00,
                           firmName: "Vodafone"),
                       TransactionInfo(
                           firmLogoPath: "lib/assets/images/hmlogo.png",
-                          amount: -80.00,
+                          amount: -90.00,
                           firmName: "H&M"),
                       TransactionInfo(
                           firmLogoPath: "lib/assets/images/amazonlogo.png",
-                          amount: -160.00,
+                          amount: -300.00,
                           firmName: "Amazon")
                     ],
                   )),

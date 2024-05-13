@@ -1,12 +1,12 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:bayfin/src/features/Authentication/presentation/main_screen.dart';
 import 'package:bayfin/src/features/Authentication/presentation/passwort_return_screen.dart';
 import 'package:bayfin/src/features/Authentication/presentation/registration_screen.dart';
 import 'package:bayfin/src/features/Authentication/presentation/widget/bay_fin_button.dart';
 import 'package:bayfin/src/features/Authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/Authentication/presentation/widget/social_login_button.dart';
 import 'package:bayfin/src/features/Authentication/presentation/widget/text_field_auth.dart';
+import 'package:bayfin/src/features/Bank%20balance/view_bankaccount.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     text: "Login",
                     height: 40,
                     width: 92,
-                    navigationWidget: MainScreen()),
+                    navigationWidget: ViewBankaccount()),
                 const SizedBox(height: 42),
                 Row(children: <Widget>[
                   Expanded(
@@ -113,7 +113,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   backgroundColor: Colors.black,
                   fontColor: Colors.white,
                 ),
-                SizedBox(height: 20),
+                SizedBox(
+                  height: 20,
+                ),
                 SocialLoginButton(
                   icon: Image.asset(
                     "lib/assets/images/googleimage.png",

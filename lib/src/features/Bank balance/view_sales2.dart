@@ -1,16 +1,16 @@
-import 'package:bayfin/src/features/Authentication/presentation/main_screen.dart';
+import 'package:bayfin/src/features/Authentication/presentation/main_screen2.dart';
 import 'package:bayfin/src/features/Authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/Authentication/presentation/widget/transaction_info.dart';
 import 'package:flutter/material.dart';
 
-class SalesScreen extends StatefulWidget {
-  const SalesScreen({super.key});
+class SalesScreen2 extends StatefulWidget {
+  const SalesScreen2({super.key});
 
   @override
-  State<SalesScreen> createState() => _SalesScreenState();
+  State<SalesScreen2> createState() => _SalesScreen2State();
 }
 
-class _SalesScreenState extends State<SalesScreen> {
+class _SalesScreen2State extends State<SalesScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +25,7 @@ class _SalesScreenState extends State<SalesScreen> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const MainScreen(),
+                          builder: (context) => const MainScreen2(),
                         ));
                   },
                   icon: const Icon(
@@ -76,7 +76,7 @@ class _SalesScreenState extends State<SalesScreen> {
                       ),
                     ),
                     child: const Text(
-                      'Girokonto\n1.890,69€',
+                      'Girokonto\n3.789,99€',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -117,14 +117,14 @@ class _SalesScreenState extends State<SalesScreen> {
                             TransactionInfo(
                                 firmLogoPath:
                                     "lib/assets/images/vodafonelogo.png",
-                                amount: -100.00,
+                                amount: -80.00,
                                 firmName: "Vodafone"),
                             const SizedBox(
                               height: 12,
                             ),
                             TransactionInfo(
                                 firmLogoPath: "lib/assets/images/hmlogo.png",
-                                amount: -80.00,
+                                amount: -90.00,
                                 firmName: "H&M"),
                             const SizedBox(
                               height: 12,
@@ -132,28 +132,28 @@ class _SalesScreenState extends State<SalesScreen> {
                             TransactionInfo(
                                 firmLogoPath:
                                     "lib/assets/images/amazonlogo.png",
-                                amount: -160.00,
+                                amount: -300.00,
                                 firmName: "Amazon"),
                             const SizedBox(height: 12),
                             TransactionInfo(
                                 firmLogoPath: "lib/assets/images/nikelogo.png",
-                                amount: -120.00,
+                                amount: -100.00,
                                 firmName: "Nike"),
                             const SizedBox(height: 12),
                             TransactionInfo(
                                 firmLogoPath: "lib/assets/images/swsglogo.png",
-                                amount: -890.00,
+                                amount: -690.00,
                                 firmName: "Miete"),
                             const SizedBox(height: 12),
                             TransactionInfo(
                                 firmLogoPath: "lib/assets/images/boschlogo.png",
-                                amount: 4500.00,
+                                amount: 6000.00,
                                 firmName: "Lohn"),
                             const SizedBox(height: 12),
                             TransactionInfo(
                                 firmLogoPath:
                                     "lib/assets/images/klarnalogo.png",
-                                amount: -250.00,
+                                amount: -30.00,
                                 firmName: "Klarna"),
                           ]))
                 ])))));
