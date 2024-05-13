@@ -24,18 +24,6 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
             children: [
               IconButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ));
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    size: 24,
-                  )),
-              IconButton(
-                  onPressed: () {
                     // Navigator.pushReplacement(
                     //   context,
                     //   MaterialPageRoute(
