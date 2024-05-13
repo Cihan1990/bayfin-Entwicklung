@@ -26,6 +26,7 @@ flutter:
     - lib/assets/images/swsglogo.png
     - lib/assets/images/boschlogo.png
     - lib/assets/images/klarnalogo.png
+   
 flutter_launcher_icons:
   image_path: "assets/launcher_icon.png"
   android: true
