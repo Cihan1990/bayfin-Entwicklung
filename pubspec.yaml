@@ -13,19 +13,20 @@ dependencies:
   flutter_svg_provider: ^1.0.7
   google_fonts: ^6.2.1
   animated_splash_screen: ^1.3.0
+  flex_color_scheme: ^7.3.1
 flutter:
   uses-material-design: true
   assets:
-    - lib/assets/images/bayfinlogo.png
-    - lib/assets/images/googleimage.png
-    - lib/assets/images/aktienbild.png
-    - lib/assets/images/amazonlogo.png
-    - lib/assets/images/hmlogo.png
-    - lib/assets/images/vodafonelogo.png
-    - lib/assets/images/nikelogo.png
-    - lib/assets/images/swsglogo.png
-    - lib/assets/images/boschlogo.png
-    - lib/assets/images/klarnalogo.png
+    - assets/images/bayfinlogo.png
+    - assets/images/googleimage.png
+    - assets/images/aktienbild.png
+    - assets/images/amazonlogo.png
+    - assets/images/hmlogo.png
+    - assets/images/vodafonelogo.png
+    - assets/images/nikelogo.png
+    - assets/images/swsglogo.png
+    - assets/images/boschlogo.png
+    - assets/images/klarnalogo.png
    
 flutter_launcher_icons:
   image_path: "assets/launcher_icon.png"

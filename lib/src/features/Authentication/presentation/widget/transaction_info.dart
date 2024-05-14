@@ -3,15 +3,15 @@
 import 'package:flutter/material.dart';
 
 class TransactionInfo extends StatelessWidget {
-  String firmLogoPath;
-  String firmName;
-  double amount;
+  String? firmLogoPath;
+  String? firmName;
+  double? amount;
 
   TransactionInfo({
     super.key,
-    required this.amount,
-    required this.firmName,
-    required this.firmLogoPath,
+    this.amount,
+    this.firmName,
+    this.firmLogoPath,
   });
 
   @override
@@ -26,23 +26,16 @@ class TransactionInfo extends StatelessWidget {
                 height: 29,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(firmLogoPath),
+                    image: AssetImage(firmLogoPath!),
                     fit: BoxFit.fill,
                   ),
                 )),
             Text(
-              firmName,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontFamily: 'SF Pro',
-                fontWeight: FontWeight.w500,
-                height: 0,
-              ),
+              firmName!,
             ),
-            Text("${amount.toStringAsFixed(2)}€",
+            Text("${amount?.toStringAsFixed(2)}€",
                 style: TextStyle(
-                  color: amount < 0 ? Colors.red : Colors.green,
+                  color: amount! < 0 ? Colors.red : Colors.green,
                   fontSize: 14,
                   fontFamily: 'SF Pro',
                   fontWeight: FontWeight.w500,

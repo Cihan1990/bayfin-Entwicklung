@@ -19,7 +19,7 @@ class LogoWidget extends StatelessWidget {
       height: height,
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('lib/assets/images/bayfinlogo.png'),
+          image: AssetImage('assets/images/bayfinlogo.png'),
           fit: BoxFit.fill,
         ),
       ),

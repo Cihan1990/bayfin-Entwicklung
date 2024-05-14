@@ -1,11 +1,14 @@
 // ignore_for_file: sort_child_properties_last
 
-import 'package:bayfin/src/features/Authentication/presentation/login_screen.dart';
-import 'package:bayfin/src/features/Authentication/presentation/widget/bay_fin_button.dart';
+import 'package:bayfin/src/data/database_repository.dart';
+import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class AccountExistScreen extends StatefulWidget {
-  const AccountExistScreen({super.key});
+  // Attribute
+  final DatabaseRepository databaseRepository;
+  // Konstruktor
+  const AccountExistScreen({super.key, required this.databaseRepository});
 
   @override
   State<AccountExistScreen> createState() => _AccountExistScreenState();
@@ -18,10 +21,10 @@ class _AccountExistScreenState extends State<AccountExistScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      body: SizedBox(
           width: 393,
           height: 852,
-          decoration: const BoxDecoration(color: Color(0xFF212C95)),
           child: Padding(
             padding: const EdgeInsets.all(10),
             child: Form(
@@ -32,7 +35,7 @@ class _AccountExistScreenState extends State<AccountExistScreen> {
                   height: 76,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('lib/assets/images/bayfinlogo.png'),
+                      image: AssetImage('assets/images/bayfinlogo.png'),
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -44,20 +47,22 @@ class _AccountExistScreenState extends State<AccountExistScreen> {
                 const SizedBox(height: 70),
                 const SizedBox(
                     child: Text(
-                  'Benutzerkonto\nerstellt',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w400,
-                  ),
+                  'Benutzerkonto\nerstellt!',
+                  style: TextStyle(color: Colors.white, fontSize: 22),
                   textAlign: TextAlign.center,
                 )),
                 const SizedBox(height: 20),
-                BayFinButton(
-                    text: 'Bestätigen',
-                    height: 50,
-                    width: 247,
-                    navigationWidget: const LoginScreen()),
+                ElevatedButton(
+                  child: const Text('Bestätigen'),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LoginScreen(
+                                  databaseRepository: widget.databaseRepository,
+                                )));
+                  },
+                ),
               ]),
             ),
           )),

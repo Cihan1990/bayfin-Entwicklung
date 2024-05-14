@@ -1,8 +1,8 @@
-import '../features/Authentication/domain/benutzer.dart';
-import '../features/Authentication/domain/kontoinformationen.dart';
-import '../features/Authentication/domain/name.dart';
-import '../features/Authentication/domain/umsatz.dart';
-import 'database_repository.dart';
+import 'package:bayfin/src/data/database_repository.dart';
+import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
+import 'package:bayfin/src/features/authentication/domain/name.dart';
+import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
+import 'package:bayfin/src/features/bank_balance/domain/umsatz.dart';
 
 class MockDatabase implements DatabaseRepository {
 // Simulierte Datenbank= Benutzerliste
@@ -11,13 +11,23 @@ class MockDatabase implements DatabaseRepository {
         benutzername: Name(vorname: "Cihan", nachname: "Oezdemir"),
         email: "Cihan.52@hotmail.de",
         telefon: "123123432",
-        bank: KontoInformation(
-            bank: "Sparkasse",
-            bic: "SOLADEST",
-            iban: "DE234242342424",
-            kontonummer: 7898777,
-            kontostand: 123.34),
-        umsatze: [Umsatz(betrag: 12.30, umsatzname: "Amazon")],
+        bank: [
+          KontoInformation(
+              bank: "Sparkasse",
+              bic: "SOLADEST",
+              iban: "DE12600501010007283092",
+              kontonummer: 7898777,
+              kontostand: 123.34),
+          KontoInformation(
+              bank: "C24",
+              bic: "BLABLA",
+              iban: "DE12600501010007072343",
+              kontonummer: 4343634634,
+              kontostand: 43123.34),
+        ],
+        umsatze: [
+          Umsatz(betrag: 12.30, umsatzname: "Amazon"),
+        ],
         userid: "1"),
   ];
 

@@ -19,42 +19,24 @@ class _ProunounsState extends State<Prounouns> {
       Container(
         alignment: Alignment.centerLeft,
         child: Text(
+          style: const TextStyle(color: Colors.white),
           widget.text,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            decoration: TextDecoration.underline,
-            decorationColor: Color(0xFFFFFFFF),
-            decorationThickness: 1.35,
-          ),
         ),
       ),
       Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         Container(
             height: 45,
-            width: 110,
+            width: 115,
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
             decoration: BoxDecoration(
-                color: const Color(0xFFD3D3D3),
+                color: const Color(0xffE6E9FF),
                 borderRadius: BorderRadius.circular(10)),
             child: DropdownButtonHideUnderline(
                 child: DropdownButton(
-                    dropdownColor: const Color(
-                        0xFFD3D3D3), // here you change the background color
-
                     value: selectedGenders,
                     icon: const Icon(Icons.arrow_drop_down),
                     iconSize: 24,
-                    elevation: 16,
                     isExpanded: true,
-                    style: TextStyle(
-                        color: const Color(0x72010000).withOpacity(0.45),
-                        fontSize: 17.0),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
                     onChanged: (String? newValue) {
                       setState(() {
                         selectedGenders = newValue!;

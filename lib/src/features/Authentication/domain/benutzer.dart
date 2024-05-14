@@ -1,12 +1,12 @@
-import 'kontoinformationen.dart';
-import 'name.dart';
-import 'umsatz.dart';
+import 'package:bayfin/src/features/authentication/domain/name.dart';
+import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
+import 'package:bayfin/src/features/bank_balance/domain/umsatz.dart';
 
 class Benutzer {
   Name benutzername;
   String email;
   String telefon;
-  KontoInformation bank;
+  List<KontoInformation> bank;
   List<Umsatz> umsatze;
   String userid;
 
