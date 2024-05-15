@@ -47,7 +47,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             const SizedBox(height: 15),
             RegistrationsText(
               text: 'Vorname',
-              
             ),
             SizedBox(height: 5),
             const SizedBox(height: 10),
@@ -66,7 +65,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               text: 'E-Mail Adresse',
             ),
             SizedBox(height: 5),
-            const SizedBox(height: 90),
+            const SizedBox(height: 110),
             ElevatedButton(
               child: Text('Passwort erstellen'),
               onPressed: () {

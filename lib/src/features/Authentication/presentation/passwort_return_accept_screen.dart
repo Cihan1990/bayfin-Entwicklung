@@ -40,7 +40,7 @@ class _PasswortReturnAcceptScreenState
             const SizedBox(
                 child:
                     Icon(Icons.check_rounded, size: 350, color: Colors.green)),
-            const SizedBox(height: 70),
+            const SizedBox(height: 100),
             const SizedBox(
                 child: Text(
               'Passwort \nzurückgesetzt!',

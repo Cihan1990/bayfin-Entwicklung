@@ -44,7 +44,16 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                         style: TextStyle(color: Colors.white)),
                   ),
                   const SizedBox(height: 5),
-                  TextFormField(),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.only(top: 0.0, left: 10, right: 10),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(11.0),
+                      ),
+                      filled: true,
+                    ),
+                  ),
                   const SizedBox(height: 10),
                   Container(
                     alignment: Alignment.centerLeft,
@@ -97,10 +106,15 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                             ? const Icon(Icons.visibility_off)
                             : const Icon(Icons.visibility),
                       ),
+                      contentPadding:
+                          const EdgeInsets.only(top: 0.0, left: 10, right: 10),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(11.0),
+                      ),
                       filled: true,
                     ),
                   ),
-                  const SizedBox(height: 270),
+                  const SizedBox(height: 275),
                   ElevatedButton(
                     child: const Text('Passwort zurücksetzen'),
                     onPressed: () {

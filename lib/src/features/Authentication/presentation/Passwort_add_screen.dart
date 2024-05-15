@@ -61,6 +61,10 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                             ? const Icon(Icons.visibility_off)
                             : const Icon(Icons.visibility),
                       ),
+                      contentPadding:
+                          const EdgeInsets.only(top: 0.0, left: 10, right: 10),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(11.0)),
                       filled: true,
                     ),
                   ),
@@ -88,10 +92,14 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                             ? const Icon(Icons.visibility_off)
                             : const Icon(Icons.visibility),
                       ),
+                      contentPadding:
+                          const EdgeInsets.only(top: 0.0, left: 10, right: 10),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(11.0)),
                       filled: true,
                     ),
                   ),
-                  const SizedBox(height: 320),
+                  const SizedBox(height: 350),
                   ElevatedButton(
                     child: const Text('Benutzerkonto erstellen'),
                     onPressed: () {
