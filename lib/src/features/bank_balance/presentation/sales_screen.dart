@@ -45,6 +45,7 @@ class _SalesScreenState extends State<SalesScreen> {
                     await showDialog<void>(
                         context: context,
                         builder: (context) => AlertDialog(
+                              backgroundColor: const Color(0xffE6E9FF),
                               content: Stack(
                                 clipBehavior: Clip.none,
                                 children: <Widget>[
@@ -56,6 +57,7 @@ class _SalesScreenState extends State<SalesScreen> {
                                         Navigator.of(context).pop();
                                       },
                                       child: const CircleAvatar(
+                                        backgroundColor: Color(0xffE6E9FF),
                                         child: Icon(Icons.close),
                                       ),
                                     ),
