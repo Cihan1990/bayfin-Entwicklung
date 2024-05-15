@@ -130,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Shadow(color: Colors.white, offset: Offset(0, -5))
                         ],
                         color: Colors.transparent,
-                        fontSize: 16,
+                        fontSize: 18,
                         decoration: TextDecoration.underline,
                         decorationColor: Colors.white,
                         decorationThickness: 1.35,
