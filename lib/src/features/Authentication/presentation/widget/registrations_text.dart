@@ -7,11 +7,13 @@ class RegistrationsText extends StatelessWidget {
   String? hinttext;
   TextStyle? hintstyle;
   Color? color;
+  TextEditingController controller;
 
   RegistrationsText(
       {super.key,
       required this.text,
       this.hintstyle,
+      required this.controller,
       this.hinttext,
       this.color = Colors.white});
 
@@ -32,16 +34,18 @@ class RegistrationsText extends StatelessWidget {
         ),
       ),
       TextFormField(
+          controller: controller,
           decoration: InputDecoration(
-        fillColor: const Color(0xffE6E9FF),
-        contentPadding: const EdgeInsets.only(top: 0.0, left: 10, right: 10),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(11.0),
-        ),
-        filled: true,
-        hintText: hinttext,
-        hintStyle: hintstyle,
-      ))
+            fillColor: const Color(0xffE6E9FF),
+            contentPadding:
+                const EdgeInsets.only(top: 0.0, left: 10, right: 10),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(11.0),
+            ),
+            filled: true,
+            hintText: hinttext,
+            hintStyle: hintstyle,
+          ))
     ]);
   }
 }

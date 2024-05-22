@@ -65,7 +65,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                                         Padding(
                                           padding: const EdgeInsets.all(8),
                                           child: RegistrationsText(
-                                            text: 'Kontoart',
+                                            text: 'Bank',
                                             color: Colors.black,
                                           ),
                                         ),

@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
 import 'package:bayfin/src/features/authentication/domain/name.dart';
@@ -15,14 +17,12 @@ class MockDatabase implements DatabaseRepository {
           KontoInformation(
               bank: "Sparkasse",
               bic: "SOLADEST",
-              iban: "DE12600501010007283092",
-              kontonummer: 7898777,
+              iban: "DE12600501010007283095",
               kontostand: 123.34),
           KontoInformation(
               bank: "C24",
               bic: "BLABLA",
               iban: "DE12600501010007072343",
-              kontonummer: 4343634634,
               kontostand: 43123.34),
         ],
         umsatze: [
@@ -48,6 +48,14 @@ class MockDatabase implements DatabaseRepository {
       // wenn user nicht vorhanden, wird kein umsatz hinzugefügt
       if (benutzer.userid == userid) {
         benutzer.umsatze.add(neuerUmsatz);
+      }
+    }
+  }
+
+  void addKonto(KontoInformation neueKontoInformation, String userid) {
+    for (var benutzer in benutzerliste) {
+      if (benutzer.userid == userid) {
+        benutzer.bank.add(neueKontoInformation);
       }
     }
   }

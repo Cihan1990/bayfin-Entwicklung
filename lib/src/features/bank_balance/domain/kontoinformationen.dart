@@ -1,15 +1,14 @@
 class KontoInformation {
   String iban;
-  String bic;
-  int kontonummer;
+  String? bic;
+
   String bank;
-  double kontostand;
+  double? kontostand;
 
   KontoInformation({
     required this.bank,
-    required this.bic,
+    this.bic,
     required this.iban,
-    required this.kontonummer,
-    required this.kontostand,
+    this.kontostand,
   });
 }
