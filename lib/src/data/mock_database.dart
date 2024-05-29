@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
 import 'package:bayfin/src/features/authentication/domain/name.dart';
@@ -32,7 +30,7 @@ class MockDatabase implements DatabaseRepository {
   ];
 
   @override
-  Benutzer? getBenutzer(String userid) {
+  Future<Benutzer?> getBenutzer(String userid) async {
     for (var benutzer in benutzerliste) {
       if (benutzer.userid == userid) {
         return benutzer;
@@ -42,7 +40,7 @@ class MockDatabase implements DatabaseRepository {
   }
 
   @override
-  void addUmsatz(Umsatz neuerUmsatz, String userid) {
+  Future<void> addUmsatz(Umsatz neuerUmsatz, String userid) async {
     // wir suchen den User mit der UserID und fügen den neuen umsatz dem user hinzu
     for (var benutzer in benutzerliste) {
       // wenn user nicht vorhanden, wird kein umsatz hinzugefügt
@@ -52,7 +50,9 @@ class MockDatabase implements DatabaseRepository {
     }
   }
 
-  void addKonto(KontoInformation neueKontoInformation, String userid) {
+  @override
+  Future<void> addKonto(
+      KontoInformation neueKontoInformation, String userid) async {
     for (var benutzer in benutzerliste) {
       if (benutzer.userid == userid) {
         benutzer.bank.add(neueKontoInformation);

@@ -20,9 +20,10 @@ class ViewBankaccount extends StatefulWidget {
 
 class _ViewBankaccountState extends State<ViewBankaccount> {
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    Benutzer loggedInUser = widget.databaseRepository.getBenutzer("1")!;
+    Future<Benutzer?> loggedInUser = widget.databaseRepository.getBenutzer("1")!;
 
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,

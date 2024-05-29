@@ -1,5 +1,6 @@
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
+
 import 'package:bayfin/src/features/authentication/presentation/widget/registrations_text.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/transaction_info.dart';
 import 'package:bayfin/src/features/bank_balance/presentation/main_screen.dart';
@@ -16,7 +17,26 @@ class SalesScreen extends StatefulWidget {
 }
 
 class _SalesScreenState extends State<SalesScreen> {
+
   final _formKey = GlobalKey<FormState>();
+  late TextEditingController umzatzbezeichnungController;
+  late TextEditingController umsatzsummeController;
+  
+  @override
+  void initState() {
+    super.initState();
+    umzatzbezeichnungController = TextEditingController();
+    umsatzsummeController = TextEditingController();
+    
+  }
+
+  @override
+  void dispose() {
+    umsatzsummeController.dispose();
+    umzatzbezeichnungController.dispose();
+    
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,13 +93,13 @@ class _SalesScreenState extends State<SalesScreen> {
                                       children: <Widget>[
                                         Padding(
                                             padding: const EdgeInsets.all(8),
-                                            child: RegistrationsText(
+                                            child: RegistrationsText(controller: umzatzbezeichnungController,
                                               text: 'Umsatzbezeichnung',
                                               color: Colors.black,
                                             )),
                                         Padding(
                                             padding: const EdgeInsets.all(8),
-                                            child: RegistrationsText(
+                                            child: RegistrationsText(controller: umsatzsummeController,
                                                 text: 'Umsatzsumme',
                                                 color: Colors.black)),
                                         Padding(
