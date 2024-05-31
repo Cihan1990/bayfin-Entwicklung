@@ -16,21 +16,19 @@ class MockDatabase implements DatabaseRepository {
               bank: "Sparkasse",
               bic: "SOLADEST",
               iban: "DE12600501010007283095",
-              kontostand: 123.34),
-          KontoInformation(
-              bank: "C24",
-              bic: "BLABLA",
-              iban: "DE12600501010007072343",
-              kontostand: 43123.34),
+              kontostand: 3530.34),
         ],
         umsatze: [
-          Umsatz(betrag: 12.30, umsatzname: "Amazon"),
+          Umsatz(betrag: -12.30, umsatzname: "Amazon"),
+          Umsatz(betrag: -40.30, umsatzname: "Vodafone"),
+          Umsatz(betrag: -56.30, umsatzname: "O2"),
         ],
         userid: "1"),
   ];
 
   @override
   Future<Benutzer?> getBenutzer(String userid) async {
+    await Future.delayed(const Duration(seconds: 2));
     for (var benutzer in benutzerliste) {
       if (benutzer.userid == userid) {
         return benutzer;
@@ -41,6 +39,7 @@ class MockDatabase implements DatabaseRepository {
 
   @override
   Future<void> addUmsatz(Umsatz neuerUmsatz, String userid) async {
+    await Future.delayed(const Duration(seconds: 2));
     // wir suchen den User mit der UserID und fügen den neuen umsatz dem user hinzu
     for (var benutzer in benutzerliste) {
       // wenn user nicht vorhanden, wird kein umsatz hinzugefügt
@@ -53,6 +52,7 @@ class MockDatabase implements DatabaseRepository {
   @override
   Future<void> addKonto(
       KontoInformation neueKontoInformation, String userid) async {
+    await Future.delayed(const Duration(seconds: 2));
     for (var benutzer in benutzerliste) {
       if (benutzer.userid == userid) {
         benutzer.bank.add(neueKontoInformation);

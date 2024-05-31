@@ -1,213 +1,222 @@
 import 'package:bayfin/src/data/database_repository.dart';
+import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
-
 import 'package:bayfin/src/features/authentication/presentation/widget/registrations_text.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/transaction_info.dart';
-import 'package:bayfin/src/features/bank_balance/presentation/main_screen.dart';
+import 'package:bayfin/src/features/bank_balance/domain/umsatz.dart';
 import 'package:flutter/material.dart';
 
 class SalesScreen extends StatefulWidget {
   // Attribute
   final DatabaseRepository databaseRepository;
+  final int kontoIndex;
   // Konstruktor
-  const SalesScreen({super.key, required this.databaseRepository});
+  const SalesScreen(
+      {super.key, required this.databaseRepository, required this.kontoIndex});
 
   @override
   State<SalesScreen> createState() => _SalesScreenState();
 }
 
 class _SalesScreenState extends State<SalesScreen> {
-
   final _formKey = GlobalKey<FormState>();
   late TextEditingController umzatzbezeichnungController;
   late TextEditingController umsatzsummeController;
-  
+
   @override
   void initState() {
     super.initState();
     umzatzbezeichnungController = TextEditingController();
     umsatzsummeController = TextEditingController();
-    
   }
 
   @override
   void dispose() {
     umsatzsummeController.dispose();
     umzatzbezeichnungController.dispose();
-    
+
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-          leading: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MainScreen(
-                            databaseRepository: widget.databaseRepository,
-                          ),
-                        ));
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    size: 24,
-                  )),
-              IconButton(
-                  onPressed: () async {
-                    await showDialog<void>(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
-                              content: Stack(
-                                clipBehavior: Clip.none,
-                                children: <Widget>[
-                                  Positioned(
-                                    right: -40,
-                                    top: -40,
-                                    child: InkResponse(
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: CircleAvatar(
-                                        backgroundColor: Theme.of(context)
-                                            .colorScheme
-                                            .primaryContainer,
-                                        child: const Icon(Icons.close),
-                                      ),
+        leading: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  size: 24,
+                )),
+            IconButton(
+                onPressed: () async {
+                  await showDialog<void>(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primaryContainer,
+                            content: Stack(
+                              clipBehavior: Clip.none,
+                              children: <Widget>[
+                                Positioned(
+                                  right: -40,
+                                  top: -40,
+                                  child: InkResponse(
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: CircleAvatar(
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                      child: const Icon(Icons.close),
                                     ),
                                   ),
-                                  Form(
-                                    key: _formKey,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Padding(
-                                            padding: const EdgeInsets.all(8),
-                                            child: RegistrationsText(controller: umzatzbezeichnungController,
-                                              text: 'Umsatzbezeichnung',
-                                              color: Colors.black,
-                                            )),
-                                        Padding(
-                                            padding: const EdgeInsets.all(8),
-                                            child: RegistrationsText(controller: umsatzsummeController,
-                                                text: 'Umsatzsumme',
-                                                color: Colors.black)),
-                                        Padding(
+                                ),
+                                Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Padding(
                                           padding: const EdgeInsets.all(8),
-                                          child: ElevatedButton(
-                                            child:
-                                                const Text('Umsatz hinzufügen'),
-                                            onPressed: () {
-                                              if (_formKey.currentState!
-                                                  .validate()) {
-                                                Navigator.of(context).pop();
+                                          child: RegistrationsText(
+                                            controller:
+                                                umzatzbezeichnungController,
+                                            text: 'Umsatzbezeichnung',
+                                            color: Colors.black,
+                                          )),
+                                      Padding(
+                                          padding: const EdgeInsets.all(8),
+                                          child: RegistrationsText(
+                                              controller: umsatzsummeController,
+                                              text: 'Umsatzsumme',
+                                              color: Colors.black)),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: ElevatedButton(
+                                          child:
+                                              const Text('Umsatz hinzufügen'),
+                                          onPressed: () async {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              await widget.databaseRepository
+                                                  .addUmsatz(
+                                                      Umsatz(
+                                                          betrag: double.parse(
+                                                              umsatzsummeController
+                                                                  .text),
+                                                          umsatzname:
+                                                              umzatzbezeichnungController
+                                                                  .text),
+                                                      "1");
+                                              setState(() {});
+                                              Navigator.of(context).pop();
 
-                                                _formKey.currentState!.save();
-                                              }
-                                            },
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                                              // _formKey.currentState!.save();
+                                            }
+                                          },
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ));
-                  },
-                  icon: const Icon(
-                    Icons.queue,
-                    size: 24,
-                  )),
-            ],
-          ),
-          leadingWidth: 200,
+                                ),
+                              ],
+                            ),
+                          ));
+                },
+                icon: const Icon(
+                  Icons.queue,
+                  size: 24,
+                )),
+          ],
         ),
-        body: SingleChildScrollView(
-            child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Form(
-                    child: Column(children: [
-                  const SizedBox(height: 10),
-                  LogoWidget(width: 217, height: 76),
-                  const SizedBox(height: 20),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(width: 10),
-                    ],
-                  ),
-                  const SizedBox(height: 15),
-                  const SizedBox(
-                    width: 361,
-                    height: 80,
-                    child: Text(
-                      'Girokonto\n1.890,69€',
-                      textAlign: TextAlign.center,
+        leadingWidth: 200,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Form(
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                LogoWidget(width: 217, height: 76),
+                const SizedBox(height: 20),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(width: 10),
+                  ],
+                ),
+                const SizedBox(height: 15),
+                SizedBox(
+                  width: 361,
+                  child: Center(
+                    child: FutureBuilder(
+                      future: widget.databaseRepository.getBenutzer("1"),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData &&
+                            snapshot.connectionState == ConnectionState.done) {
+                          Benutzer user = snapshot.data!;
+                          List<Umsatz> umsatzliste = user.umsatze;
+                          List<TransactionInfo> transactionliste = [];
+                          for (var u in umsatzliste) {
+                            transactionliste.add(TransactionInfo(
+                              firmName: u.umsatzname,
+                              firmLogoPath: "assets/images/vodafonelogo.png",
+                              amount: u.betrag,
+                            ));
+                          }
+                          // FALL: Future ist komplett und hat Daten!
+                          return Column(
+                            children: [
+                              Text(
+                                  "${user.bank[widget.kontoIndex].kontostand}€"),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Container(
+                                width: 361,
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    const Text(
+                                      'Umsätze',
+                                    ),
+                                    const SizedBox(height: 15),
+                                    ...transactionliste
+                                  ],
+                                ),
+                              ),
+                            ],
+                          );
+                        } else if (snapshot.connectionState !=
+                            ConnectionState.done) {
+                          // FALL: Sind noch im Ladezustand
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else {
+                          // FALL: Es gab nen Fehler
+                          return const Icon(Icons.error);
+                        }
+                      },
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                      width: 361,
-                      height: 510,
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const Text(
-                              'Umsätze',
-                            ),
-                            const SizedBox(height: 15),
-                            TransactionInfo(
-                                firmLogoPath: "assets/images/vodafonelogo.png",
-                                amount: -100.00,
-                                firmName: "Vodafone"),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            TransactionInfo(
-                                firmLogoPath: "assets/images/hmlogo.png",
-                                amount: -80.00,
-                                firmName: "H&M"),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            TransactionInfo(
-                                firmLogoPath: "assets/images/amazonlogo.png",
-                                amount: -160.00,
-                                firmName: "Amazon"),
-                            const SizedBox(height: 12),
-                            TransactionInfo(
-                                firmLogoPath: "assets/images/nikelogo.png",
-                                amount: -120.00,
-                                firmName: "Nike"),
-                            const SizedBox(height: 12),
-                            TransactionInfo(
-                                firmLogoPath: "assets/images/swsglogo.png",
-                                amount: -890.00,
-                                firmName: "Miete"),
-                            const SizedBox(height: 12),
-                            TransactionInfo(
-                                firmLogoPath: "assets/images/boschlogo.png",
-                                amount: 4500.00,
-                                firmName: "Lohn"),
-                            const SizedBox(height: 12),
-                            TransactionInfo(
-                                firmLogoPath: "assets/images/klarnalogo.png",
-                                amount: -250.00,
-                                firmName: "Klarna"),
-                          ]))
-                ])))));
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

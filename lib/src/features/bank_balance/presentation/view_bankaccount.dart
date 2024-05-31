@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
 import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
@@ -20,11 +22,28 @@ class ViewBankaccount extends StatefulWidget {
 
 class _ViewBankaccountState extends State<ViewBankaccount> {
   final _formKey = GlobalKey<FormState>();
+  late Future<Benutzer?> loggedInUser;
+  late TextEditingController bankController;
+  late TextEditingController ibanController;
+
+  @override
+  void initState() {
+    super.initState();
+    loggedInUser = widget.databaseRepository.getBenutzer("1");
+    bankController = TextEditingController();
+    ibanController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    bankController.dispose();
+    ibanController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Future<Benutzer?> loggedInUser = widget.databaseRepository.getBenutzer("1")!;
-
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         appBar: AppBar(
@@ -66,6 +85,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                                         Padding(
                                           padding: const EdgeInsets.all(8),
                                           child: RegistrationsText(
+                                            controller: bankController,
                                             text: 'Bank',
                                             color: Colors.black,
                                           ),
@@ -73,6 +93,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                                         Padding(
                                           padding: const EdgeInsets.all(8),
                                           child: RegistrationsText(
+                                            controller: ibanController,
                                             text: 'IBAN',
                                             color: Colors.black,
                                           ),
@@ -82,12 +103,21 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                                           child: ElevatedButton(
                                             child: const Text(
                                                 'Bankkonto hinzufügen'),
-                                            onPressed: () {
+                                            onPressed: () async {
                                               if (_formKey.currentState!
                                                   .validate()) {
+                                                await widget.databaseRepository
+                                                    .addKonto(
+                                                        KontoInformation(
+                                                            bank: bankController
+                                                                .text,
+                                                            iban: ibanController
+                                                                .text),
+                                                        "1");
+                                                setState(() {});
                                                 Navigator.of(context).pop();
 
-                                                _formKey.currentState!.save();
+                                                // _formKey.currentState!.save();
                                               }
                                             },
                                           ),
@@ -109,7 +139,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
           actions: [
             IconButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => LoginScreen(
@@ -157,7 +187,24 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                     ],
                   ),
                   const SizedBox(height: 15),
-                  ..._getBayFinButtons(loggedInUser.bank)
+                  FutureBuilder(
+                    future: loggedInUser,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData &&
+                          snapshot.connectionState == ConnectionState.done) {
+                        // FALL: Future ist komplett und hat Daten!
+                        return Column(
+                            children: _getBayFinButtons(snapshot.data!.bank));
+                      } else if (snapshot.connectionState !=
+                          ConnectionState.done) {
+                        // FALL: Sind noch im Ladezustand
+                        return const Center(child: CircularProgressIndicator());
+                      } else {
+                        // FALL: Es gab nen Fehler
+                        return const Icon(Icons.error);
+                      }
+                    },
+                  ),
                 ])))));
   }
 
@@ -168,11 +215,13 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
         width: 361,
         child: InkWell(
           onTap: () {
-            Navigator.pushReplacement(
+            Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => MainScreen(
-                        databaseRepository: widget.databaseRepository)));
+                          databaseRepository: widget.databaseRepository,
+                          kontoIndex: kontoInfos.indexOf(info),
+                        )));
           },
           child: Card(
             color: const Color(0xFFD6D7FA),

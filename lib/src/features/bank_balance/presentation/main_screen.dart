@@ -8,14 +8,24 @@ import 'package:flutter/material.dart';
 class MainScreen extends StatefulWidget {
   // Attribute
   final DatabaseRepository databaseRepository;
+  final int kontoIndex;
   // Konstruktor
-  const MainScreen({super.key, required this.databaseRepository});
+  const MainScreen(
+      {super.key, required this.databaseRepository, required this.kontoIndex});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
+  late DatabaseRepository databaseRepository;
+
+  @override
+  void initState() {
+    super.initState();
+    databaseRepository = widget.databaseRepository;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,21 +86,39 @@ class _MainScreenState extends State<MainScreen> {
                   width: 361,
                   child: InkWell(
                       onTap: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => SalesScreen(
-                                    databaseRepository:
-                                        widget.databaseRepository)));
+                                      databaseRepository:
+                                          widget.databaseRepository,
+                                      kontoIndex: widget.kontoIndex,
+                                    )));
                       },
-                      child: const Card(
-                          color: Color(0xFFD6D7FA),
+                      child: Card(
+                          color: const Color(0xFFD6D7FA),
                           child: Padding(
-                              padding: EdgeInsets.all(12.0),
+                              padding: const EdgeInsets.all(12.0),
                               child: Column(children: [
-                                Text(
-                                  'Girokonto\n1.890,69€',
-                                  textAlign: TextAlign.center,
+                                FutureBuilder(
+                                  future: databaseRepository.getBenutzer("1"),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData &&
+                                        snapshot.connectionState ==
+                                            ConnectionState.done) {
+                                      // FALL: Future ist komplett und hat Daten!
+                                      return Text(
+                                          "${snapshot.data!.bank[widget.kontoIndex].kontostand}€");
+                                    } else if (snapshot.connectionState !=
+                                        ConnectionState.done) {
+                                      // FALL: Sind noch im Ladezustand
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    } else {
+                                      // FALL: Es gab nen Fehler
+                                      return const Icon(Icons.error);
+                                    }
+                                  },
                                 ),
                               ]))))),
               const SizedBox(height: 15),
