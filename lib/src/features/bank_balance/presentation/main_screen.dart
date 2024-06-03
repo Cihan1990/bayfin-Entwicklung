@@ -109,59 +109,6 @@ class _MainScreenState extends State<MainScreen> {
                                       if (snapshot.hasData &&
                                           snapshot.connectionState ==
                                               ConnectionState.done) {
-                                        Benutzer user = snapshot.data!;
-                                        List<Umsatz> umsatzliste = user.umsatze;
-                                        List<TransactionInfo> transactionliste =
-                                            [];
-                                        for (var u in umsatzliste) {
-                                          transactionliste.add(TransactionInfo(
-                                            firmName: u.umsatzname,
-                                            firmLogoPath:
-                                                "assets/images/vodafonelogo.png",
-                                            amount: u.betrag,
-                                          ));
-                                        }
-                                        // FALL: Future ist komplett und hat Daten!
-                                        return Column(
-                                          children: [
-                                            Text(
-                                                "${user.bank[widget.kontoIndex].kontostand}€"),
-                                            const SizedBox(
-                                              height: 15,
-                                            ),
-                                            Container(
-                                              width: 361,
-                                              height: 226,
-                                              decoration: ShapeDecoration(
-                                                image: const DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/images/aktienbild.png'),
-                                                  fit: BoxFit.fill,
-                                                ),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              width: 361,
-                                              padding:
-                                                  const EdgeInsets.all(20.0),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.stretch,
-                                                children: [
-                                                  const Text(
-                                                    'Letzte Umsätze',
-                                                  ),
-                                                  const SizedBox(height: 15),
-                                                  ...transactionliste
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        );
                                         // FALL: Future ist komplett und hat Daten!
                                         return Text(
                                             "${snapshot.data!.bank[widget.kontoIndex].kontostand}€");
@@ -177,6 +124,78 @@ class _MainScreenState extends State<MainScreen> {
                                     },
                                   ),
                                 ]))))),
+                const SizedBox(height: 15),
+                Container(
+                  width: 361,
+                  height: 226,
+                  decoration: ShapeDecoration(
+                    image: const DecorationImage(
+                      image: AssetImage('assets/images/aktienbild.png'),
+                      fit: BoxFit.fill,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+      
+                SizedBox(
+                  
+                  width: 361,
+                  child: Center(
+                  
+                    child: FutureBuilder(
+                      future: widget.databaseRepository.getBenutzer("1"),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData &&
+                            snapshot.connectionState == ConnectionState.done) {
+                          Benutzer user = snapshot.data!;
+                          List<Umsatz> umsatzliste = user.umsatze;
+                          List<TransactionInfo> transactionliste = [];
+                          for (var u in umsatzliste) {
+                            transactionliste.add(TransactionInfo(
+                              firmName: u.umsatzname,
+                              firmLogoPath: "assets/images/vodafonelogo.png",
+                              amount: u.betrag,
+                            ));
+                          }
+                          // FALL: Future ist komplett und hat Daten!
+                          return Column(
+                            children: [
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              Container(
+                                width: 361,
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    const Text(
+                                      'Letzte Umsätze',
+                                    ),
+                                    const SizedBox(height: 15),
+                                    ...transactionliste
+                                  ],
+                                ),
+                              ),
+                            ],
+                          );
+                        } else if (snapshot.connectionState !=
+                            ConnectionState.done) {
+                          // FALL: Sind noch im Ladezustand
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else {
+                          // FALL: Es gab nen Fehler
+                          return const Icon(Icons.error);
+                        }
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
