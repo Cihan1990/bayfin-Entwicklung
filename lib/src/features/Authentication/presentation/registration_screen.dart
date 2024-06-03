@@ -6,7 +6,6 @@ import 'package:bayfin/src/features/authentication/presentation/passwort_add_scr
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/pronouns.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/registrations_text.dart';
-import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -68,23 +67,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             Prounouns(text: 'Anrede'),
             SizedBox(height: 5),
             const SizedBox(height: 15),
-            RegistrationsText(controller: vornameController,
+            RegistrationsText(
+              controller: vornameController,
               text: 'Vorname',
             ),
             SizedBox(height: 5),
             const SizedBox(height: 10),
-            RegistrationsText(controller: nachnameController,
+            RegistrationsText(
+              controller: nachnameController,
               text: 'Nachname',
             ),
             SizedBox(height: 5),
             const SizedBox(height: 10),
-            RegistrationsText(controller: geburtsdatumController,
+            RegistrationsText(
+              controller: geburtsdatumController,
               text: 'Geburtsdatum',
               hinttext: 'TT.MM.JJJJ',
             ),
             SizedBox(height: 5),
             SizedBox(height: 10),
-            RegistrationsText(controller: mailController,
+            RegistrationsText(
+              controller: mailController,
               text: 'E-Mail Adresse',
             ),
             SizedBox(height: 5),
