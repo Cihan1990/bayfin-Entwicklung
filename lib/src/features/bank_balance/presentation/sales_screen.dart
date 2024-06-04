@@ -118,7 +118,9 @@ class _SalesScreenState extends State<SalesScreen> {
                                                                   .text),
                                                       "1");
                                               setState(() {});
-                                              Navigator.of(context).pop();
+                                              if (context.mounted) {
+                                                Navigator.of(context).pop();
+                                              }
 
                                               // _formKey.currentState!.save();
                                             }
