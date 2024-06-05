@@ -47,7 +47,8 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                   TextFormField(
                     validator: validateName,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: InputDecoration(errorStyle: TextStyle(color: Colors.grey.shade400),
+                    decoration: InputDecoration(
+                      errorStyle: TextStyle(color: Colors.grey.shade400),
                       contentPadding:
                           const EdgeInsets.only(top: 0.0, left: 10, right: 10),
                       border: OutlineInputBorder(
@@ -69,7 +70,8 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                     autocorrect: false,
                     validator: validatePw,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: InputDecoration(errorStyle: TextStyle(color: Colors.grey.shade400),
+                    decoration: InputDecoration(
+                      errorStyle: TextStyle(color: Colors.grey.shade400),
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
@@ -101,7 +103,8 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                     validator: validatePwrp,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     autocorrect: false,
-                    decoration: InputDecoration(errorStyle: TextStyle(color: Colors.grey.shade400),
+                    decoration: InputDecoration(
+                      errorStyle: TextStyle(color: Colors.grey.shade400),
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
@@ -171,7 +174,10 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
 
 String? validatePw(String? input) {
   if (input == null || input.isEmpty) {
-    return 'Bitte Passwort eingeben';
+    return "Bitte Passwort eingeben";
+  }
+  if (input.length < 6 || input.length > 12) {
+    return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
   }
   return null;
 }
@@ -180,12 +186,21 @@ String? validatePwrp(String? input) {
   if (input == null || input.isEmpty) {
     return 'Bitte Passwort wiederholen';
   }
+  if (input.length < 6 || input.length > 12) {
+    return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
+  }
   return null;
 }
 
 String? validateName(String? input) {
   if (input == null || input.isEmpty) {
-    return 'Bitte Benutzername/E-Mail eingeben';
+    return "Bitte Buntzername/E-Mail eingeben";
+  }
+  if (!input.contains("@")) {
+    return 'Email muss das Zeichen "@" enthalten';
+  }
+  if (!(input.endsWith(".com") || input.endsWith(".de"))) {
+    return 'Email muss mit ".com" oder ".de" enden';
   }
   return null;
 }

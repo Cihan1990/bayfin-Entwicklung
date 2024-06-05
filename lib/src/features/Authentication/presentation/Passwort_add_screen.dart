@@ -52,7 +52,8 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                     obscureText: !showPassword,
                     enableSuggestions: false,
                     autocorrect: false,
-                    decoration: InputDecoration(errorStyle: TextStyle(color: Colors.grey.shade400),
+                    decoration: InputDecoration(
+                      errorStyle: TextStyle(color: Colors.grey.shade400),
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
@@ -155,7 +156,10 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
 
 String? validatePw(String? input) {
   if (input == null || input.isEmpty) {
-    return 'Bitte Passwort eingeben';
+    return "Bitte Passwort eingeben";
+  }
+  if (input.length < 6 || input.length > 12) {
+    return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
   }
   return null;
 }
@@ -163,6 +167,9 @@ String? validatePw(String? input) {
 String? validatePwrp(String? input) {
   if (input == null || input.isEmpty) {
     return 'Bitte Passwort wiederholen';
+  }
+  if (input.length < 6 || input.length > 12) {
+    return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
   }
   return null;
 }
