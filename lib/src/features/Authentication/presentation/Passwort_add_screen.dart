@@ -17,6 +17,9 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
   bool showPassword = false;
   bool showPasswordRepeated = false;
 
+  final TextEditingController _passwordField1 = TextEditingController();
+  final TextEditingController _passwordField2 = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,6 +54,7 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     obscureText: !showPassword,
                     enableSuggestions: false,
+                    controller: _passwordField1,
                     autocorrect: false,
                     decoration: InputDecoration(
                       errorStyle: TextStyle(color: Colors.grey.shade400),
@@ -83,8 +87,9 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                   TextFormField(
                     obscureText: !showPasswordRepeated,
                     enableSuggestions: false,
-                    validator: validatePwrp,
+                    validator: validatePw,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: _passwordField2,
                     autocorrect: false,
                     decoration: InputDecoration(
                       errorStyle: TextStyle(color: Colors.grey.shade400),
@@ -152,24 +157,17 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
               )),
         ));
   }
-}
 
-String? validatePw(String? input) {
-  if (input == null || input.isEmpty) {
-    return "Bitte Passwort eingeben";
+  String? validatePw(String? input) {
+    if (_passwordField1.text != _passwordField2.text) {
+      return "Passwörter stimmen nicht überein";
+    }
+    if (input == null || input.isEmpty) {
+      return "Bitte Passwort eingeben";
+    }
+    if (input.length < 6 || input.length > 12) {
+      return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
+    }
+    return null;
   }
-  if (input.length < 6 || input.length > 12) {
-    return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
-  }
-  return null;
-}
-
-String? validatePwrp(String? input) {
-  if (input == null || input.isEmpty) {
-    return 'Bitte Passwort wiederholen';
-  }
-  if (input.length < 6 || input.length > 12) {
-    return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
-  }
-  return null;
 }

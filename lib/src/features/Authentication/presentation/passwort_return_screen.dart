@@ -16,6 +16,8 @@ class PasswortReturnScreen extends StatefulWidget {
 class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
   bool showPassword = false;
   bool showPasswordRepeated = false;
+  final TextEditingController _passwordField1 = TextEditingController();
+  final TextEditingController _passwordField2 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +70,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                     obscureText: !showPassword,
                     enableSuggestions: false,
                     autocorrect: false,
+                    controller: _passwordField1,
                     validator: validatePw,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
@@ -100,7 +103,8 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                   TextFormField(
                     obscureText: !showPasswordRepeated,
                     enableSuggestions: false,
-                    validator: validatePwrp,
+                    controller: _passwordField2,
+                    validator: validatePw,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     autocorrect: false,
                     decoration: InputDecoration(
@@ -170,37 +174,30 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
               )),
         ));
   }
-}
 
-String? validatePw(String? input) {
-  if (input == null || input.isEmpty) {
-    return "Bitte Passwort eingeben";
+  String? validatePw(String? input) {
+    if (_passwordField1.text != _passwordField2.text) {
+      return "Passwörter stimmen nicht überein";
+    }
+    if (input == null || input.isEmpty) {
+      return "Bitte Passwort eingeben";
+    }
+    if (input.length < 6 || input.length > 12) {
+      return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
+    }
+    return null;
   }
-  if (input.length < 6 || input.length > 12) {
-    return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
-  }
-  return null;
-}
 
-String? validatePwrp(String? input) {
-  if (input == null || input.isEmpty) {
-    return 'Bitte Passwort wiederholen';
+  String? validateName(String? input) {
+    if (input == null || input.isEmpty) {
+      return "Bitte Buntzername/E-Mail eingeben";
+    }
+    if (!input.contains("@")) {
+      return 'Email muss das Zeichen "@" enthalten';
+    }
+    if (!(input.endsWith(".com") || input.endsWith(".de"))) {
+      return 'Email muss mit ".com" oder ".de" enden';
+    }
+    return null;
   }
-  if (input.length < 6 || input.length > 12) {
-    return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
-  }
-  return null;
-}
-
-String? validateName(String? input) {
-  if (input == null || input.isEmpty) {
-    return "Bitte Buntzername/E-Mail eingeben";
-  }
-  if (!input.contains("@")) {
-    return 'Email muss das Zeichen "@" enthalten';
-  }
-  if (!(input.endsWith(".com") || input.endsWith(".de"))) {
-    return 'Email muss mit ".com" oder ".de" enden';
-  }
-  return null;
 }

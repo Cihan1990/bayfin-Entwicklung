@@ -17,7 +17,6 @@ class _TextFieldAuthState extends State<TextFieldAuth> {
     return Column(
       children: [
         SizedBox(
-          height: 54,
           width: 372,
           child: TextFormField(
             decoration: InputDecoration(
@@ -34,7 +33,6 @@ class _TextFieldAuthState extends State<TextFieldAuth> {
         ),
         const SizedBox(height: 26),
         SizedBox(
-          height: 54,
           width: 372,
           child: TextFormField(
             obscureText: !showPassword,
@@ -63,9 +61,7 @@ class _TextFieldAuthState extends State<TextFieldAuth> {
       ],
     );
   }
-}
-
-String? validateName(String? input) {
+  String? validateName(String? input) {
   if (input == null || input.isEmpty) {
     return "Bitte Buntzername/E-Mail eingeben";
   }
@@ -77,6 +73,7 @@ String? validateName(String? input) {
   }
   return null;
 }
+
 String? validatePw(String? input) {
   if (input == null || input.isEmpty) {
     return "Bitte Passwort eingeben";
@@ -86,3 +83,6 @@ String? validatePw(String? input) {
   }
   return null;
 }
+}
+
+

@@ -140,10 +140,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ])),
         )));
   }
-}
-
-
-String? validateVn(String? input) {
+  String? validateVn(String? input) {
   if (input == null || input.isEmpty) {
     return 'Bitte Vorname eingeben';
   }
@@ -170,3 +167,6 @@ String? validateEmail(String? input) {
   }
   return null;
 }
+}
+
+

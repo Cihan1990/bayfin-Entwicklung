@@ -85,7 +85,8 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                                         Padding(
                                           padding: const EdgeInsets.all(8),
                                           child: RegistrationsText(
-                                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                                            autovalidateMode: AutovalidateMode
+                                                .onUserInteraction,
                                             controller: bankController,
                                             text: 'Bank',
                                             validator: validateBk,
@@ -95,7 +96,8 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                                         Padding(
                                           padding: const EdgeInsets.all(8),
                                           child: RegistrationsText(
-                                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                                            autovalidateMode: AutovalidateMode
+                                                .onUserInteraction,
                                             controller: ibanController,
                                             text: 'IBAN',
                                             validator: validateIban,
@@ -254,19 +256,18 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
 
     return buttonList;
   }
-}
 
-
-String? validateIban(String? input) {
-  if (input == null || input.isEmpty) {
-    return 'Bitte IBAN eingeben';
+  String? validateIban(String? input) {
+    if (input == null || input.isEmpty) {
+      return 'Bitte IBAN eingeben';
+    }
+    return null;
   }
-  return null;
-}
 
-String? validateBk(String? input) {
-  if (input == null || input.isEmpty) {
-    return 'Bitte Konto eingeben';
+  String? validateBk(String? input) {
+    if (input == null || input.isEmpty) {
+      return 'Bitte Konto eingeben';
+    }
+    return null;
   }
-  return null;
 }

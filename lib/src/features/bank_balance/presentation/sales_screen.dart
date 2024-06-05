@@ -91,7 +91,8 @@ class _SalesScreenState extends State<SalesScreen> {
                                             controller:
                                                 umzatzbezeichnungController,
                                             validator: validateUmsatzbz,
-                                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                                            autovalidateMode: AutovalidateMode
+                                                .onUserInteraction,
                                             text: 'Umsatzbezeichnung',
                                             color: Colors.black,
                                           )),
@@ -99,7 +100,8 @@ class _SalesScreenState extends State<SalesScreen> {
                                           padding: const EdgeInsets.all(8),
                                           child: RegistrationsText(
                                               controller: umsatzsummeController,
-                                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                                              autovalidateMode: AutovalidateMode
+                                                  .onUserInteraction,
                                               validator: validateUmsatzsumme,
                                               text: 'Umsatzsumme',
                                               color: Colors.black)),
@@ -225,18 +227,18 @@ class _SalesScreenState extends State<SalesScreen> {
       ),
     );
   }
-}
 
-String? validateUmsatzbz(String? input) {
-  if (input == null || input.isEmpty) {
-    return 'Bitte Umsatzbezeichnung eingeben';
+  String? validateUmsatzbz(String? input) {
+    if (input == null || input.isEmpty) {
+      return 'Bitte Umsatzbezeichnung eingeben';
+    }
+    return null;
   }
-  return null;
-}
 
-String? validateUmsatzsumme(String? input) {
-  if (input == null || input.isEmpty) {
-    return 'Bitte Umsatzsumme eingeben';
+  String? validateUmsatzsumme(String? input) {
+    if (input == null || input.isEmpty) {
+      return 'Bitte Umsatzsumme eingeben';
+    }
+    return null;
   }
-  return null;
 }

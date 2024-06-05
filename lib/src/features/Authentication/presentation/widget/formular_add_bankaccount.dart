@@ -66,9 +66,7 @@ class _FormularAddBankaccountState extends State<FormularAddBankaccount> {
           )
         ]));
   }
-}
-
-String? validateIban(String? input) {
+  String? validateIban(String? input) {
   if (input == null || input.isEmpty) {
     return 'Bitte IBAN eingeben';
   }
@@ -81,3 +79,5 @@ String? validateBk(String? input) {
   }
   return null;
 }
+}
+
