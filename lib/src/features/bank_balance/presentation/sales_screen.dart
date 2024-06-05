@@ -91,6 +91,7 @@ class _SalesScreenState extends State<SalesScreen> {
                                             controller:
                                                 umzatzbezeichnungController,
                                             validator: validateUmsatzbz,
+                                            autovalidateMode: AutovalidateMode.onUserInteraction,
                                             text: 'Umsatzbezeichnung',
                                             color: Colors.black,
                                           )),
@@ -98,6 +99,7 @@ class _SalesScreenState extends State<SalesScreen> {
                                           padding: const EdgeInsets.all(8),
                                           child: RegistrationsText(
                                               controller: umsatzsummeController,
+                                              autovalidateMode: AutovalidateMode.onUserInteraction,
                                               validator: validateUmsatzsumme,
                                               text: 'Umsatzsumme',
                                               color: Colors.black)),

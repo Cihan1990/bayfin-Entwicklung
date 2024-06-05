@@ -48,10 +48,11 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                   const SizedBox(height: 5),
                   TextFormField(
                     validator: validatePw,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     obscureText: !showPassword,
                     enableSuggestions: false,
                     autocorrect: false,
-                    decoration: InputDecoration(
+                    decoration: InputDecoration(errorStyle: TextStyle(color: Colors.grey.shade400),
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
@@ -82,8 +83,10 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                     obscureText: !showPasswordRepeated,
                     enableSuggestions: false,
                     validator: validatePwrp,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     autocorrect: false,
                     decoration: InputDecoration(
+                      errorStyle: TextStyle(color: Colors.grey.shade400),
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {

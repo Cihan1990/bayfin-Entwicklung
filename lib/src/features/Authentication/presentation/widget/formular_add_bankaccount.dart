@@ -32,6 +32,7 @@ class _FormularAddBankaccountState extends State<FormularAddBankaccount> {
             padding: const EdgeInsets.all(8),
             child: RegistrationsText(
               controller: _bankController,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               text: 'Bank',
               validator: validateBk,
               color: Colors.black,
@@ -41,6 +42,7 @@ class _FormularAddBankaccountState extends State<FormularAddBankaccount> {
             padding: const EdgeInsets.all(8),
             child: RegistrationsText(
               controller: _ibanController,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               text: 'IBAN',
               validator: validateIban,
               color: Colors.black,

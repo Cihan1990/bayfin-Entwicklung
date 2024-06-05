@@ -85,6 +85,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                                         Padding(
                                           padding: const EdgeInsets.all(8),
                                           child: RegistrationsText(
+                                            autovalidateMode: AutovalidateMode.onUserInteraction,
                                             controller: bankController,
                                             text: 'Bank',
                                             validator: validateBk,
@@ -94,6 +95,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                                         Padding(
                                           padding: const EdgeInsets.all(8),
                                           child: RegistrationsText(
+                                            autovalidateMode: AutovalidateMode.onUserInteraction,
                                             controller: ibanController,
                                             text: 'IBAN',
                                             validator: validateIban,

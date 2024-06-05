@@ -46,7 +46,8 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                   const SizedBox(height: 5),
                   TextFormField(
                     validator: validateName,
-                    decoration: InputDecoration(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: InputDecoration(errorStyle: TextStyle(color: Colors.grey.shade400),
                       contentPadding:
                           const EdgeInsets.only(top: 0.0, left: 10, right: 10),
                       border: OutlineInputBorder(
@@ -67,7 +68,8 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                     enableSuggestions: false,
                     autocorrect: false,
                     validator: validatePw,
-                    decoration: InputDecoration(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: InputDecoration(errorStyle: TextStyle(color: Colors.grey.shade400),
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
@@ -97,8 +99,9 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                     obscureText: !showPasswordRepeated,
                     enableSuggestions: false,
                     validator: validatePwrp,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     autocorrect: false,
-                    decoration: InputDecoration(
+                    decoration: InputDecoration(errorStyle: TextStyle(color: Colors.grey.shade400),
                       suffixIcon: IconButton(
                         onPressed: () {
                           setState(() {
