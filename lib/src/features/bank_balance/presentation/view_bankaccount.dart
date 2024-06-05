@@ -87,6 +87,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                                           child: RegistrationsText(
                                             controller: bankController,
                                             text: 'Bank',
+                                            validator: validateBk,
                                             color: Colors.black,
                                           ),
                                         ),
@@ -95,6 +96,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                                           child: RegistrationsText(
                                             controller: ibanController,
                                             text: 'IBAN',
+                                            validator: validateIban,
                                             color: Colors.black,
                                           ),
                                         ),
@@ -250,4 +252,19 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
 
     return buttonList;
   }
+}
+
+
+String? validateIban(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte IBAN eingeben';
+  }
+  return null;
+}
+
+String? validateBk(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte Konto eingeben';
+  }
+  return null;
 }

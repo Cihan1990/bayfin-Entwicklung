@@ -20,11 +20,15 @@ class _TextFieldAuthState extends State<TextFieldAuth> {
           height: 54,
           width: 372,
           child: TextFormField(
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.only(top: 0.0, left: 10, right: 10),
+            decoration: InputDecoration(
+              errorStyle: TextStyle(color: Colors.grey.shade400),
+              contentPadding:
+                  const EdgeInsets.only(top: 0.0, left: 10, right: 10),
               filled: true,
               hintText: "Benutzername / E-Mail Adresse",
             ),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: validateName,
             textAlign: TextAlign.left,
           ),
         ),
@@ -37,6 +41,7 @@ class _TextFieldAuthState extends State<TextFieldAuth> {
             enableSuggestions: false,
             autocorrect: false,
             decoration: InputDecoration(
+              errorStyle: TextStyle(color: Colors.grey.shade400),
               suffixIcon: IconButton(
                 onPressed: () {
                   setState(() {
@@ -50,10 +55,26 @@ class _TextFieldAuthState extends State<TextFieldAuth> {
               filled: true,
               hintText: "Passwort",
             ),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: validatePw,
             textAlign: TextAlign.left,
           ),
         ),
       ],
     );
   }
+}
+
+String? validateName(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte Benutzername/E-Mail eingeben';
+  }
+  return null;
+}
+
+String? validatePw(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte Passwort eingeben';
+  }
+  return null;
 }

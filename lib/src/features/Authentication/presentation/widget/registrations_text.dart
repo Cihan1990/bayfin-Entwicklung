@@ -8,6 +8,7 @@ class RegistrationsText extends StatelessWidget {
   TextStyle? hintstyle;
   Color? color;
   TextEditingController controller;
+  String? Function(String?)? validator;
 
   RegistrationsText(
       {super.key,
@@ -15,6 +16,7 @@ class RegistrationsText extends StatelessWidget {
       this.hintstyle,
       required this.controller,
       this.hinttext,
+      required this.validator,
       this.color = Colors.white});
 
   @override
@@ -35,6 +37,7 @@ class RegistrationsText extends StatelessWidget {
       ),
       TextFormField(
           controller: controller,
+          validator: validator,
           decoration: InputDecoration(
             fillColor: const Color(0xffE6E9FF),
             contentPadding:

@@ -90,6 +90,7 @@ class _SalesScreenState extends State<SalesScreen> {
                                           child: RegistrationsText(
                                             controller:
                                                 umzatzbezeichnungController,
+                                            validator: validateUmsatzbz,
                                             text: 'Umsatzbezeichnung',
                                             color: Colors.black,
                                           )),
@@ -97,6 +98,7 @@ class _SalesScreenState extends State<SalesScreen> {
                                           padding: const EdgeInsets.all(8),
                                           child: RegistrationsText(
                                               controller: umsatzsummeController,
+                                              validator: validateUmsatzsumme,
                                               text: 'Umsatzsumme',
                                               color: Colors.black)),
                                       Padding(
@@ -221,4 +223,18 @@ class _SalesScreenState extends State<SalesScreen> {
       ),
     );
   }
+}
+
+String? validateUmsatzbz(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte Umsatzbezeichnung eingeben';
+  }
+  return null;
+}
+
+String? validateUmsatzsumme(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte Umsatzsumme eingeben';
+  }
+  return null;
 }

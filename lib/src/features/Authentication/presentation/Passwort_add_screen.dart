@@ -47,6 +47,7 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                   ),
                   const SizedBox(height: 5),
                   TextFormField(
+                    validator: validatePw,
                     obscureText: !showPassword,
                     enableSuggestions: false,
                     autocorrect: false,
@@ -80,6 +81,7 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                   TextFormField(
                     obscureText: !showPasswordRepeated,
                     enableSuggestions: false,
+                    validator: validatePwrp,
                     autocorrect: false,
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
@@ -146,4 +148,18 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
               )),
         ));
   }
+}
+
+String? validatePw(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte Passwort eingeben';
+  }
+  return null;
+}
+
+String? validatePwrp(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte Passwort wiederholen';
+  }
+  return null;
 }

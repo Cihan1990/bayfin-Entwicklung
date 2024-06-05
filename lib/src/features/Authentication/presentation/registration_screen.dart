@@ -70,12 +70,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             RegistrationsText(
               controller: vornameController,
               text: 'Vorname',
+              validator: validateVn,
             ),
             SizedBox(height: 5),
             const SizedBox(height: 10),
             RegistrationsText(
               controller: nachnameController,
               text: 'Nachname',
+              validator: validateNn,
             ),
             SizedBox(height: 5),
             const SizedBox(height: 10),
@@ -83,11 +85,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               controller: geburtsdatumController,
               text: 'Geburtsdatum',
               hinttext: 'TT.MM.JJJJ',
+              validator: validateGb,
             ),
             SizedBox(height: 5),
             SizedBox(height: 10),
             RegistrationsText(
               controller: mailController,
+              validator: validateEmail,
               text: 'E-Mail Adresse',
             ),
             SizedBox(height: 5),
@@ -132,4 +136,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ])),
         )));
   }
+}
+
+
+String? validateVn(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte Vorname eingeben';
+  }
+  return null;
+}
+
+String? validateNn(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte Nachname eingeben';
+  }
+  return null;
+}
+
+String? validateGb(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte Geburtsdatum eingeben';
+  }
+  return null;
+}
+
+String? validateEmail(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte E-Mail eingeben';
+  }
+  return null;
 }

@@ -33,6 +33,7 @@ class _FormularAddBankaccountState extends State<FormularAddBankaccount> {
             child: RegistrationsText(
               controller: _bankController,
               text: 'Bank',
+              validator: validateBk,
               color: Colors.black,
             ),
           ),
@@ -41,6 +42,7 @@ class _FormularAddBankaccountState extends State<FormularAddBankaccount> {
             child: RegistrationsText(
               controller: _ibanController,
               text: 'IBAN',
+              validator: validateIban,
               color: Colors.black,
             ),
           ),
@@ -62,4 +64,18 @@ class _FormularAddBankaccountState extends State<FormularAddBankaccount> {
           )
         ]));
   }
+}
+
+String? validateIban(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte IBAN eingeben';
+  }
+  return null;
+}
+
+String? validateBk(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte Konto eingeben';
+  }
+  return null;
 }

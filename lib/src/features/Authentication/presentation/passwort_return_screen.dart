@@ -45,6 +45,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                   ),
                   const SizedBox(height: 5),
                   TextFormField(
+                    validator: validateName,
                     decoration: InputDecoration(
                       contentPadding:
                           const EdgeInsets.only(top: 0.0, left: 10, right: 10),
@@ -65,6 +66,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                     obscureText: !showPassword,
                     enableSuggestions: false,
                     autocorrect: false,
+                    validator: validatePw,
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
                         onPressed: () {
@@ -94,6 +96,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                   TextFormField(
                     obscureText: !showPasswordRepeated,
                     enableSuggestions: false,
+                    validator: validatePwrp,
                     autocorrect: false,
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
@@ -161,4 +164,25 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
               )),
         ));
   }
+}
+
+String? validatePw(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte Passwort eingeben';
+  }
+  return null;
+}
+
+String? validatePwrp(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte Passwort wiederholen';
+  }
+  return null;
+}
+
+String? validateName(String? input) {
+  if (input == null || input.isEmpty) {
+    return 'Bitte Benutzername/E-Mail eingeben';
+  }
+  return null;
 }
