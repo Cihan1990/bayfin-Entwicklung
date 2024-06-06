@@ -190,7 +190,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
 
   String? validateName(String? input) {
     if (input == null || input.isEmpty) {
-      return "Bitte Buntzername/E-Mail eingeben";
+      return "Bitte Buntzername/E-Mail Adresse eingeben";
     }
     if (!input.contains("@")) {
       return 'Email muss das Zeichen "@" enthalten';

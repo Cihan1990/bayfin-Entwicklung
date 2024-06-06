@@ -61,28 +61,27 @@ class _TextFieldAuthState extends State<TextFieldAuth> {
       ],
     );
   }
+
   String? validateName(String? input) {
-  if (input == null || input.isEmpty) {
-    return "Bitte Buntzername/E-Mail eingeben";
+    if (input == null || input.isEmpty) {
+      return "Bitte Buntzername/E-Mail Adresse eingeben";
+    }
+    if (!input.contains("@")) {
+      return 'Email muss das Zeichen "@" enthalten';
+    }
+    if (!(input.endsWith(".com") || input.endsWith(".de"))) {
+      return 'Email muss mit ".com" oder ".de" enden';
+    }
+    return null;
   }
-  if (!input.contains("@")) {
-    return 'Email muss das Zeichen "@" enthalten';
-  }
-  if (!(input.endsWith(".com") || input.endsWith(".de"))) {
-    return 'Email muss mit ".com" oder ".de" enden';
-  }
-  return null;
-}
 
-String? validatePw(String? input) {
-  if (input == null || input.isEmpty) {
-    return "Bitte Passwort eingeben";
+  String? validatePw(String? input) {
+    if (input == null || input.isEmpty) {
+      return "Bitte Passwort eingeben";
+    }
+    if (input.length < 6 || input.length > 12) {
+      return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
+    }
+    return null;
   }
-  if (input.length < 6 || input.length > 12) {
-    return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
-  }
-  return null;
 }
-}
-
-
