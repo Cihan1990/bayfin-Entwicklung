@@ -66,11 +66,13 @@ class _TextFieldAuthState extends State<TextFieldAuth> {
     if (input == null || input.isEmpty) {
       return "Bitte Buntzername/E-Mail Adresse eingeben";
     }
-    if (!input.contains("@")) {
-      return 'Email muss das Zeichen "@" enthalten';
+    if (input.contains("@")) {
+      return 'Bitte geben sie ihre E-Mail Adresse ein';
     }
-    if (!(input.endsWith(".com") || input.endsWith(".de"))) {
-      return 'Email muss mit ".com" oder ".de" enden';
+    if (!(input.contains("@")) &&
+        !(input.endsWith(".com")) &&
+        !(input.endsWith(".de"))) {
+      return 'Bitte geben sie einen Benutzernamen ein';
     }
     return null;
   }

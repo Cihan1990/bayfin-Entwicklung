@@ -69,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     MaterialPageRoute(
                       builder: (context) => ViewBankaccount(
                         databaseRepository: widget.databaseRepository,
+                        
                       ),
                     ),
                   );

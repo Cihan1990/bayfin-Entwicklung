@@ -139,12 +139,9 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ),
                 const SizedBox(height: 15),
-      
                 SizedBox(
-                  
                   width: 361,
                   child: Center(
-                  
                     child: FutureBuilder(
                       future: widget.databaseRepository.getBenutzer("1"),
                       builder: (context, snapshot) {

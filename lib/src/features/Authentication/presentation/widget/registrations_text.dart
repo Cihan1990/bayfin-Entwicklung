@@ -42,7 +42,7 @@ class RegistrationsText extends StatelessWidget {
           validator: validator,
           autovalidateMode: autovalidateMode,
           decoration: InputDecoration(
-            errorStyle: TextStyle(color: Colors.grey.shade400),
+            //errorStyle: TextStyle(color: Colors.grey.shade400),
             fillColor: const Color(0xffE6E9FF),
             contentPadding:
                 const EdgeInsets.only(top: 0.0, left: 10, right: 10),
