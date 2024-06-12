@@ -64,12 +64,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     decorationColor: Color(0xFFFFFFFF),
                     decorationThickness: 1.35)),
             const SizedBox(height: 25),
-            Prounouns(text: 'Anrede'),
+            Prounouns(text: '  Anrede'),
             SizedBox(height: 5),
             const SizedBox(height: 15),
             RegistrationsText(
               controller: vornameController,
-              text: 'Vorname',
+              text: '  Vorname',
               validator: validateVn,
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
@@ -77,7 +77,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             const SizedBox(height: 10),
             RegistrationsText(
               controller: nachnameController,
-              text: 'Nachname',
+              text: '  Nachname',
               validator: validateNn,
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
@@ -85,7 +85,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             const SizedBox(height: 10),
             RegistrationsText(
               controller: geburtsdatumController,
-              text: 'Geburtsdatum',
+              text: '  Geburtsdatum',
               hinttext: 'TT.MM.JJJJ',
               validator: validateGb,
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -96,7 +96,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               controller: mailController,
               validator: validateEmail,
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              text: 'E-Mail Adresse',
+              text: '  E-Mail Adresse',
             ),
             SizedBox(height: 5),
             const SizedBox(height: 110),
@@ -140,33 +140,32 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ])),
         )));
   }
+
   String? validateVn(String? input) {
-  if (input == null || input.isEmpty) {
-    return 'Bitte Vorname eingeben';
+    if (input == null || input.isEmpty) {
+      return 'Bitte Vorname eingeben';
+    }
+    return null;
   }
-  return null;
-}
 
-String? validateNn(String? input) {
-  if (input == null || input.isEmpty) {
-    return 'Bitte Nachname eingeben';
+  String? validateNn(String? input) {
+    if (input == null || input.isEmpty) {
+      return 'Bitte Nachname eingeben';
+    }
+    return null;
   }
-  return null;
-}
 
-String? validateGb(String? input) {
-  if (input == null || input.isEmpty) {
-    return 'Bitte Geburtsdatum eingeben';
+  String? validateGb(String? input) {
+    if (input == null || input.isEmpty) {
+      return 'Bitte Geburtsdatum eingeben';
+    }
+    return null;
   }
-  return null;
-}
 
-String? validateEmail(String? input) {
-  if (input == null || input.isEmpty) {
-    return 'Bitte E-Mail eingeben';
+  String? validateEmail(String? input) {
+    if (input == null || input.isEmpty) {
+      return 'Bitte E-Mail eingeben';
+    }
+    return null;
   }
-  return null;
 }
-}
-
-

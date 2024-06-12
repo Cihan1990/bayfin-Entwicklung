@@ -197,8 +197,11 @@ class _SalesScreenState extends State<SalesScreen> {
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
                                   children: [
-                                    const Text(
+                                    Text(
                                       'Umsätze',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall,
                                     ),
                                     const SizedBox(height: 15),
                                     ...transactionliste

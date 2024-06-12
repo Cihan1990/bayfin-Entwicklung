@@ -230,7 +230,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                         )));
           },
           child: Card(
-            color: const Color(0xFFD6D7FA),
+            color: const Color.fromARGB(255, 180, 183, 249),
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(

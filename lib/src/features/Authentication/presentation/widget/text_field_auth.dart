@@ -40,6 +40,8 @@ class _TextFieldAuthState extends State<TextFieldAuth> {
             autocorrect: false,
             decoration: InputDecoration(
               errorStyle: TextStyle(color: Colors.grey.shade400),
+              contentPadding:
+                  const EdgeInsets.only(top: 0.0, left: 10, right: 10),
               suffixIcon: IconButton(
                 onPressed: () {
                   setState(() {

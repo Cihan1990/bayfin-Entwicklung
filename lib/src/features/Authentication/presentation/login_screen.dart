@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 )
               ]),
-              const SizedBox(height: 18),
+              const SizedBox(height: 28),
               ElevatedButton(
                 child: Text('Login'),
                 onPressed: () {
@@ -69,7 +69,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     MaterialPageRoute(
                       builder: (context) => ViewBankaccount(
                         databaseRepository: widget.databaseRepository,
-                        
                       ),
                     ),
                   );

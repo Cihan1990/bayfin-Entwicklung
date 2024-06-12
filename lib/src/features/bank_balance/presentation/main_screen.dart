@@ -99,7 +99,7 @@ class _MainScreenState extends State<MainScreen> {
                                       )));
                         },
                         child: Card(
-                            color: const Color(0xFFD6D7FA),
+                            color: const Color.fromARGB(255, 180, 183, 249),
                             child: Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Column(children: [
@@ -164,14 +164,20 @@ class _MainScreenState extends State<MainScreen> {
                                 height: 15,
                               ),
                               Container(
+                                color: const Color.fromARGB(255, 180, 183, 249),
                                 width: 361,
                                 padding: const EdgeInsets.all(20.0),
                                 child: Column(
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
                                   children: [
-                                    const Text(
+                                    //     Padding(
+                                    // padding: const EdgeInsets.all(12.0),
+                                    Text(
                                       'Letzte Umsätze',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall,
                                     ),
                                     const SizedBox(height: 15),
                                     ...transactionliste

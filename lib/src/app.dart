@@ -90,7 +90,7 @@ class App extends StatelessWidget {
         // To use the Playground font, add GoogleFonts package and uncomment
         // fontFamily: GoogleFonts.notoSans().fontFamily,
       ).copyWith(
-        textTheme: GoogleFonts.racingSansOneTextTheme(),
+        textTheme: GoogleFonts.figtreeTextTheme(),
       ),
       home: LoginScreen(databaseRepository: databaseRepository),
     );

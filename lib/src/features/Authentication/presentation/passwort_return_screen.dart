@@ -42,7 +42,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                   const SizedBox(height: 60),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: const Text('Benutzername/E-Mail Adresse',
+                    child: const Text('  Benutzername/E-Mail Adresse',
                         style: TextStyle(color: Colors.white)),
                   ),
                   const SizedBox(height: 5),
@@ -62,7 +62,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                   const SizedBox(height: 10),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: const Text('Neues Passwort',
+                    child: const Text('  Neues Passwort',
                         style: TextStyle(color: Colors.white)),
                   ),
                   const SizedBox(height: 5),
@@ -96,7 +96,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                   const SizedBox(height: 10),
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: const Text('Neues Passwort wiederholen',
+                    child: const Text('   Neues Passwort wiederholen',
                         style: TextStyle(color: Colors.white)),
                   ),
                   const SizedBox(height: 5),
