@@ -139,6 +139,16 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ),
                 const SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(width: 6),
+                    Text(
+                      'Letzte Umsätze',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                  ],
+                ),
                 SizedBox(
                   width: 361,
                   child: Center(
@@ -160,25 +170,18 @@ class _MainScreenState extends State<MainScreen> {
                           // FALL: Future ist komplett und hat Daten!
                           return Column(
                             children: [
-                              const SizedBox(
-                                height: 15,
-                              ),
                               Container(
-                                color: const Color.fromARGB(255, 180, 183, 249),
+                                decoration: const BoxDecoration(
+                                    color: Color.fromARGB(255, 180, 183, 249),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(30))),
                                 width: 361,
-                                padding: const EdgeInsets.all(20.0),
+                                padding: const EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 30),
                                 child: Column(
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
                                   children: [
-                                    //     Padding(
-                                    // padding: const EdgeInsets.all(12.0),
-                                    Text(
-                                      'Letzte Umsätze',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall,
-                                    ),
                                     const SizedBox(height: 15),
                                     ...transactionliste
                                   ],
