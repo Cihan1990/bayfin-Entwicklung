@@ -44,7 +44,7 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                   Container(
                     alignment: Alignment.centerLeft,
                     child: const Text(
-                      'Passwort',
+                      '  Passwort',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -79,7 +79,7 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                   Container(
                     alignment: Alignment.centerLeft,
                     child: const Text(
-                      'Passwort wiederholen',
+                      '  Passwort wiederholen',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
