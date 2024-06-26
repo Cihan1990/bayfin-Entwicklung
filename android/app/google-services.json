@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "993490783056",
+    "project_id": "bayfin-entwicklung",
+    "storage_bucket": "bayfin-entwicklung.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993490783056:android:34ccb5d34dea1497fa7a55",
+        "android_client_info": {
+          "package_name": "com.example.bayfin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1RHYKK7rUI1d_gVKX4PY5Y0Awe7ueYOA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
