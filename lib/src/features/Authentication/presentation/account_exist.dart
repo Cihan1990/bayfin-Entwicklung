@@ -1,5 +1,6 @@
 // ignore_for_file: sort_child_properties_last
 
+import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,9 @@ import 'package:flutter/material.dart';
 class AccountExistScreen extends StatefulWidget {
   // Attribute
   final DatabaseRepository databaseRepository;
+  final AuthRepository authRepository;
   // Konstruktor
-  const AccountExistScreen({super.key, required this.databaseRepository});
+  const AccountExistScreen({super.key, required this.databaseRepository, required this.authRepository});
 
   @override
   State<AccountExistScreen> createState() => _AccountExistScreenState();
@@ -60,6 +62,7 @@ class _AccountExistScreenState extends State<AccountExistScreen> {
                         MaterialPageRoute(
                             builder: (context) => LoginScreen(
                                   databaseRepository: widget.databaseRepository,
+                                   authRepository: widget.authRepository,
                                 )));
                   },
                 ),

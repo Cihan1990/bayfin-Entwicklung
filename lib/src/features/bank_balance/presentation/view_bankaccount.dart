@@ -1,8 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
-import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/registrations_text.dart';
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
@@ -12,8 +12,12 @@ import 'package:flutter/material.dart';
 class ViewBankaccount extends StatefulWidget {
   // Attribute
   final DatabaseRepository databaseRepository;
+  final AuthRepository authRepository;
   // Konstruktor
-  const ViewBankaccount({super.key, required this.databaseRepository});
+  const ViewBankaccount(
+      {super.key,
+      required this.databaseRepository,
+      required this.authRepository});
 
   // Methoden
   @override
@@ -145,13 +149,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
           actions: [
             IconButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => LoginScreen(
-                              databaseRepository: widget.databaseRepository,
-                            )),
-                  );
+                  widget.authRepository.logout();
                 },
                 icon: const Icon(
                   Icons.logout,
@@ -226,6 +224,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                 MaterialPageRoute(
                     builder: (context) => MainScreen(
                           databaseRepository: widget.databaseRepository,
+                          authRepository: widget.authRepository,
                           kontoIndex: kontoInfos.indexOf(info),
                         )));
           },

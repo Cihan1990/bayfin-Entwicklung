@@ -1,3 +1,4 @@
+import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
@@ -10,10 +11,11 @@ import 'package:flutter/material.dart';
 class MainScreen extends StatefulWidget {
   // Attribute
   final DatabaseRepository databaseRepository;
+  final AuthRepository authRepository;
   final int kontoIndex;
   // Konstruktor
   const MainScreen(
-      {super.key, required this.databaseRepository, required this.kontoIndex});
+      {super.key, required this.databaseRepository, required this.kontoIndex, required this.authRepository});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -41,6 +43,7 @@ class _MainScreenState extends State<MainScreen> {
                   MaterialPageRoute(
                       builder: (context) => ViewBankaccount(
                             databaseRepository: widget.databaseRepository,
+                            authRepository: widget.authRepository,
                           )),
                 );
               },

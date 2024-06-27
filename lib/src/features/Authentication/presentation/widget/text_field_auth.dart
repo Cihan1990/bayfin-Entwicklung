@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 class TextFieldAuth extends StatefulWidget {
+  final TextEditingController mailController;
+  final TextEditingController pwController;
   const TextFieldAuth({
     super.key,
+    required this.mailController,
+    required this.pwController,
   });
 
   @override
@@ -11,6 +15,16 @@ class TextFieldAuth extends StatefulWidget {
 
 class _TextFieldAuthState extends State<TextFieldAuth> {
   bool showPassword = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +42,7 @@ class _TextFieldAuthState extends State<TextFieldAuth> {
             ),
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: validateName,
+            controller: widget.mailController,
             textAlign: TextAlign.left,
           ),
         ),
@@ -36,6 +51,7 @@ class _TextFieldAuthState extends State<TextFieldAuth> {
           width: 372,
           child: TextFormField(
             obscureText: !showPassword,
+            controller: widget.pwController,
             enableSuggestions: false,
             autocorrect: false,
             decoration: InputDecoration(
@@ -68,7 +84,7 @@ class _TextFieldAuthState extends State<TextFieldAuth> {
     if (input == null || input.isEmpty) {
       return "Bitte Buntzername/E-Mail Adresse eingeben";
     }
-    if (input.contains("@")) {
+    if (!input.contains("@")) {
       return 'Bitte geben sie ihre E-Mail Adresse ein';
     }
     if (!(input.contains("@")) &&

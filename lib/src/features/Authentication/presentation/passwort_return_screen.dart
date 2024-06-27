@@ -1,3 +1,4 @@
+import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/passwort_return_accept_screen.dart';
@@ -6,8 +7,9 @@ import 'package:flutter/material.dart';
 class PasswortReturnScreen extends StatefulWidget {
   // Attribute
   final DatabaseRepository databaseRepository;
+  final AuthRepository authRepository;
   // Konstruktor
-  const PasswortReturnScreen({super.key, required this.databaseRepository});
+  const PasswortReturnScreen({super.key, required this.databaseRepository, required this.authRepository});
 
   @override
   State<PasswortReturnScreen> createState() => _PasswortReturnScreenState();
@@ -137,6 +139,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                               builder: (context) => PasswortReturnAcceptScreen(
                                     databaseRepository:
                                         widget.databaseRepository,
+                                        authRepository: widget.authRepository,
                                   )));
                     },
                   ),
@@ -152,6 +155,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                                     builder: (context) => LoginScreen(
                                       databaseRepository:
                                           widget.databaseRepository,
+                                          authRepository: widget.authRepository,
                                     ),
                                   ));
                             },

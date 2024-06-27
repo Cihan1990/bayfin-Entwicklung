@@ -1,13 +1,19 @@
+import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
-import 'package:bayfin/src/features/Authentication/presentation/account_exist.dart';
 import 'package:bayfin/src/features/Authentication/presentation/registration_screen.dart';
 import 'package:flutter/material.dart';
 
 class PasswortAddScreen extends StatefulWidget {
   // Attribute
   final DatabaseRepository databaseRepository;
+  final AuthRepository authRepository;
+  final String email;
   // Konstruktor
-  const PasswortAddScreen({super.key, required this.databaseRepository});
+  const PasswortAddScreen(
+      {super.key,
+      required this.databaseRepository,
+      required this.authRepository,
+      required this.email});
 
   @override
   State<PasswortAddScreen> createState() => _PasswortAddScreenState();
@@ -113,15 +119,9 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                   const SizedBox(height: 350),
                   ElevatedButton(
                     child: const Text('Benutzerkonto erstellen'),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AccountExistScreen(
-                            databaseRepository: widget.databaseRepository,
-                          ),
-                        ),
-                      );
+                    onPressed: () async {
+                      await widget.authRepository.signUpWithEmailAndPassword(
+                          widget.email, _passwordField1.text);
                     },
                   ),
                   const SizedBox(height: 20),
@@ -136,6 +136,7 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                                     builder: (context) => RegistrationScreen(
                                       databaseRepository:
                                           widget.databaseRepository,
+                                      authRepository: widget.authRepository,
                                     ),
                                   ));
                             },

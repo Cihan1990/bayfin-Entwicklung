@@ -1,26 +1,51 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/presentation/passwort_return_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/registration_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/social_login_button.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/text_field_auth.dart';
-import 'package:bayfin/src/features/bank_balance/presentation/view_bankaccount.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
   // Attribute
   final DatabaseRepository databaseRepository;
+
+  final AuthRepository authRepository;
+
   // Konstruktor
-  const LoginScreen({super.key, required this.databaseRepository});
+  const LoginScreen(
+      {super.key,
+      required this.databaseRepository,
+      required this.authRepository});
+  // Konstruktor
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late TextEditingController mailController;
+  late TextEditingController _pwController;
+
+  @override
+  void initState() {
+    super.initState();
+    mailController = TextEditingController();
+    _pwController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    mailController.dispose();
+    _pwController.dispose();
+    super.dispose();
+  }
+
   bool showPassword = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +58,10 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 75),
               LogoWidget(width: 385, height: 136),
               const SizedBox(height: 60),
-              TextFieldAuth(),
+              TextFieldAuth(
+                mailController: mailController,
+                pwController: _pwController,
+              ),
               const SizedBox(height: 0),
               Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
                 TextButton(
@@ -43,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         MaterialPageRoute(
                           builder: (context) => PasswortReturnScreen(
                             databaseRepository: widget.databaseRepository,
+                            authRepository: widget.authRepository,
                           ),
                         ));
                   },
@@ -63,15 +92,11 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 28),
               ElevatedButton(
                 child: Text('Login'),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ViewBankaccount(
-                        databaseRepository: widget.databaseRepository,
-                      ),
-                    ),
-                  );
+                onPressed: () async {
+                  print(mailController.text);
+                  print(_pwController.text);
+                  await widget.authRepository.loginWithEmailAndPassword(
+                      mailController.text, _pwController.text);
                 },
               ),
               const SizedBox(height: 42),
@@ -120,6 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           MaterialPageRoute(
                             builder: (context) => RegistrationScreen(
                               databaseRepository: widget.databaseRepository,
+                              authRepository: widget.authRepository,
                             ),
                           ));
                     },

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
+import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/passwort_add_screen.dart';
@@ -11,8 +12,9 @@ import 'package:flutter/material.dart';
 class RegistrationScreen extends StatefulWidget {
   // Attribute
   final DatabaseRepository databaseRepository;
+  final AuthRepository authRepository;
   // Konstruktor
-  const RegistrationScreen({super.key, required this.databaseRepository});
+  const RegistrationScreen({super.key, required this.databaseRepository, required this.authRepository});
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
@@ -108,6 +110,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   MaterialPageRoute(
                     builder: (context) => PasswortAddScreen(
                       databaseRepository: widget.databaseRepository,
+                      authRepository: widget.authRepository,
+                      email:mailController.text
                     ),
                   ),
                 );
@@ -122,6 +126,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         MaterialPageRoute(
                           builder: (context) => LoginScreen(
                             databaseRepository: widget.databaseRepository,
+                            authRepository: widget.authRepository,
                           ),
                         ));
                   },

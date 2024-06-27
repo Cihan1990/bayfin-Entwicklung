@@ -1,3 +1,4 @@
+import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -5,9 +6,12 @@ import 'package:flutter/material.dart';
 class PasswortReturnAcceptScreen extends StatefulWidget {
   // Attribute
   final DatabaseRepository databaseRepository;
+  final AuthRepository authRepository;
   // Konstruktor
   const PasswortReturnAcceptScreen(
-      {super.key, required this.databaseRepository});
+      {super.key,
+      required this.databaseRepository,
+      required this.authRepository});
 
   @override
   State<PasswortReturnAcceptScreen> createState() =>
@@ -56,6 +60,7 @@ class _PasswortReturnAcceptScreenState
                   MaterialPageRoute(
                     builder: (context) => LoginScreen(
                       databaseRepository: widget.databaseRepository,
+                      authRepository: widget.authRepository,
                     ),
                   ),
                 );
