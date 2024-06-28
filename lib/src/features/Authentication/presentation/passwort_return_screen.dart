@@ -59,7 +59,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 240),
+                  const SizedBox(height: 185),
                   Container(
                     alignment: Alignment.centerLeft,
                     child: const Text('  Benutzername/E-Mail Adresse',
@@ -148,7 +148,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                   //     filled: true,
                   //   ),
                   // ),
-                  const SizedBox(height: 255),
+                  const SizedBox(height: 65),
                   ElevatedButton(
                     child: const Text('Passwort zurücksetzen'),
                     onPressed: () async {
@@ -171,7 +171,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                       }
                     },
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 265),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
