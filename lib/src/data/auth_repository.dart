@@ -37,6 +37,10 @@ class AuthRepository {
     return _firebaseAuth.signOut();
   }
 
+  Future<void> resetPassword(String email){
+    return _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
   Stream<User?> authStateChanges() {
     return _firebaseAuth.authStateChanges();
   }

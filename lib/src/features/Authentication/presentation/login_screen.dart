@@ -45,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   bool showPassword = false;
+  bool showCreateAccountNotification = false;
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +65,20 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 0),
               Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+                showCreateAccountNotification
+                    ? Text(
+                        "Erstellen dir deinen Account",
+                        style: TextStyle(
+                          textBaseline: TextBaseline.alphabetic,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red.shade200,
+                        ),
+                      )
+                    : SizedBox.shrink(),
+                SizedBox(
+                  width: 30,
+                ),
                 TextButton(
                   onPressed: () {
                     Navigator.pushReplacement(
@@ -95,8 +110,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () async {
                   print(mailController.text);
                   print(_pwController.text);
-                  await widget.authRepository.loginWithEmailAndPassword(
-                      mailController.text, _pwController.text);
+                  try {
+                    await widget.authRepository.loginWithEmailAndPassword(
+                        mailController.text, _pwController.text);
+                    setState(() {
+                      showCreateAccountNotification = false;
+                    });
+                  } catch (e) {
+                    setState(() {
+                      showCreateAccountNotification = true;
+                    });
+                  }
                 },
               ),
               const SizedBox(height: 42),

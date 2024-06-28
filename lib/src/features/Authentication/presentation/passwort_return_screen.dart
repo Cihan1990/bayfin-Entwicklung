@@ -9,7 +9,10 @@ class PasswortReturnScreen extends StatefulWidget {
   final DatabaseRepository databaseRepository;
   final AuthRepository authRepository;
   // Konstruktor
-  const PasswortReturnScreen({super.key, required this.databaseRepository, required this.authRepository});
+  const PasswortReturnScreen(
+      {super.key,
+      required this.databaseRepository,
+      required this.authRepository});
 
   @override
   State<PasswortReturnScreen> createState() => _PasswortReturnScreenState();
@@ -20,6 +23,20 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
   bool showPasswordRepeated = false;
   final TextEditingController _passwordField1 = TextEditingController();
   final TextEditingController _passwordField2 = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  late TextEditingController mailController;
+
+  @override
+  void initState() {
+    super.initState();
+    mailController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    mailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +46,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
           child: Padding(
               padding: const EdgeInsets.all(10),
               child: Form(
+                key: _formKey,
                 child: Column(children: [
                   const SizedBox(height: 55),
                   Container(
@@ -41,7 +59,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 60),
+                  const SizedBox(height: 240),
                   Container(
                     alignment: Alignment.centerLeft,
                     child: const Text('  Benutzername/E-Mail Adresse',
@@ -50,6 +68,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                   const SizedBox(height: 5),
                   TextFormField(
                     validator: validateName,
+                    controller: mailController,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       errorStyle: TextStyle(color: Colors.grey.shade400),
@@ -62,85 +81,94 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Text('  Neues Passwort',
-                        style: TextStyle(color: Colors.white)),
-                  ),
-                  const SizedBox(height: 5),
-                  TextFormField(
-                    obscureText: !showPassword,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    controller: _passwordField1,
-                    validator: validatePw,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: InputDecoration(
-                      errorStyle: TextStyle(color: Colors.grey.shade400),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            showPassword = !showPassword;
-                          });
-                        },
-                        icon: showPassword
-                            ? const Icon(Icons.visibility_off)
-                            : const Icon(Icons.visibility),
-                      ),
-                      contentPadding:
-                          const EdgeInsets.only(top: 0.0, left: 10, right: 10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(11.0),
-                      ),
-                      filled: true,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Text('   Neues Passwort wiederholen',
-                        style: TextStyle(color: Colors.white)),
-                  ),
-                  const SizedBox(height: 5),
-                  TextFormField(
-                    obscureText: !showPasswordRepeated,
-                    enableSuggestions: false,
-                    controller: _passwordField2,
-                    validator: validatePw,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      errorStyle: TextStyle(color: Colors.grey.shade400),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            showPasswordRepeated = !showPasswordRepeated;
-                          });
-                        },
-                        icon: showPasswordRepeated
-                            ? const Icon(Icons.visibility_off)
-                            : const Icon(Icons.visibility),
-                      ),
-                      contentPadding:
-                          const EdgeInsets.only(top: 0.0, left: 10, right: 10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(11.0),
-                      ),
-                      filled: true,
-                    ),
-                  ),
-                  const SizedBox(height: 275),
+                  // Container(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: const Text('  Neues Passwort',
+                  //       style: TextStyle(color: Colors.white)),
+                  // ),
+                  // const SizedBox(height: 5),
+                  // TextFormField(
+                  //   obscureText: !showPassword,
+                  //   enableSuggestions: false,
+                  //   autocorrect: false,
+                  //   controller: _passwordField1,
+                  //   validator: validatePw,
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   decoration: InputDecoration(
+                  //     errorStyle: TextStyle(color: Colors.grey.shade400),
+                  //     suffixIcon: IconButton(
+                  //       onPressed: () {
+                  //         setState(() {
+                  //           showPassword = !showPassword;
+                  //         });
+                  //       },
+                  //       icon: showPassword
+                  //           ? const Icon(Icons.visibility_off)
+                  //           : const Icon(Icons.visibility),
+                  //     ),
+                  //     contentPadding:
+                  //         const EdgeInsets.only(top: 0.0, left: 10, right: 10),
+                  //     border: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(11.0),
+                  //     ),
+                  //     filled: true,
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 10),
+                  // Container(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: const Text('   Neues Passwort wiederholen',
+                  //       style: TextStyle(color: Colors.white)),
+                  // ),
+                  // const SizedBox(height: 5),
+                  // TextFormField(
+                  //   obscureText: !showPasswordRepeated,
+                  //   enableSuggestions: false,
+                  //   controller: _passwordField2,
+                  //   validator: validatePw,
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   autocorrect: false,
+                  //   decoration: InputDecoration(
+                  //     errorStyle: TextStyle(color: Colors.grey.shade400),
+                  //     suffixIcon: IconButton(
+                  //       onPressed: () {
+                  //         setState(() {
+                  //           showPasswordRepeated = !showPasswordRepeated;
+                  //         });
+                  //       },
+                  //       icon: showPasswordRepeated
+                  //           ? const Icon(Icons.visibility_off)
+                  //           : const Icon(Icons.visibility),
+                  //     ),
+                  //     contentPadding:
+                  //         const EdgeInsets.only(top: 0.0, left: 10, right: 10),
+                  //     border: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(11.0),
+                  //     ),
+                  //     filled: true,
+                  //   ),
+                  // ),
+                  const SizedBox(height: 255),
                   ElevatedButton(
                     child: const Text('Passwort zurücksetzen'),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PasswortReturnAcceptScreen(
-                                    databaseRepository:
-                                        widget.databaseRepository,
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await widget.authRepository
+                            .resetPassword(mailController.text);
+                        if (mounted) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      PasswortReturnAcceptScreen(
+                                        databaseRepository:
+                                            widget.databaseRepository,
                                         authRepository: widget.authRepository,
-                                  )));
+                                      )));
+                        }
+                      } else {
+                        print("showError");
+                      }
                     },
                   ),
                   const SizedBox(height: 20),
@@ -155,7 +183,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                                     builder: (context) => LoginScreen(
                                       databaseRepository:
                                           widget.databaseRepository,
-                                          authRepository: widget.authRepository,
+                                      authRepository: widget.authRepository,
                                     ),
                                   ));
                             },
