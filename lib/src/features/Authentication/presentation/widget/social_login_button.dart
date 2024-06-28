@@ -22,14 +22,7 @@ class SocialLoginButton extends StatelessWidget {
           text,
         ),
         onPressed: () {
-          // TODO: login logik einbauen
-          // Navigator.pushReplacement(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) => OverviewScreen(
-          //         databaseRepository: widget.databaseRepository,
-          //       ),
-          //     ));
+        
         },
       ),
     );

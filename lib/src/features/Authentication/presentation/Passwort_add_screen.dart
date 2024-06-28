@@ -120,8 +120,6 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                   ElevatedButton(
                     child: const Text('Benutzerkonto erstellen'),
                     onPressed: () async {
-
-                      
                       await widget.authRepository.signUpWithEmailAndPassword(
                           widget.email, _passwordField1.text);
                     },

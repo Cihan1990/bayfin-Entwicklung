@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
                 showCreateAccountNotification
                     ? Text(
-                        "Erstellen dir deinen Account",
+                        "Erstelle dir ein Account!",
                         style: TextStyle(
                           textBaseline: TextBaseline.alphabetic,
                           fontSize: 14,
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       )
                     : SizedBox.shrink(),
                 SizedBox(
-                  width: 30,
+                  width: 55,
                 ),
                 TextButton(
                   onPressed: () {
