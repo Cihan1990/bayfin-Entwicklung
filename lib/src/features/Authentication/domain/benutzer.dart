@@ -18,4 +18,28 @@ class Benutzer {
     required this.umsatze,
     required this.userid,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      "benutzername": benutzername.toMap(),
+      "bank": bank.map((konto) => konto.toMap()).toList(),
+      "umsatze": umsatze.map((umsatz) => umsatz.toMap()).toList(),
+      "email": email,
+      "telefon": telefon,
+      "userid": userid,
+    };
+  }
+
+  factory Benutzer.fromMap(Map<String, dynamic> map) {
+    return Benutzer(
+      benutzername: Name.fromMap(map["benutzername"]),
+      email: map["email"],
+      telefon: map["telefon"],
+      bank: List<KontoInformation>.from(
+          map["bank"].map((konto) => KontoInformation.fromMap(konto))),
+      umsatze: List<Umsatz>.from(
+          map["umsatze"].map((umsatz) => Umsatz.fromMap(umsatz))),
+      userid: map["userid"],
+    );
+  }
 }
