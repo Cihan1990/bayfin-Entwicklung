@@ -20,7 +20,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DatabaseRepository databaseRepository = MockDatabase();
     const loginKey = ValueKey('LoginScreen');
     const viewBkKey = ValueKey('ViewBankaccount');
 

@@ -1,7 +1,6 @@
 class KontoInformation {
   String iban;
   String? bic;
-
   String bank;
   double? kontostand;
 

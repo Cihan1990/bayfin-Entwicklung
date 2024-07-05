@@ -59,4 +59,10 @@ class MockDatabase implements DatabaseRepository {
       }
     }
   }
+  
+  @override
+  Future<void> updateKonto(KontoInformation neueKontoInformation, String userid) {
+    // TODO: implement updateKonto
+    throw UnimplementedError();
+  }
 }

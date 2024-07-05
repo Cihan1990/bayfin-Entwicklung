@@ -122,7 +122,8 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                                                             bank: bankController
                                                                 .text,
                                                             iban: ibanController
-                                                                .text),
+                                                                .text,
+                                                            kontostand: 2000),
                                                         "1");
                                                 setState(() {});
                                                 Navigator.of(context).pop();
