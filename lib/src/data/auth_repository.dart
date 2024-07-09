@@ -24,6 +24,10 @@ class AuthRepository {
     return _firebaseAuth.currentUser;
   }
 
+  String getUserId() {
+     return _firebaseAuth.currentUser?.uid ?? "";
+  }
+
   Future<void> signUpWithEmailAndPassword(String email, String pw) {
     return _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: pw);
@@ -37,7 +41,7 @@ class AuthRepository {
     return _firebaseAuth.signOut();
   }
 
-  Future<void> resetPassword(String email){
+  Future<void> resetPassword(String email) {
     return _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 

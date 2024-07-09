@@ -107,6 +107,7 @@ class _MainScreenState extends State<MainScreen> {
                                 padding: const EdgeInsets.all(12.0),
                                 child: Column(children: [
                                   FutureBuilder(
+                                    // Methode, die über eine Id ein Dokument zurückgibt
                                     future: databaseRepository.getBenutzer("1"),
                                     builder: (context, snapshot) {
                                       if (snapshot.hasData &&

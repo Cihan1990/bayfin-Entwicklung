@@ -11,4 +11,9 @@ abstract class DatabaseRepository {
   Future<void> addKonto(KontoInformation neueKontoInformation, String userid);
   Future<void> updateKonto(
       KontoInformation neueKontoInformation, String userid);
+
+  Stream<List<KontoInformation>>
+      getKontoInformation(); // Dein Stream, der die KontoInformationen liefert
+
+  // TODO: Methode die einen Stream zurückgibt von Kontoinformationen
 }

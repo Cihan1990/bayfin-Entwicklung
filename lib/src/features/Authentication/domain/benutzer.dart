@@ -1,6 +1,7 @@
 import 'package:bayfin/src/features/authentication/domain/name.dart';
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
 import 'package:bayfin/src/features/bank_balance/domain/umsatz.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Benutzer {
   Name benutzername;
@@ -9,6 +10,7 @@ class Benutzer {
   List<KontoInformation> bank;
   List<Umsatz> umsatze;
   String userid;
+  DocumentReference? documentReference;
 
   Benutzer({
     required this.benutzername,

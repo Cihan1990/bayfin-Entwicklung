@@ -108,8 +108,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ElevatedButton(
                 child: Text('Login'),
                 onPressed: () async {
-                  print(mailController.text);
-                  print(_pwController.text);
                   try {
                     await widget.authRepository.loginWithEmailAndPassword(
                         mailController.text, _pwController.text);

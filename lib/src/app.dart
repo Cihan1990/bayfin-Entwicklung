@@ -2,7 +2,6 @@
 
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
-import 'package:bayfin/src/data/mock_database.dart';
 import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/bank_balance/presentation/view_bankaccount.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';

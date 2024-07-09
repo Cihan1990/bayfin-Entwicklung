@@ -1,216 +1,227 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
-import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
-import 'package:bayfin/src/features/authentication/presentation/widget/registrations_text.dart';
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
 import 'package:bayfin/src/features/bank_balance/presentation/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class ViewBankaccount extends StatefulWidget {
-  // Attribute
   final DatabaseRepository databaseRepository;
   final AuthRepository authRepository;
-  // Konstruktor
-  const ViewBankaccount(
-      {super.key,
-      required this.databaseRepository,
-      required this.authRepository});
 
-  // Methoden
+  const ViewBankaccount({
+    super.key,
+    required this.databaseRepository,
+    required this.authRepository,
+  });
+
   @override
   State<ViewBankaccount> createState() => _ViewBankaccountState();
 }
 
 class _ViewBankaccountState extends State<ViewBankaccount> {
   final _formKey = GlobalKey<FormState>();
-  late Future<Benutzer?> loggedInUser;
+  late Stream<List<KontoInformation>> konten;
   late TextEditingController bankController;
   late TextEditingController ibanController;
+  late TextEditingController ksController;
+  // late TextEditingController idController;
 
   @override
   void initState() {
     super.initState();
-    loggedInUser = widget.databaseRepository.getBenutzer("1");
+    konten = widget.databaseRepository.getKontoInformation();
     bankController = TextEditingController();
     ibanController = TextEditingController();
+    ksController = TextEditingController();
+
+    // idController = TextEditingController();
   }
 
   @override
   void dispose() {
     bankController.dispose();
     ibanController.dispose();
-
+    ksController.dispose();
+    // idController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-          leading: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              IconButton(
-                  onPressed: () async {
-                    await showDialog<void>(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .primaryContainer,
-                              content: Stack(
-                                clipBehavior: Clip.none,
-                                children: <Widget>[
-                                  Positioned(
-                                    right: -40,
-                                    top: -40,
-                                    child: InkResponse(
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: CircleAvatar(
-                                        backgroundColor: Theme.of(context)
-                                            .colorScheme
-                                            .primaryContainer,
-                                        child: const Icon(Icons.close),
-                                      ),
-                                    ),
-                                  ),
-                                  Form(
-                                    key: _formKey,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.all(8),
-                                          child: RegistrationsText(
-                                            autovalidateMode: AutovalidateMode
-                                                .onUserInteraction,
-                                            controller: bankController,
-                                            text: 'Bank',
-                                            validator: validateBk,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8),
-                                          child: RegistrationsText(
-                                            autovalidateMode: AutovalidateMode
-                                                .onUserInteraction,
-                                            controller: ibanController,
-                                            text: 'IBAN',
-                                            validator: validateIban,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8),
-                                          child: ElevatedButton(
-                                            child: const Text(
-                                                'Bankkonto hinzufügen'),
-                                            onPressed: () async {
-                                              if (_formKey.currentState!
-                                                  .validate()) {
-                                                await widget.databaseRepository
-                                                    .addKonto(
-                                                        KontoInformation(
-                                                            bank: bankController
-                                                                .text,
-                                                            iban: ibanController
-                                                                .text,
-                                                            kontostand: 2000),
-                                                        "1");
-                                                setState(() {});
-                                                Navigator.of(context).pop();
-
-                                                // _formKey.currentState!.save();
-                                              }
-                                            },
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ));
-                  },
-                  icon: const Icon(
-                    Icons.add_card,
-                    size: 24,
-                  )),
-            ],
-          ),
-          leadingWidth: 200,
-          actions: [
-            IconButton(
-                onPressed: () {
-                  widget.authRepository.logout();
-                },
-                icon: const Icon(
-                  Icons.logout,
-                  size: 24,
-                ))
-          ],
-        ),
-        body: SingleChildScrollView(
-            child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Form(
-                    child: Column(children: [
-                  const SizedBox(height: 10),
-                  LogoWidget(width: 217, height: 76),
-                  const SizedBox(height: 20),
-                  Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                    const SizedBox(width: 10),
-                    SizedBox(
-                      width: 200,
-                      height: 30,
-                      child: Text(
-                        'Übersicht ',
-                        style: Theme.of(context).textTheme.labelLarge,
+        leading: Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+          IconButton(
+            onPressed: () async {
+              await showDialog<void>(
+                context: context,
+                builder: (context) => AlertDialog(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primaryContainer,
+                  content: Stack(
+                    clipBehavior: Clip.none,
+                    children: <Widget>[
+                      Positioned(
+                        right: -40,
+                        top: -40,
+                        child: InkResponse(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: CircleAvatar(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primaryContainer,
+                            child: const Icon(Icons.close),
+                          ),
+                        ),
                       ),
-                    ),
-                  ]),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(width: 10),
-                      SizedBox(
-                        width: 200,
-                        height: 40,
-                        child: Text(
-                          'Girokonto',
-                          style: Theme.of(context).textTheme.headlineSmall,
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: TextFormField(
+                                controller: bankController,
+                                decoration:
+                                    const InputDecoration(labelText: 'Bank'),
+                                validator: validateBk,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: TextFormField(
+                                controller: ibanController,
+                                decoration:
+                                    const InputDecoration(labelText: 'IBAN'),
+                                validator: validateIban,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: TextFormField(
+                                controller: ksController,
+                                decoration: const InputDecoration(
+                                    labelText: 'Kontostand'),
+                                keyboardType: TextInputType.number,
+                                validator: validateKS,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: ElevatedButton(
+                                child: const Text('Bankkonto hinzufügen'),
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    double? kontostand;
+                                    if (ksController.text.isNotEmpty) {
+                                      kontostand =
+                                          double.tryParse(ksController.text);
+                                    }
+                                    await widget.databaseRepository.addKonto(
+                                      KontoInformation(
+                                        bank: bankController.text,
+                                        iban: ibanController.text,
+                                        kontostand: kontostand,
+                                      ),
+                                      widget.authRepository.getUserId(),
+                                    );
+
+                                    Navigator.of(context).pop();
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 15),
-                  FutureBuilder(
-                    future: loggedInUser,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData &&
-                          snapshot.connectionState == ConnectionState.done) {
-                        // FALL: Future ist komplett und hat Daten!
-                        return Column(
-                            children: _getBayFinButtons(snapshot.data!.bank));
-                      } else if (snapshot.connectionState !=
-                          ConnectionState.done) {
-                        // FALL: Sind noch im Ladezustand
-                        return const Center(child: CircularProgressIndicator());
-                      } else {
-                        // FALL: Es gab nen Fehler
-                        return const Icon(Icons.error);
-                      }
-                    },
+                ),
+              );
+            },
+            icon: const Icon(
+              Icons.add_card,
+              size: 24,
+            ),
+          )
+        ]),
+        leadingWidth: 200,
+        actions: [
+          IconButton(
+            onPressed: () {
+              widget.authRepository.logout();
+            },
+            icon: const Icon(
+              Icons.logout,
+              size: 24,
+            ),
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Form(
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              LogoWidget(width: 217, height: 76),
+              const SizedBox(),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(width: 10),
+                  SizedBox(
+                    width: 200,
+                    height: 30,
+                    child: Text(
+                      'Übersicht ',
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
                   ),
-                ])))));
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(width: 10),
+                  SizedBox(
+                    width: 200,
+                    height: 40,
+                    child: Text(
+                      'Girokonto',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
+              StreamBuilder<List<KontoInformation>>(
+                stream: konten,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return const Icon(Icons.error);
+                  } else if (snapshot.hasData) {
+                    return Column(
+                      children: _getBayFinButtons(snapshot.data!),
+                    );
+                  } else {
+                    return const Text('Keine Kontoinformationen gefunden.');
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   List<Widget> _getBayFinButtons(List<KontoInformation> kontoInfos) {
@@ -221,13 +232,15 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
         child: InkWell(
           onTap: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => MainScreen(
-                          databaseRepository: widget.databaseRepository,
-                          authRepository: widget.authRepository,
-                          kontoIndex: kontoInfos.indexOf(info),
-                        )));
+              context,
+              MaterialPageRoute(
+                builder: (context) => MainScreen(
+                  databaseRepository: widget.databaseRepository,
+                  authRepository: widget.authRepository,
+                  kontoIndex: kontoInfos.indexOf(info),
+                ),
+              ),
+            );
           },
           child: Card(
             color: const Color.fromARGB(255, 180, 183, 249),
@@ -242,18 +255,15 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                   Text(
                     info.iban,
                     textAlign: TextAlign.center,
-                  )
+                  ),
                 ],
               ),
             ),
           ),
         ),
       ));
-      buttonList.add(
-        const SizedBox(height: 15),
-      );
+      buttonList.add(const SizedBox(height: 15));
     }
-
     return buttonList;
   }
 
@@ -266,7 +276,18 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
 
   String? validateBk(String? input) {
     if (input == null || input.isEmpty) {
-      return 'Bitte Konto eingeben';
+      return 'Bitte Bank eingeben';
+    }
+    return null;
+  }
+
+  String? validateKS(String? input) {
+    if (input == null || input.isEmpty) {
+      return 'Bitte Kontostand eingeben';
+    }
+    double? kontostand = double.tryParse(input);
+    if (kontostand == null) {
+      return 'Kontostand muss eine Zahl sein';
     }
     return null;
   }

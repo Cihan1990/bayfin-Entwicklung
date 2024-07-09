@@ -10,6 +10,7 @@ class RegistrationsText extends StatelessWidget {
   TextEditingController controller;
   String? Function(String?)? validator;
   AutovalidateMode? autovalidateMode;
+  TextInputType? keybordtype;
 
   RegistrationsText(
       {super.key,
@@ -19,6 +20,7 @@ class RegistrationsText extends StatelessWidget {
       this.hinttext,
       required this.validator,
       required this.autovalidateMode,
+      this.keybordtype,
       this.color = Colors.white});
 
   @override
@@ -39,7 +41,7 @@ class RegistrationsText extends StatelessWidget {
       ),
       TextFormField(
           controller: controller,
-          validator: validator,
+          validator: validator, keyboardType: keybordtype,
           autovalidateMode: autovalidateMode,
           decoration: InputDecoration(
             //errorStyle: TextStyle(color: Colors.grey.shade400),
