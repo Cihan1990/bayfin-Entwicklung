@@ -21,16 +21,20 @@ class ViewBankaccount extends StatefulWidget {
 
 class _ViewBankaccountState extends State<ViewBankaccount> {
   final _formKey = GlobalKey<FormState>();
+
   late Stream<List<KontoInformation>> konten;
   late TextEditingController bankController;
   late TextEditingController ibanController;
   late TextEditingController ksController;
+
   // late TextEditingController idController;
 
   @override
   void initState() {
     super.initState();
-    konten = widget.databaseRepository.getKontoInformation();
+
+    konten = widget.databaseRepository
+        .getKontoInformation(widget.authRepository.getUserId());
     bankController = TextEditingController();
     ibanController = TextEditingController();
     ksController = TextEditingController();
@@ -237,7 +241,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                 builder: (context) => MainScreen(
                   databaseRepository: widget.databaseRepository,
                   authRepository: widget.authRepository,
-                  kontoIndex: kontoInfos.indexOf(info),
+                  kontoInformation: info,
                 ),
               ),
             );

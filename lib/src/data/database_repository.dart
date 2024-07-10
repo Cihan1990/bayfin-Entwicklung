@@ -9,11 +9,12 @@ abstract class DatabaseRepository {
 
   Future<void> addUmsatz(Umsatz neuerUmsatz, String userid);
   Future<void> addKonto(KontoInformation neueKontoInformation, String userid);
+  Future<double> getKontostand(String userId);
   Future<void> updateKonto(
       KontoInformation neueKontoInformation, String userid);
-
-  Stream<List<KontoInformation>>
-      getKontoInformation(); // Dein Stream, der die KontoInformationen liefert
+  Future<KontoInformation?> getKontoInfo(String userId, String kontoId);
+  Stream<List<KontoInformation>> getKontoInformation(
+      String userId); // Dein Stream, der die KontoInformationen liefert
 
   // TODO: Methode die einen Stream zurückgibt von Kontoinformationen
 }

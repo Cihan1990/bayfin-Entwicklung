@@ -3,16 +3,17 @@ import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/registrations_text.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/transaction_info.dart';
+import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
 import 'package:bayfin/src/features/bank_balance/domain/umsatz.dart';
 import 'package:flutter/material.dart';
 
 class SalesScreen extends StatefulWidget {
   // Attribute
   final DatabaseRepository databaseRepository;
-  final int kontoIndex;
+  final KontoInformation kontoInformation;
   // Konstruktor
   const SalesScreen(
-      {super.key, required this.databaseRepository, required this.kontoIndex});
+      {super.key, required this.databaseRepository, required this.kontoInformation});
 
   @override
   State<SalesScreen> createState() => _SalesScreenState();
@@ -121,7 +122,8 @@ class _SalesScreenState extends State<SalesScreen> {
                                                                   .text),
                                                           umsatzname:
                                                               umzatzbezeichnungController
-                                                                  .text),
+                                                                  .text,
+                                                          type: false),
                                                       "1");
                                               setState(() {});
                                               if (context.mounted) {
@@ -185,8 +187,7 @@ class _SalesScreenState extends State<SalesScreen> {
                           // FALL: Future ist komplett und hat Daten!
                           return Column(
                             children: [
-                              Text(
-                                  "${user.bank[widget.kontoIndex].kontostand}€"),
+                              const Text("test€"),
                               const SizedBox(
                                 height: 15,
                               ),

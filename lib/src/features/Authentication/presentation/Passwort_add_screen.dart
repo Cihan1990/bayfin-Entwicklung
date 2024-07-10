@@ -3,6 +3,8 @@ import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/Authentication/presentation/registration_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../bank_balance/domain/kontoinformationen.dart';
+
 class PasswortAddScreen extends StatefulWidget {
   // Attribute
   final DatabaseRepository databaseRepository;
@@ -120,8 +122,16 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                   ElevatedButton(
                     child: const Text('Benutzerkonto erstellen'),
                     onPressed: () async {
+
+                      // User bei Firebase Authentication registrieren
                       await widget.authRepository.signUpWithEmailAndPassword(
-                          widget.email, _passwordField1.text);
+                          widget.email, _passwordField1.text); 
+
+
+                    
+                      
+
+
                     },
                   ),
                   const SizedBox(height: 20),

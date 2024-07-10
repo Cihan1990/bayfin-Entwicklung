@@ -19,9 +19,9 @@ class MockDatabase implements DatabaseRepository {
               kontostand: 3530.34),
         ],
         umsatze: [
-          Umsatz(betrag: -12.30, umsatzname: "Amazon"),
-          Umsatz(betrag: -40.30, umsatzname: "Vodafone"),
-          Umsatz(betrag: -56.30, umsatzname: "O2"),
+          Umsatz(betrag: -12.30, umsatzname: "Amazon", type: false),
+          Umsatz(betrag: -40.30, umsatzname: "Vodafone", type: false),
+          Umsatz(betrag: -56.30, umsatzname: "O2", type: false),
         ],
         userid: "1"),
   ];
@@ -68,8 +68,20 @@ class MockDatabase implements DatabaseRepository {
   }
   
   @override
-  Stream<List<KontoInformation>> getKontoInformation() {
+  Stream<List<KontoInformation>> getKontoInformation(String userid) {
     // TODO: implement getKontoInformation
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<double> getKontostand(String userId) {
+    // TODO: implement getKontostand
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<KontoInformation> getKontoInfo(String userId, String kontoId) {
+    // TODO: implement getKontoInfo
     throw UnimplementedError();
   }
 

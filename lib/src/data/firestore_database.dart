@@ -11,6 +11,8 @@ class FirestoreDatabase implements DatabaseRepository {
 
   @override
   Future<Benutzer?> getBenutzer(String userid) async {
+    // Benutzer -> userId -> Konto
+
     final userSnapshot = await _firebaseFirestore
         .collection('Benutzer')
         .doc(userid)
@@ -51,7 +53,11 @@ class FirestoreDatabase implements DatabaseRepository {
   @override
   Future<void> addKonto(
       KontoInformation neueKontoInformation, String userid) async {
-    await  _firebaseFirestore.collection('Konteninformation').add(neueKontoInformation.toMap());
+    await _firebaseFirestore
+        .collection('Benutzer')
+        .doc(userid)
+        .collection('Konteninformation')
+        .add(neueKontoInformation.toMap());
   }
 
   @override
@@ -66,25 +72,49 @@ class FirestoreDatabase implements DatabaseRepository {
         .update(neueKontoInformation.toMap());
   }
 
- Stream<List<KontoInformation>> getKontoInformation() {
-  return _firebaseFirestore
-      .collection('Konteninformation')
-      .snapshots()
-      .map((snapshot) {
-        return snapshot.docs
-            .map((doc) => KontoInformation.fromMap(doc.data() as Map<String, dynamic>))
-            .toList();
-      });
-}
-
-  /// TODO: Methiode mit Future, die ein Dokument pber eine Id zurückgibvt
+  @override
+  Stream<List<KontoInformation>> getKontoInformation(String userId) {
+    return _firebaseFirestore
+        .collection('Benutzer')
+        .doc(userId)
+        .collection("Konteninformation")
+        .snapshots()
+        .map((snapshot) {
+      return (snapshot.docs)
+          .map((doc) => KontoInformation.fromMap(doc.data()))
+          .toList();
+    });
+  }
 
   @override
-  Future<KontoInformation?> getKontoInfo(Benutzer userID) {
-    // TODO: implement getKontoInfo
-    throw UnimplementedError();
+  Future<double> getKontostand(String userId) async {
+    final docs = await _firebaseFirestore
+        .collection('Benutzer')
+        .doc(userId)
+        .collection("Konteninformation")
+        .get();
+
+    List<KontoInformation> konten = [];
+
+    for (DocumentSnapshot doc in docs.docs) {
+      final konto =
+          KontoInformation.fromMap(doc.data() as Map<String, dynamic>);
+
+      konten.add(konto);
+    }
+
+    return konten.fold<double>(0, (p, c) => p + (c.kontostand ?? 0.0));
+  }
+
+  @override
+  Future<KontoInformation?> getKontoInfo(String userId, String kontoId) async {
+    final kontoInfo = await _firebaseFirestore
+        .collection('Benutzer')
+        .doc(userId)
+        .collection("Konteninformation")
+        .doc(kontoId)
+        .get();
+
+    return kontoInfo.data() as KontoInformation?;
   }
 }
-
-  // TODO: Methode hier implemenntieren
-

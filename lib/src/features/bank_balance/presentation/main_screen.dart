@@ -3,6 +3,7 @@ import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/transaction_info.dart';
+import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
 import 'package:bayfin/src/features/bank_balance/domain/umsatz.dart';
 import 'package:bayfin/src/features/bank_balance/presentation/sales_screen.dart';
 import 'package:bayfin/src/features/bank_balance/presentation/view_bankaccount.dart';
@@ -12,10 +13,13 @@ class MainScreen extends StatefulWidget {
   // Attribute
   final DatabaseRepository databaseRepository;
   final AuthRepository authRepository;
-  final int kontoIndex;
+  final KontoInformation kontoInformation;
   // Konstruktor
   const MainScreen(
-      {super.key, required this.databaseRepository, required this.kontoIndex, required this.authRepository});
+      {super.key,
+      required this.databaseRepository,
+      required this.kontoInformation,
+      required this.authRepository});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -32,6 +36,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userId = widget.authRepository.getUserId();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       appBar: AppBar(
@@ -98,7 +103,8 @@ class _MainScreenState extends State<MainScreen> {
                                   builder: (context) => SalesScreen(
                                         databaseRepository:
                                             widget.databaseRepository,
-                                        kontoIndex: widget.kontoIndex,
+                                        kontoInformation:
+                                            widget.kontoInformation,
                                       )));
                         },
                         child: Card(
@@ -106,27 +112,7 @@ class _MainScreenState extends State<MainScreen> {
                             child: Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: Column(children: [
-                                  FutureBuilder(
-                                    // Methode, die über eine Id ein Dokument zurückgibt
-                                    future: databaseRepository.getBenutzer("1"),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData &&
-                                          snapshot.connectionState ==
-                                              ConnectionState.done) {
-                                        // FALL: Future ist komplett und hat Daten!
-                                        return Text(
-                                            "${snapshot.data!.bank[widget.kontoIndex].kontostand}€");
-                                      } else if (snapshot.connectionState !=
-                                          ConnectionState.done) {
-                                        // FALL: Sind noch im Ladezustand
-                                        return const Center(
-                                            child: CircularProgressIndicator());
-                                      } else {
-                                        // FALL: Es gab nen Fehler
-                                        return const Icon(Icons.error);
-                                      }
-                                    },
-                                  ),
+                                  Text("${widget.kontoInformation.kontostand}€")
                                 ]))))),
                 const SizedBox(height: 15),
                 Container(
@@ -157,7 +143,7 @@ class _MainScreenState extends State<MainScreen> {
                   width: 361,
                   child: Center(
                     child: FutureBuilder(
-                      future: widget.databaseRepository.getBenutzer("1"),
+                      future: widget.databaseRepository.getBenutzer(userId),
                       builder: (context, snapshot) {
                         if (snapshot.hasData &&
                             snapshot.connectionState == ConnectionState.done) {

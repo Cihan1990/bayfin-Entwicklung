@@ -1,3 +1,4 @@
+import 'package:bayfin/src/features/bank_balance/domain/umsatz.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class KontoInformation {
@@ -7,14 +8,15 @@ class KontoInformation {
   double? kontostand;
   // double userId;
   DocumentReference? documentReference;
+  List<Umsatz>? transactions;
 
   KontoInformation({
     required this.bank,
     this.bic,
     required this.iban,
     this.kontostand,
+    this.transactions
     // required this.userId,
-    
   });
   Map<String, dynamic> toMap() {
     return {
@@ -22,6 +24,7 @@ class KontoInformation {
       "iban": iban,
       "bank": bank,
       "kontostand": kontostand,
+      "transactions": transactions
       // "userId": userId,
     };
   }
@@ -32,6 +35,7 @@ class KontoInformation {
       iban: map["iban"],
       bic: map["bic"],
       kontostand: map["kontostand"]?.toDouble(),
+      transactions: map["transactions"]
       // userId: map["userId"],
     );
   }
