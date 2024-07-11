@@ -46,9 +46,7 @@ class _MainScreenState extends State<MainScreen> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ViewBankaccount(
-                            
-                          )),
+                      builder: (context) => const ViewBankaccount()),
                 );
               },
               icon: const Icon(
@@ -100,7 +98,6 @@ class _MainScreenState extends State<MainScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SalesScreen(
-                                        
                                         kontoInformation:
                                             widget.kontoInformation,
                                       )));
@@ -141,7 +138,9 @@ class _MainScreenState extends State<MainScreen> {
                   width: 361,
                   child: Center(
                     child: FutureBuilder(
-                      future: context.read<DatabaseRepository>().getBenutzer(userId),
+                      future: context
+                          .read<DatabaseRepository>()
+                          .getBenutzer(userId),
                       builder: (context, snapshot) {
                         if (snapshot.hasData &&
                             snapshot.connectionState == ConnectionState.done) {
@@ -157,7 +156,8 @@ class _MainScreenState extends State<MainScreen> {
                           }
                           // FALL: Future ist komplett und hat Daten!
                           return StreamBuilder<Object>(
-                              stream: context.read<DatabaseRepository>()
+                              stream: context
+                                  .read<DatabaseRepository>()
                                   .getUmsatz(userId, '2UzevWBXk744LAO1W1aI'),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData &&

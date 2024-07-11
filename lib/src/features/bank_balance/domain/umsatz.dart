@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class Umsatz {
   double betrag;
   String umsatzname;

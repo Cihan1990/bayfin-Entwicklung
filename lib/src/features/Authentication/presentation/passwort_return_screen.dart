@@ -149,7 +149,8 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                     child: const Text('Passwort zurücksetzen'),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        await context.read<AuthRepository>()
+                        await context
+                            .read<AuthRepository>()
                             .resetPassword(mailController.text);
                         if (mounted) {
                           Navigator.pushReplacement(
@@ -172,10 +173,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => LoginScreen(
-                                      
-                              
-                                    ),
+                                    builder: (context) => const LoginScreen(),
                                   ));
                             },
                             child: const Text("Zurück zum Login",

@@ -1,5 +1,4 @@
 import 'package:bayfin/src/data/auth_repository.dart';
-import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/Authentication/presentation/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -132,12 +131,8 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => RegistrationScreen(
-                                      databaseRepository:
-                                          context.read<DatabaseRepository>(),
-                                      authRepository:
-                                          context.read<AuthRepository>(),
-                                    ),
+                                    builder: (context) =>
+                                        const RegistrationScreen(),
                                   ));
                             },
                             child: const Text("Zurück zur Registrierung",
