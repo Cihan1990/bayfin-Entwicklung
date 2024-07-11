@@ -1,21 +1,15 @@
 // ignore_for_file: avoid_print
 
 import 'package:bayfin/src/data/auth_repository.dart';
-import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/bank_balance/presentation/view_bankaccount.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
-  final DatabaseRepository databaseRepository;
-  final AuthRepository authRepository;
-
-  const App(
-      {super.key,
-      required this.databaseRepository,
-      required this.authRepository});
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +17,7 @@ class App extends StatelessWidget {
     const viewBkKey = ValueKey('ViewBankaccount');
 
     return StreamBuilder(
-        stream: authRepository.authStateChanges(),
+        stream: context.read<AuthRepository>().authStateChanges(),
         builder: (context, snapshot) {
           final user = snapshot.data;
           return MaterialApp(
@@ -107,14 +101,8 @@ class App extends StatelessWidget {
               ).copyWith(
                 textTheme: GoogleFonts.figtreeTextTheme(),
               ),
-              home: user == null
-                  ? LoginScreen(
-                      databaseRepository: databaseRepository,
-                      authRepository: authRepository,
-                    )
-                  : ViewBankaccount(
-                      databaseRepository: databaseRepository,
-                      authRepository: authRepository));
+              home:
+                  user == null ? const LoginScreen() : const ViewBankaccount());
         });
   }
 }

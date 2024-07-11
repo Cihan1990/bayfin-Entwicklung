@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +18,17 @@ Future<void> main() async {
       FirestoreDatabase(FirebaseFirestore.instance);
   AuthRepository authRepository = AuthRepository(FirebaseAuth.instance);
 
-  runApp(App(
-    databaseRepository: databaseRepository,
-    authRepository: authRepository,
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider<DatabaseRepository>(
+          create: (_) => databaseRepository,
+        ),
+        Provider<AuthRepository>(
+          create: (_) => authRepository,
+        ),
+      ],
+      child: const App(),
+    ),
+  );
 }

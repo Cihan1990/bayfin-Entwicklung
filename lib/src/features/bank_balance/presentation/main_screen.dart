@@ -8,18 +8,17 @@ import 'package:bayfin/src/features/bank_balance/domain/umsatz.dart';
 import 'package:bayfin/src/features/bank_balance/presentation/sales_screen.dart';
 import 'package:bayfin/src/features/bank_balance/presentation/view_bankaccount.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   // Attribute
-  final DatabaseRepository databaseRepository;
-  final AuthRepository authRepository;
+
   final KontoInformation kontoInformation;
   // Konstruktor
-  const MainScreen(
-      {super.key,
-      required this.databaseRepository,
-      required this.kontoInformation,
-      required this.authRepository});
+  const MainScreen({
+    super.key,
+    required this.kontoInformation,
+  });
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -31,12 +30,13 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    databaseRepository = widget.databaseRepository;
+    databaseRepository = context.read<DatabaseRepository>();
   }
 
   @override
   Widget build(BuildContext context) {
-    final userId = widget.authRepository.getUserId();
+    final userId = context.read<AuthRepository>().getUserId();
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       appBar: AppBar(
@@ -47,8 +47,7 @@ class _MainScreenState extends State<MainScreen> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => ViewBankaccount(
-                            databaseRepository: widget.databaseRepository,
-                            authRepository: widget.authRepository,
+                            
                           )),
                 );
               },
@@ -101,8 +100,7 @@ class _MainScreenState extends State<MainScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SalesScreen(
-                                        databaseRepository:
-                                            widget.databaseRepository,
+                                        
                                         kontoInformation:
                                             widget.kontoInformation,
                                       )));
@@ -143,7 +141,7 @@ class _MainScreenState extends State<MainScreen> {
                   width: 361,
                   child: Center(
                     child: FutureBuilder(
-                      future: widget.databaseRepository.getBenutzer(userId),
+                      future: context.read<DatabaseRepository>().getBenutzer(userId),
                       builder: (context, snapshot) {
                         if (snapshot.hasData &&
                             snapshot.connectionState == ConnectionState.done) {
@@ -158,27 +156,45 @@ class _MainScreenState extends State<MainScreen> {
                             ));
                           }
                           // FALL: Future ist komplett und hat Daten!
-                          return Column(
-                            children: [
-                              Container(
-                                decoration: const BoxDecoration(
-                                    color: Color.fromARGB(255, 180, 183, 249),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(30))),
-                                width: 361,
-                                padding: const EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 30),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    const SizedBox(height: 15),
-                                    ...transactionliste
-                                  ],
-                                ),
-                              ),
-                            ],
-                          );
+                          return StreamBuilder<Object>(
+                              stream: context.read<DatabaseRepository>()
+                                  .getUmsatz(userId, '2UzevWBXk744LAO1W1aI'),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData &&
+                                    snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                  return Column(
+                                    children: [
+                                      Container(
+                                        decoration: const BoxDecoration(
+                                            color: Color.fromARGB(
+                                                255, 180, 183, 249),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(30))),
+                                        width: 361,
+                                        padding: const EdgeInsets.only(
+                                            left: 20, right: 20, bottom: 30),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                            const SizedBox(height: 15),
+                                            ...transactionliste
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                } else if (snapshot.connectionState !=
+                                    ConnectionState.done) {
+                                  // FALL: Sind noch im Ladezustand
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                } else {
+                                  // FALL: Es gab nen Fehler
+                                  return const Icon(Icons.error);
+                                }
+                              });
                         } else if (snapshot.connectionState !=
                             ConnectionState.done) {
                           // FALL: Sind noch im Ladezustand

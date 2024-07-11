@@ -66,25 +66,28 @@ class MockDatabase implements DatabaseRepository {
     // TODO: implement updateKonto
     throw UnimplementedError();
   }
-  
+
   @override
   Stream<List<KontoInformation>> getKontoInformation(String userid) {
     // TODO: implement getKontoInformation
     throw UnimplementedError();
   }
-  
+
   @override
   Future<double> getKontostand(String userId) {
     // TODO: implement getKontostand
     throw UnimplementedError();
   }
-  
+
   @override
   Future<KontoInformation> getKontoInfo(String userId, String kontoId) {
     // TODO: implement getKontoInfo
     throw UnimplementedError();
   }
 
- 
+  @override
+  Stream<List<Umsatz>> getUmsatz(String userid, String kontoId) {
+    // TODO: implement getUmsatz
+    throw UnimplementedError();
   }
-
+}

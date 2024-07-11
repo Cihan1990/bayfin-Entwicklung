@@ -117,4 +117,18 @@ class FirestoreDatabase implements DatabaseRepository {
 
     return kontoInfo.data() as KontoInformation?;
   }
+
+  @override
+  Stream<List<Umsatz>>? getUmsatz(String userId, String kontoId) {
+    return _firebaseFirestore
+        .collection('Benutzer')
+        .doc(userId)
+        .collection("Konteninformation")
+        .doc(kontoId)
+        .collection('Umsatz')
+        .snapshots()
+        .map((snapshot) {
+      return (snapshot.docs).map((doc) => Umsatz.fromMap(doc.data())).toList();
+    });
+  }
 }

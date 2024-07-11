@@ -6,14 +6,14 @@ import 'package:bayfin/src/features/authentication/presentation/widget/transacti
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
 import 'package:bayfin/src/features/bank_balance/domain/umsatz.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SalesScreen extends StatefulWidget {
   // Attribute
-  final DatabaseRepository databaseRepository;
+
   final KontoInformation kontoInformation;
   // Konstruktor
-  const SalesScreen(
-      {super.key, required this.databaseRepository, required this.kontoInformation});
+  const SalesScreen({super.key, required this.kontoInformation});
 
   @override
   State<SalesScreen> createState() => _SalesScreenState();
@@ -114,7 +114,8 @@ class _SalesScreenState extends State<SalesScreen> {
                                           onPressed: () async {
                                             if (_formKey.currentState!
                                                 .validate()) {
-                                              await widget.databaseRepository
+                                              await context
+                                                  .read<DatabaseRepository>()
                                                   .addUmsatz(
                                                       Umsatz(
                                                           betrag: double.parse(
@@ -170,7 +171,8 @@ class _SalesScreenState extends State<SalesScreen> {
                   width: 361,
                   child: Center(
                     child: FutureBuilder(
-                      future: widget.databaseRepository.getBenutzer("1"),
+                      future:
+                          context.read<DatabaseRepository>().getBenutzer("1"),
                       builder: (context, snapshot) {
                         if (snapshot.hasData &&
                             snapshot.connectionState == ConnectionState.done) {

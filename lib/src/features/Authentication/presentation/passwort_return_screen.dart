@@ -1,18 +1,14 @@
 import 'package:bayfin/src/data/auth_repository.dart';
-import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/passwort_return_accept_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PasswortReturnScreen extends StatefulWidget {
   // Attribute
-  final DatabaseRepository databaseRepository;
-  final AuthRepository authRepository;
+
   // Konstruktor
-  const PasswortReturnScreen(
-      {super.key,
-      required this.databaseRepository,
-      required this.authRepository});
+  const PasswortReturnScreen({super.key});
 
   @override
   State<PasswortReturnScreen> createState() => _PasswortReturnScreenState();
@@ -153,18 +149,14 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                     child: const Text('Passwort zurücksetzen'),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        await widget.authRepository
+                        await context.read<AuthRepository>()
                             .resetPassword(mailController.text);
                         if (mounted) {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      PasswortReturnAcceptScreen(
-                                        databaseRepository:
-                                            widget.databaseRepository,
-                                        authRepository: widget.authRepository,
-                                      )));
+                                      const PasswortReturnAcceptScreen()));
                         }
                       } else {
                         print("showError");
@@ -181,9 +173,8 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => LoginScreen(
-                                      databaseRepository:
-                                          widget.databaseRepository,
-                                      authRepository: widget.authRepository,
+                                      
+                              
                                     ),
                                   ));
                             },

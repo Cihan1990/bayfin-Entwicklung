@@ -40,3 +40,15 @@ class KontoInformation {
     );
   }
 }
+
+
+
+
+// db.collection("cities").get().then(
+//   (querySnapshot) {
+//     print("Successfully completed");
+//     for (var docSnapshot in querySnapshot.docs) {
+//       print('${docSnapshot.id} => ${docSnapshot.data()}');
+//     }
+//   },
+//   onError: (e) => print("Error completing: $e"),

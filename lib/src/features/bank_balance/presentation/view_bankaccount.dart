@@ -4,16 +4,10 @@ import 'package:bayfin/src/features/authentication/presentation/widget/logo_widg
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
 import 'package:bayfin/src/features/bank_balance/presentation/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ViewBankaccount extends StatefulWidget {
-  final DatabaseRepository databaseRepository;
-  final AuthRepository authRepository;
-
-  const ViewBankaccount({
-    super.key,
-    required this.databaseRepository,
-    required this.authRepository,
-  });
+  const ViewBankaccount({super.key});
 
   @override
   State<ViewBankaccount> createState() => _ViewBankaccountState();
@@ -33,8 +27,9 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
   void initState() {
     super.initState();
 
-    konten = widget.databaseRepository
-        .getKontoInformation(widget.authRepository.getUserId());
+    konten = context
+        .read<DatabaseRepository>()
+        .getKontoInformation(context.read<AuthRepository>().getUserId());
     bankController = TextEditingController();
     ibanController = TextEditingController();
     ksController = TextEditingController();
@@ -126,14 +121,18 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                                       kontostand =
                                           double.tryParse(ksController.text);
                                     }
-                                    await widget.databaseRepository.addKonto(
-                                      KontoInformation(
-                                        bank: bankController.text,
-                                        iban: ibanController.text,
-                                        kontostand: kontostand,
-                                      ),
-                                      widget.authRepository.getUserId(),
-                                    );
+                                    await context
+                                        .read<DatabaseRepository>()
+                                        .addKonto(
+                                          KontoInformation(
+                                            bank: bankController.text,
+                                            iban: ibanController.text,
+                                            kontostand: kontostand,
+                                          ),
+                                          context
+                                              .read<AuthRepository>()
+                                              .getUserId(),
+                                        );
 
                                     Navigator.of(context).pop();
                                   }
@@ -158,7 +157,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
         actions: [
           IconButton(
             onPressed: () {
-              widget.authRepository.logout();
+              context.read<AuthRepository>().logout();
             },
             icon: const Icon(
               Icons.logout,
@@ -239,8 +238,6 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
               context,
               MaterialPageRoute(
                 builder: (context) => MainScreen(
-                  databaseRepository: widget.databaseRepository,
-                  authRepository: widget.authRepository,
                   kontoInformation: info,
                 ),
               ),

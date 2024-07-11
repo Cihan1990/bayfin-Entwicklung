@@ -1,25 +1,21 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:bayfin/src/data/auth_repository.dart';
-import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/presentation/passwort_return_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/registration_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/social_login_button.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/text_field_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   // Attribute
-  final DatabaseRepository databaseRepository;
-
-  final AuthRepository authRepository;
 
   // Konstruktor
-  const LoginScreen(
-      {super.key,
-      required this.databaseRepository,
-      required this.authRepository});
+  const LoginScreen({
+    super.key,
+  });
   // Konstruktor
 
   @override
@@ -84,10 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => PasswortReturnScreen(
-                            databaseRepository: widget.databaseRepository,
-                            authRepository: widget.authRepository,
-                          ),
+                          builder: (context) => PasswortReturnScreen(),
                         ));
                   },
                   child: Text(
@@ -109,8 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Text('Login'),
                 onPressed: () async {
                   try {
-                    await widget.authRepository.loginWithEmailAndPassword(
-                        mailController.text, _pwController.text);
+                    await context
+                        .read<AuthRepository>()
+                        .loginWithEmailAndPassword(
+                            mailController.text, _pwController.text);
                     setState(() {
                       showCreateAccountNotification = false;
                     });
@@ -165,10 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RegistrationScreen(
-                              databaseRepository: widget.databaseRepository,
-                              authRepository: widget.authRepository,
-                            ),
+                            builder: (context) => RegistrationScreen(),
                           ));
                     },
                     child: Text(

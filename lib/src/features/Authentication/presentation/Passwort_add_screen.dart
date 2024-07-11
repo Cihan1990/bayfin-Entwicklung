@@ -2,20 +2,14 @@ import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/Authentication/presentation/registration_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../../bank_balance/domain/kontoinformationen.dart';
+import 'package:provider/provider.dart';
 
 class PasswortAddScreen extends StatefulWidget {
   // Attribute
-  final DatabaseRepository databaseRepository;
-  final AuthRepository authRepository;
+
   final String email;
   // Konstruktor
-  const PasswortAddScreen(
-      {super.key,
-      required this.databaseRepository,
-      required this.authRepository,
-      required this.email});
+  const PasswortAddScreen({super.key, required this.email});
 
   @override
   State<PasswortAddScreen> createState() => _PasswortAddScreenState();
@@ -122,16 +116,11 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                   ElevatedButton(
                     child: const Text('Benutzerkonto erstellen'),
                     onPressed: () async {
-
                       // User bei Firebase Authentication registrieren
-                      await widget.authRepository.signUpWithEmailAndPassword(
-                          widget.email, _passwordField1.text); 
-
-
-                    
-                      
-
-
+                      await context
+                          .read<AuthRepository>()
+                          .signUpWithEmailAndPassword(
+                              widget.email, _passwordField1.text);
                     },
                   ),
                   const SizedBox(height: 20),
@@ -145,8 +134,9 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                                   MaterialPageRoute(
                                     builder: (context) => RegistrationScreen(
                                       databaseRepository:
-                                          widget.databaseRepository,
-                                      authRepository: widget.authRepository,
+                                          context.read<DatabaseRepository>(),
+                                      authRepository:
+                                          context.read<AuthRepository>(),
                                     ),
                                   ));
                             },

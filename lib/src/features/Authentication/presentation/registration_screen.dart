@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
-import 'package:bayfin/src/data/auth_repository.dart';
-import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/passwort_add_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
@@ -11,13 +9,9 @@ import 'package:flutter/material.dart';
 
 class RegistrationScreen extends StatefulWidget {
   // Attribute
-  final DatabaseRepository databaseRepository;
-  final AuthRepository authRepository;
+
   // Konstruktor
-  const RegistrationScreen(
-      {super.key,
-      required this.databaseRepository,
-      required this.authRepository});
+  const RegistrationScreen({super.key});
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
@@ -115,10 +109,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => PasswortAddScreen(
-                              databaseRepository: widget.databaseRepository,
-                              authRepository: widget.authRepository,
-                              email: mailController.text),
+                          builder: (context) =>
+                              PasswortAddScreen(email: mailController.text),
                         ),
                       );
                     }
@@ -133,11 +125,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => LoginScreen(
-                                    databaseRepository:
-                                        widget.databaseRepository,
-                                    authRepository: widget.authRepository,
-                                  ),
+                                  builder: (context) => LoginScreen(),
                                 ));
                           },
                           child: Text("Zurück zur Anmeldung",
