@@ -167,7 +167,15 @@ class _SalesScreenState extends State<SalesScreen> {
                     SizedBox(width: 10),
                   ],
                 ),
-                const SizedBox(height: 15),
+                Card(
+                    color: const Color.fromARGB(255, 180, 183, 249),
+                    child: Center(
+                      child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(children: [
+                            Text("${widget.kontoInformation.kontostand}€")
+                          ])),
+                    )),
                 SizedBox(
                   width: 361,
                   child: Center(
@@ -196,24 +204,27 @@ class _SalesScreenState extends State<SalesScreen> {
                               const SizedBox(
                                 height: 15,
                               ),
-                              Container(
-                                width: 361,
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Text(
-                                      'Umsätze',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall,
-                                    ),
-                                    const SizedBox(height: 15),
-                                    ...transactionliste
-                                  ],
+                              Card(
+                                color: const Color.fromARGB(255, 180, 183, 249),
+                                // width: 361,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Text(
+                                        'Umsätze',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall,
+                                      ),
+                                      const SizedBox(height: 15),
+                                      ...transactionliste
+                                    ],
+                                  ),
                                 ),
-                              ),
+                              )
                             ],
                           );
                         } else if (snapshot.connectionState !=

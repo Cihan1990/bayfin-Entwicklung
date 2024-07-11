@@ -147,13 +147,17 @@ class _MainScreenState extends State<MainScreen> {
                           List<Umsatz> umsatzliste = snapshot.data!;
 
                           List<TransactionInfo> transactionliste = [];
+                          int i = 0;
                           for (var u in umsatzliste) {
-                            transactionliste.add(TransactionInfo(
-                              firmName: u.umsatzname,
-                              type: u.type,
-                              firmLogoPath: "assets/images/vodafonelogo.png",
-                              amount: u.betrag,
-                            ));
+                            if (i < 3) {
+                              transactionliste.add(TransactionInfo(
+                                firmName: u.umsatzname,
+                                type: u.type,
+                                firmLogoPath: "assets/images/vodafonelogo.png",
+                                amount: u.betrag,
+                              ));
+                              i++;
+                            }
                           }
                           // FALL: Future ist komplett und hat Daten!
                           return Column(
