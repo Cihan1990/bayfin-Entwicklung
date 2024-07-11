@@ -9,13 +9,15 @@ class KontoInformation {
   // double userId;
   DocumentReference? documentReference;
   List<Umsatz>? transactions;
+  
 
   KontoInformation({
     required this.bank,
     this.bic,
     required this.iban,
     this.kontostand,
-    this.transactions
+    this.transactions,
+    this.documentReference
     // required this.userId,
   });
   Map<String, dynamic> toMap() {
@@ -29,13 +31,14 @@ class KontoInformation {
     };
   }
 
-  factory KontoInformation.fromMap(Map<String, dynamic> map) {
+  factory KontoInformation.fromMap(Map<String, dynamic> map, DocumentReference ref) {
     return KontoInformation(
       bank: map["bank"],
       iban: map["iban"],
       bic: map["bic"],
       kontostand: map["kontostand"]?.toDouble(),
-      transactions: map["transactions"]
+      transactions: map["transactions"],
+      documentReference: ref
       // userId: map["userId"],
     );
   }

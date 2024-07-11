@@ -24,8 +24,7 @@ class FirestoreDatabase implements DatabaseRepository {
       return null;
     }
 
-    // Get user data
-    final user = Benutzer.fromMap(userMap);
+    
 
     // Get bank accounts for the user (assuming a 'userId' field in bank_accounts)
     final bankAccountsSnapshot = await _firebaseFirestore
@@ -33,8 +32,11 @@ class FirestoreDatabase implements DatabaseRepository {
         .where('userId', isEqualTo: userid)
         .get();
     final bankAccounts = bankAccountsSnapshot.docs
-        .map((doc) => KontoInformation.fromMap(doc.data()))
+        .map((doc) => KontoInformation.fromMap(doc.data(), doc.reference))
         .toList();
+
+        // Get user data
+    final user = Benutzer.fromMap(userMap, bankAccounts);
 
     // Set bank accounts on the user object
     user.bank = bankAccounts;
@@ -81,7 +83,7 @@ class FirestoreDatabase implements DatabaseRepository {
         .snapshots()
         .map((snapshot) {
       return (snapshot.docs)
-          .map((doc) => KontoInformation.fromMap(doc.data()))
+          .map((doc) => KontoInformation.fromMap(doc.data(), doc.reference))
           .toList();
     });
   }
@@ -98,7 +100,7 @@ class FirestoreDatabase implements DatabaseRepository {
 
     for (DocumentSnapshot doc in docs.docs) {
       final konto =
-          KontoInformation.fromMap(doc.data() as Map<String, dynamic>);
+          KontoInformation.fromMap(doc.data() as Map<String, dynamic>, doc.reference);
 
       konten.add(konto);
     }
@@ -120,6 +122,7 @@ class FirestoreDatabase implements DatabaseRepository {
 
   @override
   Stream<List<Umsatz>>? getUmsatz(String userId, String kontoId) {
+
     return _firebaseFirestore
         .collection('Benutzer')
         .doc(userId)
@@ -128,7 +131,14 @@ class FirestoreDatabase implements DatabaseRepository {
         .collection('Umsatz')
         .snapshots()
         .map((snapshot) {
-      return (snapshot.docs).map((doc) => Umsatz.fromMap(doc.data())).toList();
+      return (snapshot.docs).map((doc){
+        print("Getting doc: ${doc.data()}");
+        try{
+          return Umsatz.fromMap(doc.data());
+        } catch(e){
+          throw Exception(e);
+        }
+      }).toList();
     });
   }
 }

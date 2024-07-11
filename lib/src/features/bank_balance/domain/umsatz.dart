@@ -8,14 +8,14 @@ class Umsatz {
   Map<String, dynamic> toMap() {
     return {
       "betrag": betrag,
-      "umsatzname": umsatzname,
+      "name": umsatzname,
     };
   }
 
   factory Umsatz.fromMap(Map<String, dynamic> map) {
     return Umsatz(
-        betrag: map["betrag"],
-        umsatzname: map["umsatzname"],
+        betrag: map["betrag"].toDouble(),
+        umsatzname: map["name"],
         type: map["type"]);
   }
 }

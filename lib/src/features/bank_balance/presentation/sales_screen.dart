@@ -1,5 +1,5 @@
+import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
-import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/registrations_text.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/transaction_info.dart';
@@ -41,6 +41,7 @@ class _SalesScreenState extends State<SalesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userId = context.read<AuthRepository>().getUserId();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       appBar: AppBar(
@@ -170,18 +171,21 @@ class _SalesScreenState extends State<SalesScreen> {
                 SizedBox(
                   width: 361,
                   child: Center(
-                    child: FutureBuilder(
-                      future:
-                          context.read<DatabaseRepository>().getBenutzer("1"),
+                    child: StreamBuilder<List<Umsatz>>(
+                      stream: context.read<DatabaseRepository>().getUmsatz(
+                          userId,
+                          widget.kontoInformation.documentReference!.id),
                       builder: (context, snapshot) {
                         if (snapshot.hasData &&
-                            snapshot.connectionState == ConnectionState.done) {
-                          Benutzer user = snapshot.data!;
-                          List<Umsatz> umsatzliste = user.umsatze;
+                            snapshot.connectionState ==
+                                ConnectionState.active) {
+                          List<Umsatz> umsatzliste = snapshot.data!;
+
                           List<TransactionInfo> transactionliste = [];
                           for (var u in umsatzliste) {
                             transactionliste.add(TransactionInfo(
                               firmName: u.umsatzname,
+                              type: u.type,
                               firmLogoPath: "assets/images/vodafonelogo.png",
                               amount: u.betrag,
                             ));
@@ -189,7 +193,6 @@ class _SalesScreenState extends State<SalesScreen> {
                           // FALL: Future ist komplett und hat Daten!
                           return Column(
                             children: [
-                              const Text("test€"),
                               const SizedBox(
                                 height: 15,
                               ),

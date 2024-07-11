@@ -1,6 +1,5 @@
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
-import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/transaction_info.dart';
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
@@ -137,66 +136,49 @@ class _MainScreenState extends State<MainScreen> {
                 SizedBox(
                   width: 361,
                   child: Center(
-                    child: FutureBuilder(
-                      future: context
-                          .read<DatabaseRepository>()
-                          .getBenutzer(userId),
+                    child: StreamBuilder<List<Umsatz>>(
+                      stream: context.read<DatabaseRepository>().getUmsatz(
+                          userId,
+                          widget.kontoInformation.documentReference!.id),
                       builder: (context, snapshot) {
                         if (snapshot.hasData &&
-                            snapshot.connectionState == ConnectionState.done) {
-                          Benutzer user = snapshot.data!;
-                          List<Umsatz> umsatzliste = user.umsatze;
+                            snapshot.connectionState ==
+                                ConnectionState.active) {
+                          List<Umsatz> umsatzliste = snapshot.data!;
+
                           List<TransactionInfo> transactionliste = [];
                           for (var u in umsatzliste) {
                             transactionliste.add(TransactionInfo(
                               firmName: u.umsatzname,
+                              type: u.type,
                               firmLogoPath: "assets/images/vodafonelogo.png",
                               amount: u.betrag,
                             ));
                           }
                           // FALL: Future ist komplett und hat Daten!
-                          return StreamBuilder<Object>(
-                              stream: context
-                                  .read<DatabaseRepository>()
-                                  .getUmsatz(userId, '2UzevWBXk744LAO1W1aI'),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData &&
-                                    snapshot.connectionState ==
-                                        ConnectionState.done) {
-                                  return Column(
-                                    children: [
-                                      Container(
-                                        decoration: const BoxDecoration(
-                                            color: Color.fromARGB(
-                                                255, 180, 183, 249),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(30))),
-                                        width: 361,
-                                        padding: const EdgeInsets.only(
-                                            left: 20, right: 20, bottom: 30),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            const SizedBox(height: 15),
-                                            ...transactionliste
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                } else if (snapshot.connectionState !=
-                                    ConnectionState.done) {
-                                  // FALL: Sind noch im Ladezustand
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                } else {
-                                  // FALL: Es gab nen Fehler
-                                  return const Icon(Icons.error);
-                                }
-                              });
+                          return Column(
+                            children: [
+                              Container(
+                                decoration: const BoxDecoration(
+                                    color: Color.fromARGB(255, 180, 183, 249),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(30))),
+                                width: 361,
+                                padding: const EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 30),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    const SizedBox(height: 15),
+                                    ...transactionliste
+                                  ],
+                                ),
+                              ),
+                            ],
+                          );
                         } else if (snapshot.connectionState !=
-                            ConnectionState.done) {
+                            ConnectionState.waiting) {
                           // FALL: Sind noch im Ladezustand
                           return const Center(
                               child: CircularProgressIndicator());
