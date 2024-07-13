@@ -38,7 +38,7 @@ class MockDatabase implements DatabaseRepository {
   }
 
   @override
-  Future<void> addUmsatz(Umsatz neuerUmsatz, String userid) async {
+  Future<void> addUmsatz(Umsatz neuerUmsatz, String userid,String kontoId) async {
     await Future.delayed(const Duration(seconds: 2));
     // wir suchen den User mit der UserID und fügen den neuen umsatz dem user hinzu
     for (var benutzer in benutzerliste) {

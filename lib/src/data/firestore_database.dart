@@ -45,11 +45,16 @@ class FirestoreDatabase implements DatabaseRepository {
   }
 
   @override
-  Future<void> addUmsatz(Umsatz neuerUmsatz, String userid) {
+  Future<void> addUmsatz(Umsatz neuerUmsatz, String userid, String kontoId) {
+   
     return _firebaseFirestore
-        .collection('Umsatz')
-        .doc(neuerUmsatz.umsatzname)
-        .update(neuerUmsatz.toMap());
+  .collection('Benutzer')
+        .doc(userid)
+        .collection('Konteninformation')
+        .doc(kontoId)
+        .collection("Umsatz")
+        .doc()
+        .set(neuerUmsatz.toMap());
   }
 
   @override
@@ -141,4 +146,6 @@ class FirestoreDatabase implements DatabaseRepository {
       }).toList();
     });
   }
+
+  
 }

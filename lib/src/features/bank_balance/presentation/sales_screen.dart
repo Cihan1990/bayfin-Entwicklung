@@ -115,23 +115,27 @@ class _SalesScreenState extends State<SalesScreen> {
                                           onPressed: () async {
                                             if (_formKey.currentState!
                                                 .validate()) {
-                                              await context
-                                                  .read<DatabaseRepository>()
-                                                  .addUmsatz(
-                                                      Umsatz(
-                                                          betrag: double.parse(
-                                                              umsatzsummeController
-                                                                  .text),
-                                                          umsatzname:
-                                                              umzatzbezeichnungController
-                                                                  .text,
-                                                          type: false),
-                                                      "1");
+                                              final userId = context
+                                                  .read<AuthRepository>()
+                                                  .getCurrentUser()!
+                                                  .uid;
+                                          
+                                              await context.read<DatabaseRepository>().addUmsatz(
+                                                  Umsatz(
+                                                      betrag: double.parse(
+                                                          umsatzsummeController
+                                                              .text),
+                                                      umsatzname:
+                                                          umzatzbezeichnungController
+                                                              .text,
+                                                      type: checkIfUmsatzIsMinus(umsatzsummeController.text)),
+                                                  userId,
+                                                  widget.kontoInformation
+                                                      .documentReference!.id);
                                               setState(() {});
                                               if (context.mounted) {
                                                 Navigator.of(context).pop();
                                               }
-
                                               // _formKey.currentState!.save();
                                             }
                                           },
@@ -260,5 +264,14 @@ class _SalesScreenState extends State<SalesScreen> {
       return 'Bitte Umsatzsumme eingeben';
     }
     return null;
+  }
+
+  bool checkIfUmsatzIsMinus(String umsatz) {
+    // Überprüfen, ob der String ein Minuszeichen enthält
+    if (umsatz.contains('-')) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

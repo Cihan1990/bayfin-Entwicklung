@@ -9,6 +9,7 @@ class Umsatz {
     return {
       "betrag": betrag,
       "name": umsatzname,
+      "type": type
     };
   }
 
