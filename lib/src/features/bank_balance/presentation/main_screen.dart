@@ -14,10 +14,8 @@ class MainScreen extends StatefulWidget {
 
   final KontoInformation kontoInformation;
   // Konstruktor
-  const MainScreen({
-    super.key,
-    required this.kontoInformation,
-  });
+  const MainScreen(
+      {super.key, required this.kontoInformation});
 
   @override
   State<MainScreen> createState() => _MainScreenState();

@@ -24,8 +24,6 @@ class FirestoreDatabase implements DatabaseRepository {
       return null;
     }
 
-    
-
     // Get bank accounts for the user (assuming a 'userId' field in bank_accounts)
     final bankAccountsSnapshot = await _firebaseFirestore
         .collection('Konteninformation')
@@ -35,7 +33,7 @@ class FirestoreDatabase implements DatabaseRepository {
         .map((doc) => KontoInformation.fromMap(doc.data(), doc.reference))
         .toList();
 
-        // Get user data
+    // Get user data
     final user = Benutzer.fromMap(userMap, bankAccounts);
 
     // Set bank accounts on the user object
@@ -46,9 +44,8 @@ class FirestoreDatabase implements DatabaseRepository {
 
   @override
   Future<void> addUmsatz(Umsatz neuerUmsatz, String userid, String kontoId) {
-   
     return _firebaseFirestore
-  .collection('Benutzer')
+        .collection('Benutzer')
         .doc(userid)
         .collection('Konteninformation')
         .doc(kontoId)
@@ -73,9 +70,12 @@ class FirestoreDatabase implements DatabaseRepository {
     if (neueKontoInformation.documentReference == null) {
       throw Exception("Kontoinformation braucht eine ID!");
     }
+    
     return _firebaseFirestore
+        .collection('Benutzer')
+        .doc(userid)
         .collection('Konteninformation')
-        .doc(neueKontoInformation.documentReference.toString())
+        .doc(neueKontoInformation.documentReference!.id)
         .update(neueKontoInformation.toMap());
   }
 
@@ -104,8 +104,8 @@ class FirestoreDatabase implements DatabaseRepository {
     List<KontoInformation> konten = [];
 
     for (DocumentSnapshot doc in docs.docs) {
-      final konto =
-          KontoInformation.fromMap(doc.data() as Map<String, dynamic>, doc.reference);
+      final konto = KontoInformation.fromMap(
+          doc.data() as Map<String, dynamic>, doc.reference);
 
       konten.add(konto);
     }
@@ -127,7 +127,6 @@ class FirestoreDatabase implements DatabaseRepository {
 
   @override
   Stream<List<Umsatz>>? getUmsatz(String userId, String kontoId) {
-
     return _firebaseFirestore
         .collection('Benutzer')
         .doc(userId)
@@ -136,16 +135,14 @@ class FirestoreDatabase implements DatabaseRepository {
         .collection('Umsatz')
         .snapshots()
         .map((snapshot) {
-      return (snapshot.docs).map((doc){
+      return (snapshot.docs).map((doc) {
         print("Getting doc: ${doc.data()}");
-        try{
+        try {
           return Umsatz.fromMap(doc.data());
-        } catch(e){
+        } catch (e) {
           throw Exception(e);
         }
       }).toList();
     });
   }
-
-  
 }

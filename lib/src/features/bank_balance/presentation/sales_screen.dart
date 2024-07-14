@@ -119,24 +119,41 @@ class _SalesScreenState extends State<SalesScreen> {
                                                   .read<AuthRepository>()
                                                   .getCurrentUser()!
                                                   .uid;
-                                          
-                                              await context.read<DatabaseRepository>().addUmsatz(
-                                                  Umsatz(
-                                                      betrag: double.parse(
+
+                                              await context
+                                                  .read<DatabaseRepository>()
+                                                  .addUmsatz(
+                                                      Umsatz(
+                                                          betrag: double.parse(
+                                                              umsatzsummeController
+                                                                  .text),
+                                                          umsatzname:
+                                                              umzatzbezeichnungController
+                                                                  .text,
+                                                          type: checkIfUmsatzIsMinus(
+                                                              umsatzsummeController
+                                                                  .text)),
+                                                      userId,
+                                                      widget
+                                                          .kontoInformation
+                                                          .documentReference!
+                                                          .id);
+
+                                              final updatedInfo =
+                                                  widget.kontoInformation;
+                                              updatedInfo.kontostand =
+                                                  updatedInfo.kontostand! +
+                                                      double.parse(
                                                           umsatzsummeController
-                                                              .text),
-                                                      umsatzname:
-                                                          umzatzbezeichnungController
-                                                              .text,
-                                                      type: checkIfUmsatzIsMinus(umsatzsummeController.text)),
-                                                  userId,
-                                                  widget.kontoInformation
-                                                      .documentReference!.id);
-                                              setState(() {});
+                                                              .text);
                                               if (context.mounted) {
                                                 Navigator.of(context).pop();
                                               }
-                                              // _formKey.currentState!.save();
+                                              await context
+                                                  .read<DatabaseRepository>()
+                                                  .updateKonto(
+                                                      updatedInfo, userId);
+                                              setState(() {});
                                             }
                                           },
                                         ),

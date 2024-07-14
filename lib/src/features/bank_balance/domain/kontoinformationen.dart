@@ -31,6 +31,7 @@ class KontoInformation {
     };
   }
 
+
   factory KontoInformation.fromMap(Map<String, dynamic> map, DocumentReference ref) {
     return KontoInformation(
       bank: map["bank"],
