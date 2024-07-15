@@ -70,7 +70,7 @@ class FirestoreDatabase implements DatabaseRepository {
     if (neueKontoInformation.documentReference == null) {
       throw Exception("Kontoinformation braucht eine ID!");
     }
-    
+
     return _firebaseFirestore
         .collection('Benutzer')
         .doc(userid)
@@ -122,7 +122,7 @@ class FirestoreDatabase implements DatabaseRepository {
         .doc(kontoId)
         .get();
 
-    return kontoInfo.data() as KontoInformation?;
+    return KontoInformation.fromMap(kontoInfo.data()!, kontoInfo.reference);
   }
 
   @override

@@ -51,7 +51,7 @@ class _SalesScreenState extends State<SalesScreen> {
           children: [
             IconButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pop(context,true);
                 },
                 icon: const Icon(
                   Icons.arrow_back,
@@ -139,21 +139,23 @@ class _SalesScreenState extends State<SalesScreen> {
                                                           .documentReference!
                                                           .id);
 
-                                              final updatedInfo =
-                                                  widget.kontoInformation;
-                                              updatedInfo.kontostand =
-                                                  updatedInfo.kontostand! +
-                                                      double.parse(
-                                                          umsatzsummeController
-                                                              .text);
-                                              if (context.mounted) {
-                                                Navigator.of(context).pop();
-                                              }
-                                              await context
-                                                  .read<DatabaseRepository>()
-                                                  .updateKonto(
-                                                      updatedInfo, userId);
-                                              setState(() {});
+                                              setState(() {
+                                                final updatedInfo =
+                                                    widget.kontoInformation;
+                                                updatedInfo
+                                                    .kontostand = updatedInfo
+                                                        .kontostand! +
+                                                    double.parse(
+                                                        umsatzsummeController
+                                                            .text);
+                                                if (context.mounted) {
+                                                  Navigator.of(context).pop();
+                                                }
+                                                context
+                                                    .read<DatabaseRepository>()
+                                                    .updateKonto(
+                                                        updatedInfo, userId);
+                                              });
                                             }
                                           },
                                         ),
@@ -198,7 +200,7 @@ class _SalesScreenState extends State<SalesScreen> {
                           ])),
                     )),
                 SizedBox(
-                  width: 361,
+                  width: 370,
                   child: Center(
                     child: StreamBuilder<List<Umsatz>>(
                       stream: context.read<DatabaseRepository>().getUmsatz(
@@ -229,7 +231,7 @@ class _SalesScreenState extends State<SalesScreen> {
                                 color: const Color.fromARGB(255, 180, 183, 249),
                                 // width: 361,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(20.0),
+                                  padding: const EdgeInsets.all(12.0),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,

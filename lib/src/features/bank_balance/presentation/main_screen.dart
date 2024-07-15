@@ -14,8 +14,7 @@ class MainScreen extends StatefulWidget {
 
   final KontoInformation kontoInformation;
   // Konstruktor
-  const MainScreen(
-      {super.key, required this.kontoInformation});
+  const MainScreen({super.key, required this.kontoInformation});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -23,11 +22,29 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   late DatabaseRepository databaseRepository;
+  late KontoInformation kontoInformation;
 
   @override
   void initState() {
     super.initState();
+    kontoInformation = widget.kontoInformation;
     databaseRepository = context.read<DatabaseRepository>();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<void> aktualisiereKontoInformation() async {
+    final userId = context.read<AuthRepository>().getUserId();
+    final aktualisierteKontoInfo = await databaseRepository.getKontoInfo(
+        userId, kontoInformation.documentReference!.id);
+    if (aktualisierteKontoInfo != null) {
+      setState(() {
+        kontoInformation = aktualisierteKontoInfo;
+      });
+    }
   }
 
   @override
@@ -90,14 +107,18 @@ class _MainScreenState extends State<MainScreen> {
                 SizedBox(
                     width: 361,
                     child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SalesScreen(
-                                        kontoInformation:
-                                            widget.kontoInformation,
-                                      )));
+                        onTap: () async {
+                          bool shouldUpdate = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SalesScreen(
+                                kontoInformation: kontoInformation,
+                              ),
+                            ),
+                          );
+                          if (shouldUpdate) {
+                            await aktualisiereKontoInformation();
+                          }
                         },
                         child: Card(
                             color: const Color.fromARGB(255, 180, 183, 249),
