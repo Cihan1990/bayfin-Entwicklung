@@ -145,4 +145,24 @@ class FirestoreDatabase implements DatabaseRepository {
       }).toList();
     });
   }
+  
+
+  @override
+  Future<void> deleteKonto(String iban, String userId) async {
+    try {
+      final querySnapshot = await _firebaseFirestore
+          .collection('Benutzer')
+          .doc(userId)
+          .collection('Konteninformation')
+          .where('iban', isEqualTo: iban)
+          .get();
+
+      for (final doc in querySnapshot.docs) {
+        await doc.reference.delete();
+      }
+    } catch (e) {
+      print('Fehler beim Löschen des Kontos: $e');
+    }
+  }
 }
+

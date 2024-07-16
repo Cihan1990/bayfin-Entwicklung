@@ -21,8 +21,6 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
   late TextEditingController ibanController;
   late TextEditingController ksController;
 
-  // late TextEditingController idController;
-
   @override
   void initState() {
     super.initState();
@@ -33,8 +31,6 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
     bankController = TextEditingController();
     ibanController = TextEditingController();
     ksController = TextEditingController();
-
-    // idController = TextEditingController();
   }
 
   @override
@@ -42,7 +38,6 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
     bankController.dispose();
     ibanController.dispose();
     ksController.dispose();
-    // idController.dispose();
     super.dispose();
   }
 
@@ -230,39 +225,57 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
   List<Widget> _getBayFinButtons(List<KontoInformation> kontoInfos) {
     List<Widget> buttonList = [];
     for (KontoInformation info in kontoInfos) {
-      buttonList.add(SizedBox(
-        width: 361,
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => MainScreen(
-                  kontoInformation: info,
-                ),
-              ),
+      buttonList.add(
+        Dismissible(
+          key: Key(info.iban), // Each item must have a unique key
+          background: Container(
+            color: Colors.red,
+            alignment: Alignment.centerRight,
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: const Icon(Icons.delete, color: Colors.white),
+          ),
+          direction: DismissDirection.endToStart,
+          onDismissed: (direction) async {
+            await context.read<DatabaseRepository>().deleteKonto(info.iban, context.read<AuthRepository>().getUserId());
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Konto ${info.bank} gelöscht')),
             );
           },
-          child: Card(
-            color: const Color.fromARGB(255, 180, 183, 249),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                children: [
-                  const Text(
-                    "Girokonto",
-                    textAlign: TextAlign.center,
+          child: SizedBox(
+            width: 361,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MainScreen(
+                      kontoInformation: info,
+                    ),
                   ),
-                  Text(
-                    info.iban,
-                    textAlign: TextAlign.center,
+                );
+              },
+              child: Card(
+                color: const Color.fromARGB(255, 180, 183, 249),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Girokonto",
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        info.iban,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
         ),
-      ));
+      );
       buttonList.add(const SizedBox(height: 15));
     }
     return buttonList;
@@ -292,4 +305,6 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
     }
     return null;
   }
+
+  
 }

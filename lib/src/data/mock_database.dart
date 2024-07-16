@@ -90,4 +90,10 @@ class MockDatabase implements DatabaseRepository {
     // TODO: implement getUmsatz
     throw UnimplementedError();
   }
+  
+  @override
+  Future<void> deleteKonto(String iban, String userId) {
+    // TODO: implement deleteKonto
+    throw UnimplementedError();
+  }
 }
