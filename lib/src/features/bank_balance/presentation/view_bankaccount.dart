@@ -1,5 +1,7 @@
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
+import 'package:bayfin/src/features/authentication/presentation/account_edit.dart';
+import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
 import 'package:bayfin/src/features/bank_balance/presentation/main_screen.dart';
@@ -47,7 +49,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-        leading: Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+        leading: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
           IconButton(
             onPressed: () async {
               await showDialog<void>(
@@ -146,7 +148,15 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
               Icons.add_card,
               size: 24,
             ),
-          )
+          ),
+          IconButton(
+              icon: const Icon(Icons.account_circle),
+              onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AccountEditScreen(),
+                    ),
+                  )),
         ]),
         leadingWidth: 200,
         actions: [
@@ -236,7 +246,8 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
           ),
           direction: DismissDirection.endToStart,
           onDismissed: (direction) async {
-            await context.read<DatabaseRepository>().deleteKonto(info.iban, context.read<AuthRepository>().getUserId());
+            await context.read<DatabaseRepository>().deleteKonto(
+                info.iban, context.read<AuthRepository>().getUserId());
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Konto ${info.bank} gelöscht')),
             );
@@ -305,6 +316,4 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
     }
     return null;
   }
-
-  
 }

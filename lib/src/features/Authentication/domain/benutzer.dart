@@ -11,6 +11,7 @@ class Benutzer {
   List<Umsatz> umsatze;
   String userid;
   DocumentReference? documentReference;
+  String? geburtsdatum;
 
   Benutzer({
     required this.benutzername,
@@ -19,6 +20,7 @@ class Benutzer {
     required this.bank,
     required this.umsatze,
     required this.userid,
+    this.geburtsdatum
   });
 
   Map<String, dynamic> toMap() {
@@ -29,10 +31,12 @@ class Benutzer {
       "email": email,
       "telefon": telefon,
       "userid": userid,
+      "geburtsdatum":geburtsdatum
     };
   }
 
-  factory Benutzer.fromMap(Map<String, dynamic> map, List<KontoInformation> kontoInformationen) {
+  factory Benutzer.fromMap(
+      Map<String, dynamic> map, List<KontoInformation> kontoInformationen) {
     return Benutzer(
       benutzername: Name.fromMap(map["benutzername"]),
       email: map["email"],
@@ -41,6 +45,7 @@ class Benutzer {
       umsatze: List<Umsatz>.from(
           map["umsatze"].map((umsatz) => Umsatz.fromMap(umsatz))),
       userid: map["userid"],
+      geburtsdatum: map["geburtsdatum"]
     );
   }
 }
