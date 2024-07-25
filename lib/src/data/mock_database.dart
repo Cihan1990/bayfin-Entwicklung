@@ -96,4 +96,10 @@ class MockDatabase implements DatabaseRepository {
     // TODO: implement deleteKonto
     throw UnimplementedError();
   }
+  
+  @override
+  Future<void> regestraionDataUpload(String anrede, String vorname, String nachname, String gebDatum, String email, String userId) {
+    // TODO: implement regestraionDataUpload
+    throw UnimplementedError();
+  }
 }

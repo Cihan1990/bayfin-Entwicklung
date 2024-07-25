@@ -21,6 +21,7 @@ class RegistrationsText extends StatelessWidget {
       required this.validator,
       required this.autovalidateMode,
       this.keybordtype,
+
       this.color = Colors.white});
 
   @override

@@ -145,7 +145,6 @@ class FirestoreDatabase implements DatabaseRepository {
       }).toList();
     });
   }
-  
 
   @override
   Future<void> deleteKonto(String iban, String userId) async {
@@ -164,5 +163,17 @@ class FirestoreDatabase implements DatabaseRepository {
       print('Fehler beim Löschen des Kontos: $e');
     }
   }
-}
 
+  @override
+  Future<void> regestraionDataUpload(String anrede, String vorname,
+      String nachname, String gebDatum, String email, String userId) async {
+    final result = _firebaseFirestore.collection("Benutzer").doc(userId).set({
+      "userID": userId,
+      "anrede": anrede,
+      "Vorname": vorname,
+      "Nachname": nachname,
+      "Geburtsdatum": gebDatum,
+      "E-mail": email
+    });
+  }
+}

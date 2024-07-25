@@ -1,6 +1,6 @@
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
-import 'package:bayfin/src/features/authentication/presentation/passwort_add_screen.dart';
+import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/pronouns.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/registrations_text.dart';
@@ -23,6 +23,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
   late TextEditingController nachnameController;
   late TextEditingController geburtsdatumController;
   late TextEditingController mailController;
+  late TextEditingController pronounsController;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -32,6 +33,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
     nachnameController = TextEditingController();
     geburtsdatumController = TextEditingController();
     mailController = TextEditingController();
+    pronounsController = TextEditingController();
     _loadUserData();
   }
 
@@ -53,7 +55,8 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
         vornameController.text = benutzer.benutzername.vorname;
         nachnameController.text = benutzer.benutzername.nachname;
         mailController.text = benutzer.email;
-        geburtsdatumController.text = benutzer.geburtsdatum ??'';
+        geburtsdatumController.text = benutzer.geburtsdatum ?? '';
+        pronounsController.text = benutzer.anrede ?? '';
       });
     }
   }
@@ -83,7 +86,10 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                         decorationColor: Color(0xFFFFFFFF),
                         decorationThickness: 1.35)),
                 const SizedBox(height: 25),
-                Prounouns(text: '  Anrede'),
+                Prounouns(
+                  text: '  Anrede',
+                  controller: TextEditingController(),
+                ),
                 const SizedBox(height: 5),
                 const SizedBox(height: 15),
                 RegistrationsText(
@@ -127,7 +133,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              PasswortAddScreen(email: mailController.text),
+                              const LoginScreen(),
                         ),
                       );
                     }

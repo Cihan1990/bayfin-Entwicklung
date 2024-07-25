@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class Prounouns extends StatefulWidget {
   String text;
-  Prounouns({super.key, required this.text});
+  final TextEditingController controller;
+  Prounouns({super.key, required this.text, required this.controller});
 
   @override
   State<Prounouns> createState() => _ProunounsState();
@@ -33,6 +34,7 @@ class _ProunounsState extends State<Prounouns> {
                 borderRadius: BorderRadius.circular(10)),
             child: DropdownButtonHideUnderline(
                 child: DropdownButton(
+
                     value: selectedGenders,
                     icon: const Icon(Icons.arrow_drop_down),
                     iconSize: 24,
@@ -40,6 +42,7 @@ class _ProunounsState extends State<Prounouns> {
                     onChanged: (String? newValue) {
                       setState(() {
                         selectedGenders = newValue!;
+                        widget.controller.text = newValue;
                       });
                     },
                     items: genders.map((String items) {

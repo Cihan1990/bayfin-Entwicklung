@@ -1,4 +1,5 @@
 import 'package:bayfin/src/data/auth_repository.dart';
+import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/Authentication/presentation/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -7,8 +8,12 @@ class PasswortAddScreen extends StatefulWidget {
   // Attribute
 
   final String email;
+  final String vorname;
+  final String nachname;
+  final String geburtsdatum;
+  final String pronouns;
   // Konstruktor
-  const PasswortAddScreen({super.key, required this.email});
+  const PasswortAddScreen({super.key, required this.email, required this.vorname, required this.nachname, required this.geburtsdatum, required this.pronouns});
 
   @override
   State<PasswortAddScreen> createState() => _PasswortAddScreenState();
@@ -20,9 +25,36 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
 
   final TextEditingController _passwordField1 = TextEditingController();
   final TextEditingController _passwordField2 = TextEditingController();
+  late TextEditingController vornameController;
+  late TextEditingController nachnameController;
+  late TextEditingController geburtsdatumController;
+  late TextEditingController mailController;
+  late TextEditingController pronounsController;
+
+  @override
+  void initState() {
+    super.initState();
+    vornameController = TextEditingController();
+    nachnameController = TextEditingController();
+    geburtsdatumController = TextEditingController();
+    mailController = TextEditingController();
+    pronounsController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    vornameController.dispose();
+    nachnameController.dispose();
+    geburtsdatumController.dispose();
+    mailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<DatabaseRepository>(context);
+    final authProvider = Provider.of<AuthRepository>(context);
+
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.primary,
         body: SingleChildScrollView(
@@ -120,6 +152,13 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                           .read<AuthRepository>()
                           .signUpWithEmailAndPassword(
                               widget.email, _passwordField1.text);
+                      await provider.regestraionDataUpload(
+                          widget.pronouns,
+                          widget.vorname,
+                          widget.nachname,
+                        widget.geburtsdatum,
+                          widget.email,
+                          authProvider.getUserId());
                     },
                   ),
                   const SizedBox(height: 20),

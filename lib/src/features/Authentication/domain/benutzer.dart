@@ -12,16 +12,17 @@ class Benutzer {
   String userid;
   DocumentReference? documentReference;
   String? geburtsdatum;
+  String? anrede;
 
-  Benutzer({
-    required this.benutzername,
-    required this.email,
-    required this.telefon,
-    required this.bank,
-    required this.umsatze,
-    required this.userid,
-    this.geburtsdatum
-  });
+  Benutzer(
+      {required this.benutzername,
+      required this.email,
+      required this.telefon,
+      required this.bank,
+      required this.umsatze,
+      required this.userid,
+      this.anrede,
+      this.geburtsdatum});
 
   Map<String, dynamic> toMap() {
     return {
@@ -31,21 +32,22 @@ class Benutzer {
       "email": email,
       "telefon": telefon,
       "userid": userid,
-      "geburtsdatum":geburtsdatum
+      "geburtsdatum": geburtsdatum,
+      "anrede": anrede,
     };
   }
 
   factory Benutzer.fromMap(
       Map<String, dynamic> map, List<KontoInformation> kontoInformationen) {
     return Benutzer(
-      benutzername: Name.fromMap(map["benutzername"]),
-      email: map["email"],
-      telefon: map["telefon"],
-      bank: kontoInformationen,
-      umsatze: List<Umsatz>.from(
-          map["umsatze"].map((umsatz) => Umsatz.fromMap(umsatz))),
-      userid: map["userid"],
-      geburtsdatum: map["geburtsdatum"]
-    );
+        benutzername: Name.fromMap(map["benutzername"]),
+        email: map["email"],
+        telefon: map["telefon"],
+        bank: kontoInformationen,
+        umsatze: List<Umsatz>.from(
+            map["umsatze"].map((umsatz) => Umsatz.fromMap(umsatz))),
+        userid: map["userid"],
+        geburtsdatum: map["geburtsdatum"],
+        anrede: map["anrede"]);
   }
 }
