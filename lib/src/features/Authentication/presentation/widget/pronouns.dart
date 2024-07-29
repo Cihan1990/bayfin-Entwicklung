@@ -13,7 +13,7 @@ class Prounouns extends StatefulWidget {
 
 class _ProunounsState extends State<Prounouns> {
   List<String> genders = ["", "Herr", "Frau", "Divers"];
-  late String selectedGenders = genders.first;
+  late String selectedGenders = widget.controller.text;
   @override
   Widget build(BuildContext context) {
     return Column(children: [

@@ -24,19 +24,16 @@ class FirestoreDatabase implements DatabaseRepository {
       return null;
     }
 
-    // Get bank accounts for the user (assuming a 'userId' field in bank_accounts)
     final bankAccountsSnapshot = await _firebaseFirestore
         .collection('Konteninformation')
-        .where('userId', isEqualTo: userid)
+        .where('userID', isEqualTo: userid)
         .get();
     final bankAccounts = bankAccountsSnapshot.docs
         .map((doc) => KontoInformation.fromMap(doc.data(), doc.reference))
         .toList();
 
-    // Get user data
     final user = Benutzer.fromMap(userMap, bankAccounts);
 
-    // Set bank accounts on the user object
     user.bank = bankAccounts;
 
     return user;
@@ -175,5 +172,39 @@ class FirestoreDatabase implements DatabaseRepository {
       "Geburtsdatum": gebDatum,
       "E-mail": email
     });
+  }
+
+  @override
+  Future<Benutzer?> loadUserData(String userID) async {
+    try {
+      final snapshot =
+          await _firebaseFirestore.collection("Benutzer").doc(userID).get();
+      if (!snapshot.exists) {
+        return null;
+      }
+
+      print("testtt: ${snapshot.data()}", );
+      return Benutzer.fromMap2(
+          snapshot.data() as Map<String, dynamic>);
+    } catch (e) {
+      print("Error: {$e}" );
+      //// Debug-Ausgabe
+      return null;
+    }
+  }
+
+  @override
+  Future<void> updateUserData(String userId, Benutzer user) async {
+    try {
+      await _firebaseFirestore.collection('users').doc(userId).update({
+        'vorname': user.vorname,
+        'nachname': user.nachname,
+        'geburtsdatum': user.geburtsdatum,
+        'email': user.email,
+        'anrede': user.anrede,
+      });
+    } catch (e) {
+      throw Exception('Failed to update user data: $e');
+    }
   }
 }

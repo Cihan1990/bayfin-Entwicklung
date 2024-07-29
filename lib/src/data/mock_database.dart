@@ -1,6 +1,5 @@
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
-import 'package:bayfin/src/features/authentication/domain/name.dart';
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
 import 'package:bayfin/src/features/bank_balance/domain/umsatz.dart';
 
@@ -8,9 +7,9 @@ class MockDatabase implements DatabaseRepository {
 // Simulierte Datenbank= Benutzerliste
   List<Benutzer> benutzerliste = [
     Benutzer(
-        benutzername: Name(vorname: "Cihan", nachname: "Oezdemir"),
+        vorname: "Cihan",
+        nachname: "Oezdemir",
         email: "Cihan.52@hotmail.de",
-        telefon: "123123432",
         bank: [
           KontoInformation(
               bank: "Sparkasse",
@@ -38,13 +37,14 @@ class MockDatabase implements DatabaseRepository {
   }
 
   @override
-  Future<void> addUmsatz(Umsatz neuerUmsatz, String userid,String kontoId) async {
+  Future<void> addUmsatz(
+      Umsatz neuerUmsatz, String userid, String kontoId) async {
     await Future.delayed(const Duration(seconds: 2));
     // wir suchen den User mit der UserID und fügen den neuen umsatz dem user hinzu
     for (var benutzer in benutzerliste) {
       // wenn user nicht vorhanden, wird kein umsatz hinzugefügt
       if (benutzer.userid == userid) {
-        benutzer.umsatze.add(neuerUmsatz);
+        benutzer.umsatze?.add(neuerUmsatz);
       }
     }
   }
@@ -55,7 +55,7 @@ class MockDatabase implements DatabaseRepository {
     await Future.delayed(const Duration(seconds: 2));
     for (var benutzer in benutzerliste) {
       if (benutzer.userid == userid) {
-        benutzer.bank.add(neueKontoInformation);
+        benutzer.bank?.add(neueKontoInformation);
       }
     }
   }
@@ -90,16 +90,29 @@ class MockDatabase implements DatabaseRepository {
     // TODO: implement getUmsatz
     throw UnimplementedError();
   }
-  
+
   @override
   Future<void> deleteKonto(String iban, String userId) {
     // TODO: implement deleteKonto
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> regestraionDataUpload(String anrede, String vorname,
+      String nachname, String gebDatum, String email, String userId) {
+    // TODO: implement regestraionDataUpload
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Benutzer?> loadUserData(String userID) {
+    // TODO: implement loadUserData
+    throw UnimplementedError();
+  }
   
   @override
-  Future<void> regestraionDataUpload(String anrede, String vorname, String nachname, String gebDatum, String email, String userId) {
-    // TODO: implement regestraionDataUpload
+  Future<void> updateUserData(String userId, Benutzer user) {
+    // TODO: implement updateUserData
     throw UnimplementedError();
   }
 }

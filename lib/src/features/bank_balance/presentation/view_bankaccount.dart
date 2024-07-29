@@ -259,7 +259,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => MainScreen(
-                      kontoInformation: info,
+                      kontoInformation: info
                     ),
                   ),
                 );
