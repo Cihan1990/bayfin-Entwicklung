@@ -175,10 +175,10 @@ class FirestoreDatabase implements DatabaseRepository {
   }
 
   @override
-  Future<Benutzer?> loadUserData(String userID) async {
+  Future<Benutzer?> loadUserData(String userId) async {
     try {
       final snapshot =
-          await _firebaseFirestore.collection("Benutzer").doc(userID).get();
+          await _firebaseFirestore.collection("Benutzer").doc(userId).get();
       if (!snapshot.exists) {
         return null;
       }
@@ -196,7 +196,7 @@ class FirestoreDatabase implements DatabaseRepository {
   @override
   Future<void> updateUserData(String userId, Benutzer user) async {
     try {
-      await _firebaseFirestore.collection('users').doc(userId).update({
+      await _firebaseFirestore.collection('Benutzer').doc(userId).update({
         'vorname': user.vorname,
         'nachname': user.nachname,
         'geburtsdatum': user.geburtsdatum,
@@ -204,7 +204,7 @@ class FirestoreDatabase implements DatabaseRepository {
         'anrede': user.anrede,
       });
     } catch (e) {
-      throw Exception('Failed to update user data: $e');
+      throw Exception('Fehler bei der Änderung der Daten!');
     }
   }
 }

@@ -8,7 +8,7 @@ class Benutzer {
   String email;
   List<KontoInformation>? bank;
   List<Umsatz>? umsatze;
-  String userid;
+  String? userid;
   DocumentReference? documentReference;
   String? geburtsdatum;
   String? anrede;
@@ -19,7 +19,7 @@ class Benutzer {
       required this.email,
       this.bank,
       this.umsatze,
-      required this.userid,
+      this.userid,
       this.anrede,
       this.geburtsdatum});
 
@@ -52,13 +52,13 @@ class Benutzer {
 
   factory Benutzer.fromMap2(Map<String, dynamic> map) {
     return Benutzer(
-        vorname: map["Vorname"],
-        nachname: map["Nachname"],
-        email: map["E-mail"],
+        vorname: map["vorname"],
+        nachname: map["nachname"],
+        email: map["email"],
         bank: null,
         umsatze: null,
-        userid: map["userID"],
-        geburtsdatum: map["Geburtsdatum"],
-        anrede: map["Anrede"]);
+        
+        geburtsdatum: map["geburtsdatum"],
+        anrede: map["anrede"]);
   }
 }

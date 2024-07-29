@@ -10,9 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AccountEditScreen extends StatefulWidget {
-  // Attribute
-
-  // Konstruktor
   const AccountEditScreen({super.key});
 
   @override
@@ -35,7 +32,6 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
     geburtsdatumController = TextEditingController();
     mailController = TextEditingController();
     pronounsController = TextEditingController();
-    //_loadUserData();
   }
 
   @override
@@ -44,11 +40,9 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
     nachnameController.dispose();
     geburtsdatumController.dispose();
     mailController.dispose();
+    pronounsController.dispose();
     super.dispose();
   }
-
-  
-  
 
   @override
   Widget build(BuildContext context) {
@@ -62,116 +56,138 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
               future: context.read<DatabaseRepository>().loadUserData(userId),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Fehler: ${snapshot.error}'));
-            } else if (!snapshot.hasData || snapshot.data == null) {
-              return const Icon(Icons.error);
-            } else {
-                final Benutzer user = snapshot.data!;
-                return Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 55),
-                      LogoWidget(width: 217, height: 76),
-                      const SizedBox(height: 10),
-                      const Text('Perönliche Daten',
-                          style: TextStyle(
-                              shadows: [
-                                Shadow(
-                                    color: Colors.white, offset: Offset(0, -5))
-                              ],
-                              color: Colors.transparent,
-                              fontSize: 18,
-                              decoration: TextDecoration.underline,
-                              decorationColor: Color(0xFFFFFFFF),
-                              decorationThickness: 1.35)),
-                      const SizedBox(height: 25),
-                      Prounouns(
-                        text: '  Anrede',
-                        controller: TextEditingController(text: user.anrede),
-                       
-                      ),
-                      const SizedBox(height: 5),
-                      const SizedBox(height: 15),
-                      RegistrationsText(
-                        controller: TextEditingController(text: user.vorname),
-                        text: '  Vorname',
-                        validator: validateVn,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                      ),
-                      const SizedBox(height: 5),
-                      const SizedBox(height: 10),
-                      RegistrationsText(
-                        controller: TextEditingController(text: user.nachname),
-                        text: '  Nachname',
-                        validator: validateNn,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                      ),
-                      const SizedBox(height: 5),
-                      const SizedBox(height: 10),
-                      RegistrationsText(
-                        controller: TextEditingController(text: user.geburtsdatum),
-                        text: '  Geburtsdatum',
-                        hinttext: 'TT.MM.JJJJ',
-                        validator: validateGb,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                      ),
-                      const SizedBox(height: 5),
-                      const SizedBox(height: 10),
-                      RegistrationsText(
-                        controller: TextEditingController(text: user.email),
-                        validator: validateEmail,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        text: '  E-Mail Adresse',
-                      ),
-                      const SizedBox(height: 5),
-                      const SizedBox(height: 110),
-                      ElevatedButton(
-                        child: const Text('Änderungen übernehmen'),
-                        onPressed: () {
-                          if (_formKey.currentState?.validate() ?? false) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
-                              ),
-                            );
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Fehler: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data == null) {
+                  return const Icon(Icons.error);
+                } else {
+                  final Benutzer user = snapshot.data!;
+                  // Initialize controllers with user data
+                  vornameController.text = user.vorname;
+                  nachnameController.text = user.nachname;
+                  geburtsdatumController.text = user.geburtsdatum ?? '';
+                  mailController.text = user.email;
+                  pronounsController.text = user.anrede ?? '';
+
+                  return Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 55),
+                        LogoWidget(width: 217, height: 76),
+                        const SizedBox(height: 10),
+                        const Text('Persönliche Daten',
+                            style: TextStyle(
+                                shadows: [
+                                  Shadow(
+                                      color: Colors.white,
+                                      offset: Offset(0, -5))
+                                ],
+                                color: Colors.transparent,
+                                fontSize: 18,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Color(0xFFFFFFFF),
+                                decorationThickness: 1.35)),
+                        const SizedBox(height: 25),
+                        Prounouns(
+                          text: '  Anrede',
+                          controller: pronounsController,
+                        ),
+                        const SizedBox(height: 5),
+                        const SizedBox(height: 15),
+                        RegistrationsText(
+                          controller: vornameController,
+                          text: '  Vorname',
+                          validator: validateVn,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                        ),
+                        const SizedBox(height: 5),
+                        const SizedBox(height: 10),
+                        RegistrationsText(
+                          controller: nachnameController,
+                          text: '  Nachname',
+                          validator: validateNn,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                        ),
+                        const SizedBox(height: 5),
+                        const SizedBox(height: 10),
+                        RegistrationsText(
+                          controller: geburtsdatumController,
+                          text: '  Geburtsdatum',
+                          hinttext: 'TT.MM.JJJJ',
+                          validator: validateGb,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                        ),
+                        const SizedBox(height: 5),
+                        const SizedBox(height: 10),
+                        RegistrationsText(
+                          controller: mailController,
+                          validator: validateEmail,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          text: '  E-Mail Adresse',
+                        ),
+                        const SizedBox(height: 5),
+                        const SizedBox(height: 110),
+                        ElevatedButton(
+                          child: const Text('Änderungen übernehmen'),
+                          onPressed: () async {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              final updatedUser = Benutzer(
+                                  vorname: vornameController.text,
+                                  nachname: nachnameController.text,
+                                  geburtsdatum: geburtsdatumController.text,
+                                  email: mailController.text,
+                                  anrede: pronounsController.text,
+                                  userid: userId);
+
+                              await context
+                                  .read<DatabaseRepository>()
+                                  .updateUserData(userId, updatedUser);
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             TextButton(
-                                onPressed: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ViewBankaccount(),
-                                      ));
-                                },
-                                child: const Text("Zurück zur Kontoübersicht",
-                                    style: TextStyle(
-                                      shadows: [
-                                        Shadow(
-                                            color: Colors.white,
-                                            offset: Offset(0, -5))
-                                      ],
-                                      color: Colors.transparent,
-                                      fontSize: 16,
-                                      decoration: TextDecoration.underline,
-                                      decorationColor: Color(0xFFFFFFFF),
-                                      decorationThickness: 1.35,
-                                    ))),
-                          ]),
-                    ],
-                  ),
-                );
-              }}),
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ViewBankaccount(),
+                                  ),
+                                );
+                              },
+                              child: const Text("Zurück zur Kontoübersicht",
+                                  style: TextStyle(
+                                    shadows: [
+                                      Shadow(
+                                          color: Colors.white,
+                                          offset: Offset(0, -5))
+                                    ],
+                                    color: Colors.transparent,
+                                    fontSize: 16,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: Color(0xFFFFFFFF),
+                                    decorationThickness: 1.35,
+                                  )),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              }),
         ),
       ),
     );
