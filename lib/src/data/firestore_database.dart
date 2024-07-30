@@ -166,11 +166,11 @@ class FirestoreDatabase implements DatabaseRepository {
       String nachname, String gebDatum, String email, String userId) async {
     final result = _firebaseFirestore.collection("Benutzer").doc(userId).set({
       "userID": userId,
-      "Anrede": anrede,
-      "Vorname": vorname,
-      "Nachname": nachname,
-      "Geburtsdatum": gebDatum,
-      "E-mail": email
+      "anrede": anrede,
+      "vorname": vorname,
+      "nachname": nachname,
+      "geburtsdatum": gebDatum,
+      "email": email
     });
   }
 

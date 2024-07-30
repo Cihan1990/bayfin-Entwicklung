@@ -30,7 +30,6 @@ class Benutzer {
       "bank": bank?.map((konto) => konto.toMap()).toList(),
       "umsatze": umsatze?.map((umsatz) => umsatz.toMap()).toList(),
       "email": email,
-      "userid": userid,
       "geburtsdatum": geburtsdatum,
       "anrede": anrede,
     };
@@ -57,7 +56,6 @@ class Benutzer {
         email: map["email"],
         bank: null,
         umsatze: null,
-        
         geburtsdatum: map["geburtsdatum"],
         anrede: map["anrede"]);
   }
