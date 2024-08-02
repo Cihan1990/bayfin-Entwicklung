@@ -170,7 +170,7 @@ class FirestoreDatabase implements DatabaseRepository {
       "vorname": vorname,
       "nachname": nachname,
       "geburtsdatum": gebDatum,
-      "email": email
+      "email": email,
     });
   }
 
@@ -183,11 +183,9 @@ class FirestoreDatabase implements DatabaseRepository {
         return null;
       }
 
-      print("testtt: ${snapshot.data()}", );
-      return Benutzer.fromMap2(
-          snapshot.data() as Map<String, dynamic>);
+      return Benutzer.fromMap2(snapshot.data() as Map<String, dynamic>);
     } catch (e) {
-      print("Error: {$e}" );
+      print("Error: {$e}");
       //// Debug-Ausgabe
       return null;
     }
@@ -205,6 +203,26 @@ class FirestoreDatabase implements DatabaseRepository {
       });
     } catch (e) {
       throw Exception('Fehler bei der Änderung der Daten!');
+    }
+  }
+
+  @override
+  Future<void> deleteUserData(String userId) async {
+    try {
+      final querySnapshot = await _firebaseFirestore
+          .collection('Benutzer')
+          .doc(userId)
+          .collection('Konteninformation')
+          .get();
+
+      for (final doc in querySnapshot.docs) {
+        await doc.reference.delete();
+      }
+       
+      await _firebaseFirestore.collection('Benutzer').doc(userId).delete();
+      
+    } catch (e) {
+      throw Exception('Fehler beim Löschen der Daten!');
     }
   }
 }

@@ -115,4 +115,10 @@ class MockDatabase implements DatabaseRepository {
     // TODO: implement updateUserData
     throw UnimplementedError();
   }
+  
+  @override
+  Future<void> deleteUserData(String userId) {
+    // TODO: implement deleteUserData
+    throw UnimplementedError();
+  }
 }

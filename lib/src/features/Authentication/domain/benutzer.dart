@@ -38,15 +38,15 @@ class Benutzer {
   factory Benutzer.fromMap(
       Map<String, dynamic> map, List<KontoInformation>? kontoInformationen) {
     return Benutzer(
-        vorname: map["Vorname"],
-        nachname: map["Nachname"],
-        email: map["E-mail"],
+        vorname: map["vorname"],
+        nachname: map["nachname"],
+        email: map["email"],
         bank: kontoInformationen,
         umsatze: List<Umsatz>.from(
-            map["Umsatze"].map((umsatz) => Umsatz.fromMap(umsatz))),
-        userid: map["userID"],
-        geburtsdatum: map["Geburtsdatum"],
-        anrede: map["Anrede"]);
+            map["umsatze"].map((umsatz) => Umsatz.fromMap(umsatz))),
+        geburtsdatum: map["geburtsdatum"],
+        userid: map["userid"],
+        anrede: map["anrede"]);
   }
 
   factory Benutzer.fromMap2(Map<String, dynamic> map) {

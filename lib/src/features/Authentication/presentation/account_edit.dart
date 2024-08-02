@@ -44,6 +44,21 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
     super.dispose();
   }
 
+  Future<void> _deleteAccount(String userId) async {
+    try {
+      await context.read<AuthRepository>().deleteAccount(userId);
+
+      await context.read<DatabaseRepository>().deleteUserData(userId);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Fehler beim Löschen des Accounts!')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final userId = context.read<AuthRepository>().getUserId();
@@ -75,7 +90,20 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                     child: Column(
                       children: [
                         const SizedBox(height: 55),
-                        LogoWidget(width: 217, height: 76),
+                        Row(
+                          children: [
+                            const Spacer(
+                              flex: 3,
+                            ),
+                            LogoWidget(width: 217, height: 76),
+                            const Spacer(),
+                            IconButton(
+                              onPressed: () => _deleteAccount(userId),
+                              icon: const Icon(Icons.delete_forever),
+                              color: Colors.white,
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 10),
                         const Text('Persönliche Daten',
                             style: TextStyle(
@@ -147,7 +175,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const LoginScreen(),
+                                  builder: (context) => const ViewBankaccount(),
                                 ),
                               );
                             }

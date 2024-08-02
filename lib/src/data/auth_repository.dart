@@ -48,4 +48,16 @@ class AuthRepository {
   Stream<User?> authStateChanges() {
     return _firebaseAuth.authStateChanges();
   }
+ 
+ Future<void> deleteAccount(String userId) async {
+    try {
+      // Löscht den aktuell angemeldeten Benutzer
+      await _firebaseAuth.currentUser?.delete();
+    } catch (e) {
+      // Hier kannst du eventuell Fehler-Handling hinzufügen
+      print('Fehler beim Löschen des Accounts: $e');
+      rethrow;
+    }
+  }
+
 }

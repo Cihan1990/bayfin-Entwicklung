@@ -71,7 +71,12 @@ class _MainScreenState extends State<MainScreen> {
       body: FutureBuilder(
           future: context.read<DatabaseRepository>().loadUserData(userId),
           builder: (context, snapshot) {
-            final Benutzer user = snapshot.data!;
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return const Icon(Icons.error);
+                  } else if (snapshot.hasData) {
+                    final Benutzer user = snapshot.data!;
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(10),
@@ -232,7 +237,13 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
             );
-          }),
+          }
+                   else {
+                    return const Text('Keine Kontodaten gefunden.');
+                  }
+
+                }
+            ),
     );
   }
 }

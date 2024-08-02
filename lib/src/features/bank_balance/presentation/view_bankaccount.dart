@@ -129,7 +129,9 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                                               .read<AuthRepository>()
                                               .getUserId(),
                                         );
-
+                                    bankController.clear();
+                                    ibanController.clear();
+                                    ksController.clear();
                                     Navigator.of(context).pop();
                                   }
                                 },
@@ -258,9 +260,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MainScreen(
-                      kontoInformation: info
-                    ),
+                    builder: (context) => MainScreen(kontoInformation: info),
                   ),
                 );
               },
