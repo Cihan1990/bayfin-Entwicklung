@@ -77,73 +77,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  // Container(
-                  //   alignment: Alignment.centerLeft,
-                  //   child: const Text('  Neues Passwort',
-                  //       style: TextStyle(color: Colors.white)),
-                  // ),
-                  // const SizedBox(height: 5),
-                  // TextFormField(
-                  //   obscureText: !showPassword,
-                  //   enableSuggestions: false,
-                  //   autocorrect: false,
-                  //   controller: _passwordField1,
-                  //   validator: validatePw,
-                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  //   decoration: InputDecoration(
-                  //     errorStyle: TextStyle(color: Colors.grey.shade400),
-                  //     suffixIcon: IconButton(
-                  //       onPressed: () {
-                  //         setState(() {
-                  //           showPassword = !showPassword;
-                  //         });
-                  //       },
-                  //       icon: showPassword
-                  //           ? const Icon(Icons.visibility_off)
-                  //           : const Icon(Icons.visibility),
-                  //     ),
-                  //     contentPadding:
-                  //         const EdgeInsets.only(top: 0.0, left: 10, right: 10),
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(11.0),
-                  //     ),
-                  //     filled: true,
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 10),
-                  // Container(
-                  //   alignment: Alignment.centerLeft,
-                  //   child: const Text('   Neues Passwort wiederholen',
-                  //       style: TextStyle(color: Colors.white)),
-                  // ),
-                  // const SizedBox(height: 5),
-                  // TextFormField(
-                  //   obscureText: !showPasswordRepeated,
-                  //   enableSuggestions: false,
-                  //   controller: _passwordField2,
-                  //   validator: validatePw,
-                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  //   autocorrect: false,
-                  //   decoration: InputDecoration(
-                  //     errorStyle: TextStyle(color: Colors.grey.shade400),
-                  //     suffixIcon: IconButton(
-                  //       onPressed: () {
-                  //         setState(() {
-                  //           showPasswordRepeated = !showPasswordRepeated;
-                  //         });
-                  //       },
-                  //       icon: showPasswordRepeated
-                  //           ? const Icon(Icons.visibility_off)
-                  //           : const Icon(Icons.visibility),
-                  //     ),
-                  //     contentPadding:
-                  //         const EdgeInsets.only(top: 0.0, left: 10, right: 10),
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(11.0),
-                  //     ),
-                  //     filled: true,
-                  //   ),
-                  // ),
+                 
                   const SizedBox(height: 65),
                   ElevatedButton(
                     child: const Text('Passwort zurücksetzen'),
