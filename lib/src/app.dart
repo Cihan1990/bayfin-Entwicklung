@@ -21,6 +21,7 @@ class App extends StatelessWidget {
         builder: (context, snapshot) {
           final user = snapshot.data;
           return MaterialApp(
+              debugShowCheckedModeBanner: false,
               key: user == null ? loginKey : viewBkKey,
               theme: FlexThemeData.light(
                 colors: const FlexSchemeColor(
