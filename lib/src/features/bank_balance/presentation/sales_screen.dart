@@ -1,5 +1,6 @@
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
+import 'package:bayfin/src/features/authentication/application/validators.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/registrations_text.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/transaction_info.dart';
@@ -217,7 +218,7 @@ class _SalesScreenState extends State<SalesScreen> {
                             transactionliste.add(TransactionInfo(
                               firmName: u.umsatzname,
                               type: u.type,
-                              firmLogoPath: "assets/images/vodafonelogo.png",
+            
                               amount: u.betrag,
                             ));
                           }
@@ -271,26 +272,5 @@ class _SalesScreenState extends State<SalesScreen> {
     );
   }
 
-  String? validateUmsatzbz(String? input) {
-    if (input == null || input.isEmpty) {
-      return 'Bitte Umsatzbezeichnung eingeben';
-    }
-    return null;
-  }
-
-  String? validateUmsatzsumme(String? input) {
-    if (input == null || input.isEmpty) {
-      return 'Bitte Umsatzsumme eingeben';
-    }
-    return null;
-  }
-
-  bool checkIfUmsatzIsMinus(String umsatz) {
-    // Überprüfen, ob der String ein Minuszeichen enthält
-    if (umsatz.contains('-')) {
-      return false;
-    } else {
-      return true;
-    }
-  }
+ 
 }

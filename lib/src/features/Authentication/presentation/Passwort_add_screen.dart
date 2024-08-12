@@ -1,6 +1,7 @@
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/Authentication/presentation/registration_screen.dart';
+import 'package:bayfin/src/features/authentication/application/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -193,16 +194,5 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
         ));
   }
 
-  String? validatePw(String? input) {
-    if (_passwordField1.text != _passwordField2.text) {
-      return "Passwörter stimmen nicht überein";
-    }
-    if (input == null || input.isEmpty) {
-      return "Bitte Passwort eingeben";
-    }
-    if (input.length < 6 || input.length > 12) {
-      return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
-    }
-    return null;
-  }
+  
 }

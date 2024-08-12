@@ -37,8 +37,7 @@ class _MainScreenState extends State<MainScreen> {
     super.dispose();
   }
 
-  Future<void> aktualisiereKontoInformation() async {
-    final userId = context.read<AuthRepository>().getUserId();
+  Future<void> aktualisiereKontoInformation(userId) async {
     final aktualisierteKontoInfo = await databaseRepository.getKontoInfo(
         userId, kontoInformation.documentReference!.id);
     if (aktualisierteKontoInfo != null) {
@@ -71,179 +70,175 @@ class _MainScreenState extends State<MainScreen> {
       body: FutureBuilder(
           future: context.read<DatabaseRepository>().loadUserData(userId),
           builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return const Icon(Icons.error);
-                  } else if (snapshot.hasData) {
-                    final Benutzer user = snapshot.data!;
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Form(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 0),
-                      LogoWidget(width: 217, height: 76),
-                      const SizedBox(height: 20),
-                      Row(
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return const Icon(Icons.error);
+            } else if (snapshot.hasData) {
+              final Benutzer user = snapshot.data!;
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Form(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 0),
+                        LogoWidget(width: 217, height: 76),
+                        const SizedBox(height: 20),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: 96,
+                                height: 20,
+                                child: Text(
+                                  'Guten Tag ',
+                                  style: Theme.of(context).textTheme.labelLarge,
+                                ),
+                              ),
+                            ]),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            const SizedBox(width: 10),
+                            const SizedBox(width: 6),
                             SizedBox(
-                              width: 96,
-                              height: 20,
+                              width: 113,
+                              height: 40,
                               child: Text(
-                                'Guten Tag ',
-                                style: Theme.of(context).textTheme.labelLarge,
+                                user.vorname,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
                               ),
                             ),
-                          ]),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 6),
-                          SizedBox(
-                            width: 113,
-                            height: 40,
-                            child: Text(
-                              user.vorname,
-                              style: Theme.of(context).textTheme.headlineMedium,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      SizedBox(
-                          width: 361,
-                          child: InkWell(
-                              onTap: () async {
-                                bool shouldUpdate = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SalesScreen(
-                                      kontoInformation: kontoInformation,
-                                    ),
-                                  ),
-                                );
-                                if (shouldUpdate) {
-                                  await aktualisiereKontoInformation();
-                                }
-                              },
-                              child: Card(
-                                  color:
-                                      const Color.fromARGB(255, 180, 183, 249),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: Column(children: [
-                                        Text(
-                                            "${widget.kontoInformation.kontostand}€")
-                                      ]))))),
-                      const SizedBox(height: 15),
-                      Container(
-                        width: 361,
-                        height: 226,
-                        decoration: ShapeDecoration(
-                          image: const DecorationImage(
-                            image: AssetImage('assets/images/aktienbild.png'),
-                            fit: BoxFit.fill,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: 15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(width: 6),
-                          Text(
-                            'Letzte Umsätze',
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 361,
-                        child: Center(
-                          child: StreamBuilder<List<Umsatz>>(
-                            stream: context
-                                .read<DatabaseRepository>()
-                                .getUmsatz(
-                                    userId,
-                                    widget.kontoInformation.documentReference!
-                                        .id),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData &&
-                                  snapshot.connectionState ==
-                                      ConnectionState.active) {
-                                List<Umsatz> umsatzliste = snapshot.data!;
-
-                                List<TransactionInfo> transactionliste = [];
-                                int i = 0;
-                                for (var u in umsatzliste) {
-                                  if (i < 3) {
-                                    transactionliste.add(TransactionInfo(
-                                      firmName: u.umsatzname,
-                                      type: u.type,
-                                      firmLogoPath:
-                                          "assets/images/vodafonelogo.png",
-                                      amount: u.betrag,
-                                    ));
-                                    i++;
-                                  }
-                                }
-                                // FALL: Future ist komplett und hat Daten!
-                                return Column(
-                                  children: [
-                                    Container(
-                                      decoration: const BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 180, 183, 249),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(30))),
-                                      width: 361,
-                                      padding: const EdgeInsets.only(
-                                          left: 20, right: 20, bottom: 30),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          const SizedBox(height: 15),
-                                          ...transactionliste
-                                        ],
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                            width: 361,
+                            child: InkWell(
+                                onTap: () async {
+                                  bool shouldUpdate = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SalesScreen(
+                                        kontoInformation: kontoInformation,
                                       ),
                                     ),
-                                  ],
-                                );
-                              } else if (snapshot.connectionState !=
-                                  ConnectionState.waiting) {
-                                // FALL: Sind noch im Ladezustand
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              } else {
-                                // FALL: Es gab nen Fehler
-                                return const Icon(Icons.error);
-                              }
-                            },
+                                  );
+                                  if (shouldUpdate) {
+                                    await aktualisiereKontoInformation(userId);
+                                  }
+                                },
+                                child: Card(
+                                    color: const Color.fromARGB(
+                                        255, 180, 183, 249),
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(12.0),
+                                        child: Column(children: [
+                                          Text(
+                                              "${widget.kontoInformation.kontostand}€")
+                                        ]))))),
+                        const SizedBox(height: 15),
+                        Container(
+                          width: 361,
+                          height: 226,
+                          decoration: ShapeDecoration(
+                            image: const DecorationImage(
+                              image: AssetImage('assets/images/aktienbild.png'),
+                              fit: BoxFit.fill,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const SizedBox(width: 6),
+                            Text(
+                              'Letzte Umsätze',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 361,
+                          child: Center(
+                            child: StreamBuilder<List<Umsatz>>(
+                              stream: context
+                                  .read<DatabaseRepository>()
+                                  .getUmsatz(
+                                      userId,
+                                      widget.kontoInformation.documentReference!
+                                          .id),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData &&
+                                    snapshot.connectionState ==
+                                        ConnectionState.active) {
+                                  List<Umsatz> umsatzliste = snapshot.data!;
+
+                                  List<TransactionInfo> transactionliste = [];
+                                  int i = 0;
+                                  for (var u in umsatzliste) {
+                                    if (i < 3) {
+                                      transactionliste.add(TransactionInfo(
+                                        firmName: u.umsatzname,
+                                        type: u.type,
+                                        amount: u.betrag,
+                                      ));
+                                      i++;
+                                    }
+                                  }
+                                  // FALL: Future ist komplett und hat Daten!
+                                  return Column(
+                                    children: [
+                                      Container(
+                                        decoration: const BoxDecoration(
+                                            color: Color.fromARGB(
+                                                255, 180, 183, 249),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(30))),
+                                        width: 361,
+                                        padding: const EdgeInsets.only(
+                                            left: 20, right: 20, bottom: 30),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                            const SizedBox(height: 15),
+                                            ...transactionliste
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                } else if (snapshot.connectionState !=
+                                    ConnectionState.waiting) {
+                                  // FALL: Sind noch im Ladezustand
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                } else {
+                                  // FALL: Es gab nen Fehler
+                                  return const Icon(Icons.error);
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          }
-                   else {
-                    return const Text('Keine Kontodaten gefunden.');
-                  }
-
-                }
-            ),
+              );
+            } else {
+              return const Text('Keine Kontodaten gefunden.');
+            }
+          }),
     );
   }
 }

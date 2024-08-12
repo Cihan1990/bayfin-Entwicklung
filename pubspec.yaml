@@ -16,8 +16,8 @@ dependencies:
   flex_color_scheme: ^7.3.1
   firebase_auth: ^5.1.1
   firebase_core: ^3.1.1
-  cloud_firestore: ^5.0.2
   provider: ^6.1.2
+  cloud_firestore: ^5.2.1
 flutter:
   uses-material-design: true
   assets:
@@ -31,6 +31,7 @@ flutter:
     - assets/images/swsglogo.png
     - assets/images/boschlogo.png
     - assets/images/klarnalogo.png
+    - assets/images/platzhalter.jpeg
    
 flutter_launcher_icons:
   image_path: "assets/launcher_icon.png"

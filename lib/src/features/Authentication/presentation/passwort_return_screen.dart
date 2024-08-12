@@ -1,4 +1,5 @@
 import 'package:bayfin/src/data/auth_repository.dart';
+import 'package:bayfin/src/features/authentication/application/validators.dart';
 import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/passwort_return_accept_screen.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,6 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                 
                   const SizedBox(height: 65),
                   ElevatedButton(
                     child: const Text('Passwort zurücksetzen'),
@@ -128,31 +128,5 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                 ]),
               )),
         ));
-  }
-
-  String? validatePw(String? input) {
-    if (_passwordField1.text != _passwordField2.text) {
-      return "Passwörter stimmen nicht überein";
-    }
-    if (input == null || input.isEmpty) {
-      return "Bitte Passwort eingeben";
-    }
-    if (input.length < 6 || input.length > 12) {
-      return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
-    }
-    return null;
-  }
-
-  String? validateName(String? input) {
-    if (input == null || input.isEmpty) {
-      return "Bitte Buntzername/E-Mail Adresse eingeben";
-    }
-    if (!input.contains("@")) {
-      return 'Email muss das Zeichen "@" enthalten';
-    }
-    if (!(input.endsWith(".com") || input.endsWith(".de"))) {
-      return 'Email muss mit ".com" oder ".de" enden';
-    }
-    return null;
   }
 }

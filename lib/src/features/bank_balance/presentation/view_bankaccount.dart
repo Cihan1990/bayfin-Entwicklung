@@ -1,5 +1,6 @@
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
+import 'package:bayfin/src/features/authentication/application/validators.dart';
 import 'package:bayfin/src/features/authentication/presentation/account_edit.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
@@ -291,28 +292,5 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
     return buttonList;
   }
 
-  String? validateIban(String? input) {
-    if (input == null || input.isEmpty) {
-      return 'Bitte IBAN eingeben';
-    }
-    return null;
-  }
-
-  String? validateBk(String? input) {
-    if (input == null || input.isEmpty) {
-      return 'Bitte Bank eingeben';
-    }
-    return null;
-  }
-
-  String? validateKS(String? input) {
-    if (input == null || input.isEmpty) {
-      return 'Bitte Kontostand eingeben';
-    }
-    double? kontostand = double.tryParse(input);
-    if (kontostand == null) {
-      return 'Kontostand muss eine Zahl sein';
-    }
-    return null;
-  }
+ 
 }

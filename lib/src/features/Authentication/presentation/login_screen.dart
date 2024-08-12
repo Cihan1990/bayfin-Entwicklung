@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/features/authentication/presentation/passwort_return_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/registration_screen.dart';
@@ -23,19 +21,19 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late TextEditingController mailController;
+  late TextEditingController _mailController;
   late TextEditingController _pwController;
 
   @override
   void initState() {
     super.initState();
-    mailController = TextEditingController();
+    _mailController = TextEditingController();
     _pwController = TextEditingController();
   }
 
   @override
   void dispose() {
-    mailController.dispose();
+    _mailController.dispose();
     _pwController.dispose();
     super.dispose();
   }
@@ -46,141 +44,233 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        body: SingleChildScrollView(
-            child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Form(
-            child: Column(children: [
-              const SizedBox(height: 75),
-              LogoWidget(width: 385, height: 136),
-              const SizedBox(height: 60),
-              TextFieldAuth(
-                mailController: mailController,
-                pwController: _pwController,
-              ),
-              const SizedBox(height: 0),
-              Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
-                showCreateAccountNotification
-                    ? Text(
-                        "Erstelle dir ein Account!",
-                        style: TextStyle(
-                          textBaseline: TextBaseline.alphabetic,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red.shade200,
-                        ),
-                      )
-                    : SizedBox.shrink(),
-                SizedBox(
-                  width: 55,
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PasswortReturnScreen(),
-                        ));
-                  },
-                  child: Text(
-                    "Passwort vergessen",
-                    style: TextStyle(
-                      textBaseline: TextBaseline.alphabetic,
-                      decoration: TextDecoration.underline,
-                      decorationColor: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.right,
-                  ),
-                )
-              ]),
-              const SizedBox(height: 28),
-              ElevatedButton(
-                child: Text('Login'),
-                onPressed: () async {
-                  try {
-                    await context
-                        .read<AuthRepository>()
-                        .loginWithEmailAndPassword(
-                            mailController.text, _pwController.text);
-                    setState(() {
-                      showCreateAccountNotification = false;
-                    });
-                  } catch (e) {
-                    setState(() {
-                      showCreateAccountNotification = true;
-                    });
-                  }
-                },
-              ),
-              const SizedBox(height: 42),
-              Row(children: <Widget>[
-                Expanded(child: Divider(color: Colors.white)),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Oder",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                Expanded(child: Divider(color: Colors.white)),
-              ]),
-              SizedBox(height: 40),
-              SocialLoginButton(
-                icon: Icon(
-                  Icons.apple,
-                  color: Colors.black,
-                  size: 30,
-                ),
-                text: "Sign in with Apple",
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              SocialLoginButton(
-                icon: Image.asset(
-                  "assets/images/googleimage.png",
-                  height: 22,
-                ),
-                text: "Sign in with Google",
-              ),
-              SizedBox(height: 20),
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 75, horizontal: 10),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Container(
-                    child: Text("Du hast noch keinen Account?",
-                        style: TextStyle(color: Colors.white)),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RegistrationScreen(),
-                          ));
-                    },
-                    child: Text(
-                      "Registrieren",
-                      style: TextStyle(
-                        shadows: const [
-                          Shadow(color: Colors.white, offset: Offset(0, -5))
-                        ],
-                        color: Colors.transparent,
-                        fontSize: 18,
-                        decoration: TextDecoration.underline,
-                        decorationColor: Colors.white,
-                        decorationThickness: 1.35,
-                      ),
-                    ),
-                  )
+                children: [
+                  LogoWidget(width: 373, height: 136),
                 ],
               ),
-            ]),
+              Form(
+                  child: Column(
+                children: [
+                  const SizedBox(height: 60),
+                  TextFieldAuth(
+                    mailController: _mailController,
+                    pwController: _pwController,
+                  ),
+                  if (showCreateAccountNotification)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Erstelle dir ein Account!",
+                              style: TextStyle(
+                                textBaseline: TextBaseline.alphabetic,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red.shade200,
+                              ),
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PasswortReturnScreen()));
+                          },
+                          child: const Text(
+                            "Passwort vergessen",
+                            style: TextStyle(
+                              textBaseline: TextBaseline.alphabetic,
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                      ],
+                    ),
+                  const SizedBox(height: 28),
+                  ElevatedButton(
+                    onPressed: () async {
+                      try {
+                        await context
+                            .read<AuthRepository>()
+                            .loginWithEmailAndPassword(
+                                _mailController.text, _pwController.text);
+                        setState(() {
+                          showCreateAccountNotification = false;
+                        });
+                      } catch (e) {
+                        setState(() {
+                          showCreateAccountNotification = true;
+                        });
+                      }
+                    },
+                    child: const Text("Login"),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 35),
+                    child: Row(children: <Widget>[
+                      Expanded(child: Divider(color: Colors.white)),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "Oder",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      Expanded(child: Divider(color: Colors.white)),
+                    ]),
+                  ),
+                  SocialLoginButton(
+                    icon: const Icon(
+                      Icons.apple,
+                      color: Colors.black,
+                      size: 30,
+                    ),
+                    text: "Sign in with Apple",
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SocialLoginButton(
+                    icon: Image.asset(
+                      "assets/images/googleimage.png",
+                      height: 22,
+                    ),
+                    text: "Sign in with Google",
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 35),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Container(
+                          child: const Text("Du hast noch keinen Account?",
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const RegistrationScreen(),
+                                ));
+                          },
+                          child: const Text(
+                            "Registrieren",
+                            style: TextStyle(
+                              shadows: [
+                                Shadow(
+                                    color: Colors.white, offset: Offset(0, -5))
+                              ],
+                              color: Colors.transparent,
+                              fontSize: 18,
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.white,
+                              decorationThickness: 1.35,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              )),
+            ],
           ),
-        )));
+        ),
+      ),
+    );
   }
 }
+
+
+      //
+
+      //
+
+      //
+      //      
+      //       const SizedBox(height: 42),
+      //       Row(children: <Widget>[
+      //         Expanded(child: Divider(color: Colors.white)),
+      //         Padding(
+      //           padding: const EdgeInsets.all(8.0),
+      //           child: Text(
+      //             "Oder",
+      //             style: TextStyle(color: Colors.white),
+      //           ),
+      //         ),
+      //         Expanded(child: Divider(color: Colors.white)),
+      //       ]),
+      //       SizedBox(height: 40),
+      //       SocialLoginButton(
+      //         icon: Icon(
+      //           Icons.apple,
+      //           color: Colors.black,
+      //           size: 30,
+      //         ),
+      //         text: "Sign in with Apple",
+      //       ),
+      //       SizedBox(
+      //         height: 20,
+      //       ),
+      //       SocialLoginButton(
+      //         icon: Image.asset(
+      //           "assets/images/googleimage.png",
+      //           height: 22,
+      //         ),
+      //         text: "Sign in with Google",
+      //       ),
+      //       SizedBox(height: 20),
+      //       Row(
+      //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //         children: <Widget>[
+      //           Container(
+      //             child: Text("Du hast noch keinen Account?",
+      //                 style: TextStyle(color: Colors.white)),
+      //           ),
+      //           TextButton(
+      //             onPressed: () {
+      //               Navigator.pushReplacement(
+      //                   context,
+      //                   MaterialPageRoute(
+      //                     builder: (context) => RegistrationScreen(),
+      //                   ));
+      //             },
+      //             child: Text(
+      //               "Registrieren",
+      //               style: TextStyle(
+      //                 shadows: const [
+      //                   Shadow(color: Colors.white, offset: Offset(0, -5))
+      //                 ],
+      //                 color: Colors.transparent,
+      //                 fontSize: 18,
+      //                 decoration: TextDecoration.underline,
+      //                 decorationColor: Colors.white,
+      //                 decorationThickness: 1.35,
+      //               ),
+      //             ),
+      //           )
+      //         ],
+      //       ),
+      //     ]),
+      //   ),
+      // ))
+    

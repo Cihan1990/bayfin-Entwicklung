@@ -26,9 +26,10 @@ class TransactionInfo extends StatelessWidget {
             Container(
                 width: 29,
                 height: 29,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
                   image: DecorationImage(
-                    image: AssetImage(firmLogoPath!),
+                    image: AssetImage("assets/images/platzhalter.jpeg"),
                     fit: BoxFit.fill,
                   ),
                 )),
