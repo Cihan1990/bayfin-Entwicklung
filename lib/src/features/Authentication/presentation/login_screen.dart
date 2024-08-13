@@ -8,13 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
-  // Attribute
-
-  // Konstruktor
-  const LoginScreen({
-    super.key,
-  });
-  // Konstruktor
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -43,11 +37,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomInsets = MediaQuery.of(context).viewInsets.bottom;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 75, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 75, horizontal: 10)
+            .copyWith(bottom: 0),
         child: SingleChildScrollView(
+          padding: EdgeInsets.only(bottom: bottomInsets),
           child: Column(
             children: [
               Row(
@@ -56,142 +54,144 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
               Form(
-                  child: Column(
-                children: [
-                  const SizedBox(height: 60),
-                  TextFieldAuth(
-                    mailController: _mailController,
-                    pwController: _pwController,
-                  ),
-                  if (showCreateAccountNotification)
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Erstelle dir ein Account!",
-                              style: TextStyle(
-                                textBaseline: TextBaseline.alphabetic,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.red.shade200,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 60),
+                    TextFieldAuth(
+                      mailController: _mailController,
+                      pwController: _pwController,
+                    ),
+                    if (showCreateAccountNotification)
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Erstelle dir ein Account!",
+                                style: TextStyle(
+                                  textBaseline: TextBaseline.alphabetic,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.red.shade200,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const PasswortReturnScreen()));
-                          },
-                          child: const Text(
-                            "Passwort vergessen",
-                            style: TextStyle(
-                              textBaseline: TextBaseline.alphabetic,
-                              decoration: TextDecoration.underline,
-                              decorationColor: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.white,
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const PasswortReturnScreen()));
+                            },
+                            child: const Text(
+                              "Passwort vergessen",
+                              style: TextStyle(
+                                textBaseline: TextBaseline.alphabetic,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.right,
                             ),
-                            textAlign: TextAlign.right,
                           ),
-                        ),
-                      ],
-                    ),
-                  const SizedBox(height: 28),
-                  ElevatedButton(
-                    onPressed: () async {
-                      try {
-                        await context
-                            .read<AuthRepository>()
-                            .loginWithEmailAndPassword(
-                                _mailController.text, _pwController.text);
-                        setState(() {
-                          showCreateAccountNotification = false;
-                        });
-                      } catch (e) {
-                        setState(() {
-                          showCreateAccountNotification = true;
-                        });
-                      }
-                    },
-                    child: const Text("Login"),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 35),
-                    child: Row(children: <Widget>[
-                      Expanded(child: Divider(color: Colors.white)),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          "Oder",
-                          style: TextStyle(color: Colors.white),
-                        ),
+                        ],
                       ),
-                      Expanded(child: Divider(color: Colors.white)),
-                    ]),
-                  ),
-                  SocialLoginButton(
-                    icon: const Icon(
-                      Icons.apple,
-                      color: Colors.black,
-                      size: 30,
+                    const SizedBox(height: 28),
+                    ElevatedButton(
+                      onPressed: () async {
+                        try {
+                          await context
+                              .read<AuthRepository>()
+                              .loginWithEmailAndPassword(
+                                  _mailController.text, _pwController.text);
+                          setState(() {
+                            showCreateAccountNotification = false;
+                          });
+                        } catch (e) {
+                          setState(() {
+                            showCreateAccountNotification = true;
+                          });
+                        }
+                      },
+                      child: const Text("Login"),
                     ),
-                    text: "Sign in with Apple",
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SocialLoginButton(
-                    icon: Image.asset(
-                      "assets/images/googleimage.png",
-                      height: 22,
-                    ),
-                    text: "Sign in with Google",
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 35),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Container(
-                          child: const Text("Du hast noch keinen Account?",
-                              style: TextStyle(color: Colors.white)),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 35),
+                      child: Row(children: <Widget>[
+                        Expanded(child: Divider(color: Colors.white)),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "Oder",
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RegistrationScreen(),
-                                ));
-                          },
-                          child: const Text(
-                            "Registrieren",
-                            style: TextStyle(
-                              shadows: [
-                                Shadow(
-                                    color: Colors.white, offset: Offset(0, -5))
-                              ],
-                              color: Colors.transparent,
-                              fontSize: 18,
-                              decoration: TextDecoration.underline,
-                              decorationColor: Colors.white,
-                              decorationThickness: 1.35,
+                        Expanded(child: Divider(color: Colors.white)),
+                      ]),
+                    ),
+                    SocialLoginButton(
+                      icon: const Icon(
+                        Icons.apple,
+                        color: Colors.black,
+                        size: 30,
+                      ),
+                      text: "Sign in with Apple",
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SocialLoginButton(
+                      icon: Image.asset(
+                        "assets/images/googleimage.png",
+                        height: 22,
+                      ),
+                      text: "Sign in with Google",
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 40),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          const Text(
+                            "Du hast noch keinen Account?",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const RegistrationScreen(),
+                                  ));
+                            },
+                            child: const Text(
+                              "Registrieren",
+                              style: TextStyle(
+                                shadows: [
+                                  Shadow(
+                                      color: Colors.white,
+                                      offset: Offset(0, -5))
+                                ],
+                                color: Colors.transparent,
+                                fontSize: 18,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.white,
+                                decorationThickness: 1.35,
+                              ),
                             ),
                           ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              )),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -199,78 +199,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
-
-      //
-
-      //
-
-      //
-      //      
-      //       const SizedBox(height: 42),
-      //       Row(children: <Widget>[
-      //         Expanded(child: Divider(color: Colors.white)),
-      //         Padding(
-      //           padding: const EdgeInsets.all(8.0),
-      //           child: Text(
-      //             "Oder",
-      //             style: TextStyle(color: Colors.white),
-      //           ),
-      //         ),
-      //         Expanded(child: Divider(color: Colors.white)),
-      //       ]),
-      //       SizedBox(height: 40),
-      //       SocialLoginButton(
-      //         icon: Icon(
-      //           Icons.apple,
-      //           color: Colors.black,
-      //           size: 30,
-      //         ),
-      //         text: "Sign in with Apple",
-      //       ),
-      //       SizedBox(
-      //         height: 20,
-      //       ),
-      //       SocialLoginButton(
-      //         icon: Image.asset(
-      //           "assets/images/googleimage.png",
-      //           height: 22,
-      //         ),
-      //         text: "Sign in with Google",
-      //       ),
-      //       SizedBox(height: 20),
-      //       Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //         children: <Widget>[
-      //           Container(
-      //             child: Text("Du hast noch keinen Account?",
-      //                 style: TextStyle(color: Colors.white)),
-      //           ),
-      //           TextButton(
-      //             onPressed: () {
-      //               Navigator.pushReplacement(
-      //                   context,
-      //                   MaterialPageRoute(
-      //                     builder: (context) => RegistrationScreen(),
-      //                   ));
-      //             },
-      //             child: Text(
-      //               "Registrieren",
-      //               style: TextStyle(
-      //                 shadows: const [
-      //                   Shadow(color: Colors.white, offset: Offset(0, -5))
-      //                 ],
-      //                 color: Colors.transparent,
-      //                 fontSize: 18,
-      //                 decoration: TextDecoration.underline,
-      //                 decorationColor: Colors.white,
-      //                 decorationThickness: 1.35,
-      //               ),
-      //             ),
-      //           )
-      //         ],
-      //       ),
-      //     ]),
-      //   ),
-      // ))
-    
