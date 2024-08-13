@@ -1,8 +1,7 @@
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
-import 'package:bayfin/src/features/authentication/application/validators.dart';
+import 'package:bayfin/src/features/authentication/presentation/widget/add_umsatz.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
-import 'package:bayfin/src/features/authentication/presentation/widget/registrations_text.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/transaction_info.dart';
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
 import 'package:bayfin/src/features/bank_balance/domain/umsatz.dart';
@@ -52,7 +51,7 @@ class _SalesScreenState extends State<SalesScreen> {
           children: [
             IconButton(
                 onPressed: () {
-                  Navigator.pop(context,true);
+                  Navigator.pop(context, true);
                 },
                 icon: const Icon(
                   Icons.arrow_back,
@@ -83,87 +82,8 @@ class _SalesScreenState extends State<SalesScreen> {
                                     ),
                                   ),
                                 ),
-                                Form(
-                                  key: _formKey,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Padding(
-                                          padding: const EdgeInsets.all(8),
-                                          child: RegistrationsText(
-                                            controller:
-                                                umzatzbezeichnungController,
-                                            validator: validateUmsatzbz,
-                                            autovalidateMode: AutovalidateMode
-                                                .onUserInteraction,
-                                            text: 'Umsatzbezeichnung',
-                                            color: Colors.black,
-                                          )),
-                                      Padding(
-                                          padding: const EdgeInsets.all(8),
-                                          child: RegistrationsText(
-                                              controller: umsatzsummeController,
-                                              autovalidateMode: AutovalidateMode
-                                                  .onUserInteraction,
-                                              validator: validateUmsatzsumme,
-                                              text: 'Umsatzsumme',
-                                              color: Colors.black)),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8),
-                                        child: ElevatedButton(
-                                          child:
-                                              const Text('Umsatz hinzufügen'),
-                                          onPressed: () async {
-                                            if (_formKey.currentState!
-                                                .validate()) {
-                                              final userId = context
-                                                  .read<AuthRepository>()
-                                                  .getCurrentUser()!
-                                                  .uid;
-
-                                              await context
-                                                  .read<DatabaseRepository>()
-                                                  .addUmsatz(
-                                                      Umsatz(
-                                                          betrag: double.parse(
-                                                              umsatzsummeController
-                                                                  .text),
-                                                          umsatzname:
-                                                              umzatzbezeichnungController
-                                                                  .text,
-                                                          type: checkIfUmsatzIsMinus(
-                                                              umsatzsummeController
-                                                                  .text)),
-                                                      userId,
-                                                      widget
-                                                          .kontoInformation
-                                                          .documentReference!
-                                                          .id);
-
-                                              setState(() {
-                                                final updatedInfo =
-                                                    widget.kontoInformation;
-                                                updatedInfo
-                                                    .kontostand = updatedInfo
-                                                        .kontostand! +
-                                                    double.parse(
-                                                        umsatzsummeController
-                                                            .text);
-                                                if (context.mounted) {
-                                                  Navigator.of(context).pop();
-                                                }
-                                                context
-                                                    .read<DatabaseRepository>()
-                                                    .updateKonto(
-                                                        updatedInfo, userId);
-                                              });
-                                            }
-                                          },
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                AddUmsatz(
+                                    kontoInformation: widget.kontoInformation)
                               ],
                             ),
                           ));
@@ -218,7 +138,6 @@ class _SalesScreenState extends State<SalesScreen> {
                             transactionliste.add(TransactionInfo(
                               firmName: u.umsatzname,
                               type: u.type,
-            
                               amount: u.betrag,
                             ));
                           }
@@ -271,6 +190,4 @@ class _SalesScreenState extends State<SalesScreen> {
       ),
     );
   }
-
- 
 }
