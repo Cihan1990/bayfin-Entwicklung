@@ -1,10 +1,10 @@
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
-import 'package:bayfin/src/features/authentication/application/validators.dart';
 import 'package:bayfin/src/features/authentication/presentation/account_edit.dart';
+import 'package:bayfin/src/features/authentication/presentation/widget/add_bankaccount.dart';
+import 'package:bayfin/src/features/authentication/presentation/widget/bayfin_buttons.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
-import 'package:bayfin/src/features/bank_balance/presentation/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,12 +16,7 @@ class ViewBankaccount extends StatefulWidget {
 }
 
 class _ViewBankaccountState extends State<ViewBankaccount> {
-  final _formKey = GlobalKey<FormState>();
-
   late Stream<List<KontoInformation>> konten;
-  late TextEditingController bankController;
-  late TextEditingController ibanController;
-  late TextEditingController ksController;
 
   @override
   void initState() {
@@ -30,16 +25,10 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
     konten = context
         .read<DatabaseRepository>()
         .getKontoInformation(context.read<AuthRepository>().getUserId());
-    bankController = TextEditingController();
-    ibanController = TextEditingController();
-    ksController = TextEditingController();
   }
 
   @override
   void dispose() {
-    bankController.dispose();
-    ibanController.dispose();
-    ksController.dispose();
     super.dispose();
   }
 
@@ -74,73 +63,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                           ),
                         ),
                       ),
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: TextFormField(
-                                controller: bankController,
-                                decoration:
-                                    const InputDecoration(labelText: 'Bank'),
-                                validator: validateBk,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: TextFormField(
-                                controller: ibanController,
-                                decoration:
-                                    const InputDecoration(labelText: 'IBAN'),
-                                validator: validateIban,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: TextFormField(
-                                controller: ksController,
-                                decoration: const InputDecoration(
-                                    labelText: 'Kontostand'),
-                                keyboardType: TextInputType.number,
-                                validator: validateKS,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: ElevatedButton(
-                                child: const Text('Bankkonto hinzufügen'),
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    double? kontostand;
-                                    if (ksController.text.isNotEmpty) {
-                                      kontostand =
-                                          double.tryParse(ksController.text);
-                                    }
-                                    await context
-                                        .read<DatabaseRepository>()
-                                        .addKonto(
-                                          KontoInformation(
-                                            bank: bankController.text,
-                                            iban: ibanController.text,
-                                            kontostand: kontostand,
-                                          ),
-                                          context
-                                              .read<AuthRepository>()
-                                              .getUserId(),
-                                        );
-                                    bankController.clear();
-                                    ibanController.clear();
-                                    ksController.clear();
-                                    Navigator.of(context).pop();
-                                  }
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      const AddBankaccount(),
                     ],
                   ),
                 ),
@@ -219,9 +142,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                   } else if (snapshot.hasError) {
                     return const Icon(Icons.error);
                   } else if (snapshot.hasData) {
-                    return Column(
-                      children: _getBayFinButtons(snapshot.data!),
-                    );
+                    return BayFinButtonList(kontoInfos: snapshot.data!);
                   } else {
                     return const Text('Keine Kontoinformationen gefunden.');
                   }
@@ -233,64 +154,4 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
       ),
     );
   }
-
-  List<Widget> _getBayFinButtons(List<KontoInformation> kontoInfos) {
-    List<Widget> buttonList = [];
-    for (KontoInformation info in kontoInfos) {
-      buttonList.add(
-        Dismissible(
-          key: Key(info.iban), // Each item must have a unique key
-          background: Container(
-            color: Colors.red,
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: const Icon(Icons.delete, color: Colors.white),
-          ),
-          direction: DismissDirection.endToStart,
-          onDismissed: (direction) async {
-            await context.read<DatabaseRepository>().deleteKonto(
-                info.iban, context.read<AuthRepository>().getUserId());
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Konto ${info.bank} gelöscht')),
-            );
-          },
-          child: SizedBox(
-            width: 361,
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MainScreen(kontoInformation: info),
-                  ),
-                );
-              },
-              child: Card(
-                color: const Color.fromARGB(255, 180, 183, 249),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    children: [
-                      const Text(
-                        "Girokonto",
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        info.iban,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-      buttonList.add(const SizedBox(height: 15));
-    }
-    return buttonList;
-  }
-
- 
 }
