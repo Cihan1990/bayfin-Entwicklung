@@ -137,10 +137,21 @@ class _MainScreenState extends State<MainScreen> {
                                         255, 180, 183, 249),
                                     child: Padding(
                                         padding: const EdgeInsets.all(12.0),
-                                        child: Column(children: [
-                                          Text(
-                                              "${widget.kontoInformation.kontostand}€")
-                                        ]))))),
+                                        child: StreamBuilder(
+                                            stream: context
+                                                .read<DatabaseRepository>()
+                                                .getKontoInformation(userId),
+                                            builder: (context, snapshot) {
+                                              if (snapshot.hasData &&
+                                                  snapshot.connectionState ==
+                                                      ConnectionState.active) {
+                                                return Center(
+                                                  child: Text("${snapshot.data!.first.kontostand.toString()} €"),
+                                                );
+                                              } else {
+                                                return const Text("No Data");
+                                              }
+                                            }))))),
                         const SizedBox(height: 15),
                         Container(
                           width: 361,

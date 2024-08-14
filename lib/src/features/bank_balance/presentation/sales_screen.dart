@@ -112,14 +112,27 @@ class _SalesScreenState extends State<SalesScreen> {
                   ],
                 ),
                 Card(
-                    color: const Color.fromARGB(255, 180, 183, 249),
-                    child: Center(
+                  color: const Color.fromARGB(255, 180, 183, 249),
+                  child: Center(
                       child: Padding(
                           padding: const EdgeInsets.all(12.0),
-                          child: Column(children: [
-                            Text("${widget.kontoInformation.kontostand}€")
-                          ])),
-                    )),
+                          child: StreamBuilder(
+                              stream: context
+                                  .read<DatabaseRepository>()
+                                  .getKontoInformation(userId),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData &&
+                                    snapshot.connectionState ==
+                                        ConnectionState.active) {
+                                  return Center(
+                                    child: Text(
+                                        "${snapshot.data!.first.kontostand.toString()} €"),
+                                  );
+                                } else {
+                                  return const Text("No Data");
+                                }
+                              }))),
+                ),
                 SizedBox(
                   width: 370,
                   child: Center(
