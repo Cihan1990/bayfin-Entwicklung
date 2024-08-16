@@ -1,4 +1,4 @@
-package com.cihan.bayfin.bayfin
+package com.cihan.bayfin
 
 import io.flutter.embedding.android.FlutterActivity
 

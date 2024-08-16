@@ -63,7 +63,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '993490783056',
     projectId: 'bayfin-entwicklung',
     storageBucket: 'bayfin-entwicklung.appspot.com',
-    iosBundleId: 'com.cihan.bayfin.bayfin',
+    iosBundleId: 'com.cihan.bayfin',
   );
-
 }
