@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyD1RHYKK7rUI1d_gVKX4PY5Y0Awe7ueYOA',
-    appId: '1:993490783056:android:34ccb5d34dea1497fa7a55',
+    appId: '1:993490783056:android:7a98778275e02e4ffa7a55',
     messagingSenderId: '993490783056',
     projectId: 'bayfin-entwicklung',
     storageBucket: 'bayfin-entwicklung.appspot.com',
@@ -59,10 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDkhKJ5KGpRvUUkeeduR_PhtclxYUUbOtY',
-    appId: '1:993490783056:ios:f67cbb6a298c8c9ffa7a55',
+    appId: '1:993490783056:ios:d3e08bd5f8154bfdfa7a55',
     messagingSenderId: '993490783056',
     projectId: 'bayfin-entwicklung',
     storageBucket: 'bayfin-entwicklung.appspot.com',
-    iosBundleId: 'com.example.bayfin',
+    iosBundleId: 'com.cihan.bayfin.bayfin',
   );
+
 }

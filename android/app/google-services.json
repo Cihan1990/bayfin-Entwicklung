@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:993490783056:android:34ccb5d34dea1497fa7a55",
+        "mobilesdk_app_id": "1:993490783056:android:7a98778275e02e4ffa7a55",
         "android_client_info": {
-          "package_name": "com.example.bayfin"
+          "package_name": "com.cihan.bayfin.bayfin"
         }
       },
       "oauth_client": [],
