@@ -1,5 +1,6 @@
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
+import 'package:bayfin/src/features/authentication/application/validators.dart';
 import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
 import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
@@ -219,33 +220,5 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
         ),
       ),
     );
-  }
-
-  String? validateVn(String? input) {
-    if (input == null || input.isEmpty) {
-      return 'Bitte Vorname eingeben';
-    }
-    return null;
-  }
-
-  String? validateNn(String? input) {
-    if (input == null || input.isEmpty) {
-      return 'Bitte Nachname eingeben';
-    }
-    return null;
-  }
-
-  String? validateGb(String? input) {
-    if (input == null || input.isEmpty) {
-      return 'Bitte Geburtsdatum eingeben';
-    }
-    return null;
-  }
-
-  String? validateEmail(String? input) {
-    if (input == null || input.isEmpty) {
-      return 'Bitte E-Mail eingeben';
-    }
-    return null;
   }
 }
