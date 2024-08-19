@@ -102,6 +102,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   hinttext: 'TT.MM.JJJJ',
                   validator: validateGb,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  
                 ),
                 SizedBox(height: 5),
                 SizedBox(height: 10),

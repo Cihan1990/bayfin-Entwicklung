@@ -2,6 +2,7 @@ import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
+import 'package:bayfin/src/features/authentication/presentation/widget/time_based_greeting.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/transaction_list.dart';
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
 import 'package:bayfin/src/features/bank_balance/presentation/sales_screen.dart';
@@ -42,7 +43,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final userId = context.read<AuthRepository>().getUserId();
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       appBar: AppBar(
@@ -77,17 +77,14 @@ class _MainScreenState extends State<MainScreen> {
                     const SizedBox(height: 0),
                     LogoWidget(width: 217, height: 76),
                     const SizedBox(height: 20),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const SizedBox(width: 10),
+                        SizedBox(width: 10),
                         SizedBox(
                           width: 96,
                           height: 20,
-                          child: Text(
-                            'Guten Tag ',
-                            style: Theme.of(context).textTheme.labelLarge,
-                          ),
+                          child: TimeBasedGreeting(),
                         ),
                       ],
                     ),
@@ -96,10 +93,9 @@ class _MainScreenState extends State<MainScreen> {
                       children: [
                         const SizedBox(width: 6),
                         SizedBox(
-                          width: 113,
                           height: 40,
                           child: Text(
-                            user.vorname,
+                            "${user.vorname} ${user.nachname}",
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
                         ),

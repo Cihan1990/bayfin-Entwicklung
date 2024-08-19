@@ -1,8 +1,10 @@
+import 'package:bayfin/src/features/authentication/application/validators.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldAuth extends StatefulWidget {
   final TextEditingController mailController;
   final TextEditingController pwController;
+
   const TextFieldAuth({
     super.key,
     required this.mailController,
@@ -41,7 +43,7 @@ class _TextFieldAuthState extends State<TextFieldAuth> {
               hintText: "Benutzername / E-Mail Adresse",
             ),
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: validateName,
+            validator: validateEmail,
             controller: widget.mailController,
             textAlign: TextAlign.left,
           ),

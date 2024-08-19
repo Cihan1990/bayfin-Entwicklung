@@ -21,7 +21,6 @@ class RegistrationsText extends StatelessWidget {
       required this.validator,
       required this.autovalidateMode,
       this.keybordtype,
-
       this.color = Colors.white});
 
   @override
@@ -42,11 +41,13 @@ class RegistrationsText extends StatelessWidget {
       ),
       TextFormField(
           controller: controller,
-          validator: validator, keyboardType: keybordtype,
+          validator: validator,
+          keyboardType: keybordtype,
           autovalidateMode: autovalidateMode,
           decoration: InputDecoration(
             //errorStyle: TextStyle(color: Colors.grey.shade400),
             fillColor: const Color(0xffE6E9FF),
+            errorStyle: TextStyle(color: Colors.grey.shade400),
             contentPadding:
                 const EdgeInsets.only(top: 0.0, left: 10, right: 10),
             border: OutlineInputBorder(

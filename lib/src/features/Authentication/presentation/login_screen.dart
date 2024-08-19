@@ -40,35 +40,73 @@ class _LoginScreenState extends State<LoginScreen> {
       context: context,
       builder: (context) {
         return const Center(
-            child: CircularProgressIndicator(
-          color: Colors.black,
-          strokeWidth: 8,
-        ));
+          child: CircularProgressIndicator(
+            color: Colors.black,
+            strokeWidth: 8,
+          ),
+        );
       },
     );
+
     try {
-      //Beginn sign in process
-      final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
-      //obtain auth detrails from request
-      final GoogleSignInAuthentication gAuth = await gUser!.authentication;
-      //create a new credential for user
-      final credential = GoogleAuthProvider.credential(
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      print("Starting Google sign-in...");
+
+      // Überprüfe, ob der Benutzer bereits angemeldet ist
+      if (await googleSignIn.isSignedIn()) {
+        await googleSignIn.signOut();
+        print("Previous sign-in session found. Signing out.");
+      }
+
+      // Beginn des Anmeldevorgangs
+      final GoogleSignInAccount? gUser = await googleSignIn.signIn();
+      print("Google sign-in completed: ${gUser?.email}");
+
+      if (gUser == null) {
+        Navigator.pop(context);
+        print("User cancelled the Google sign-in.");
+        return;
+      }
+
+      // Authentifizierungsdetails von der Anfrage abrufen
+      final GoogleSignInAuthentication gAuth = await gUser.authentication;
+      print("Google authentication obtained.");
+
+      // Erstellen eines neuen Anmeldecredentials
+      final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: gAuth.accessToken,
         idToken: gAuth.idToken,
       );
-      await FirebaseAuth.instance.signInWithCredential(credential);
-      Navigator.pop(context);
-      //Analytics
-      FirebaseAnalytics.instance.logSignUp(signUpMethod: "GoogleSignIn");
+      print("Credential created. Signing in with Firebase...");
+
+      // Anmelden mit dem Credential
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      print("Firebase sign-in completed: ${userCredential.user?.email}");
+
+      if (userCredential.user != null) {
+        Navigator.pop(context);
+        FirebaseAnalytics.instance.logSignUp(signUpMethod: "GoogleSignIn");
+      } else {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+            "Google sign-in failed. Please try again later.",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+        ));
+      }
     } catch (e) {
       Navigator.pop(context);
-
+      print("Error during Google sign-in: $e");
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(
-            e.toString(),
-            style: const TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Theme.of(context).colorScheme.secondary));
+        content: Text(
+          "An error occurred: ${e.toString()}",
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+      ));
     }
   }
 
@@ -188,15 +226,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 20,
                     ),
                     SocialLoginButton(
-                      icon: Image.asset(
-                        "assets/images/googleimage.png",
-                        height: 22,
-                      ),
-                      text: "Sign in with Google",
-                      onpressed: () {
-                        signInWithGoogle();
-                      },
-                    ),
+                        icon: Image.asset(
+                          "assets/images/googleimage.png",
+                          height: 22,
+                        ),
+                        text: "Sign in with Google",
+                        onpressed: signInWithGoogle),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 40),
                       child: Row(
