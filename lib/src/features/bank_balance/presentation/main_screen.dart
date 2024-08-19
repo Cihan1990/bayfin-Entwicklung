@@ -135,7 +135,7 @@ class _MainScreenState extends State<MainScreen> {
                                         ConnectionState.active) {
                                   return Center(
                                     child: Text(
-                                      "${snapshot.data!.first.kontostand.toString()} €",
+                                      "${kontoInformation.kontostand} €",
                                     ),
                                   );
                                 } else {
