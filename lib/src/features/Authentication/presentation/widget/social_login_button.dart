@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 class SocialLoginButton extends StatelessWidget {
   Widget icon;
   String text;
+  VoidCallback onpressed;
 
   SocialLoginButton({
     super.key,
     required this.icon,
     required this.text,
+    required this.onpressed,
   });
 
   @override
@@ -17,14 +19,11 @@ class SocialLoginButton extends StatelessWidget {
     return SizedBox(
       width: 300,
       child: ElevatedButton.icon(
-        icon: icon,
-        label: Text(
-          text,
-        ),
-        onPressed: () {
-        
-        },
-      ),
+          icon: icon,
+          label: Text(
+            text,
+          ),
+          onPressed: onpressed),
     );
   }
 }

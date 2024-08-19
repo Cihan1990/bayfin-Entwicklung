@@ -4,7 +4,10 @@ import 'package:bayfin/src/features/authentication/presentation/registration_scr
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/social_login_button.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/text_field_auth.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -32,6 +35,43 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  signInWithGoogle() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+            child: CircularProgressIndicator(
+          color: Colors.black,
+          strokeWidth: 8,
+        ));
+      },
+    );
+    try {
+      //Beginn sign in process
+      final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
+      //obtain auth detrails from request
+      final GoogleSignInAuthentication gAuth = await gUser!.authentication;
+      //create a new credential for user
+      final credential = GoogleAuthProvider.credential(
+        accessToken: gAuth.accessToken,
+        idToken: gAuth.idToken,
+      );
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      Navigator.pop(context);
+      //Analytics
+      FirebaseAnalytics.instance.logSignUp(signUpMethod: "GoogleSignIn");
+    } catch (e) {
+      Navigator.pop(context);
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+            e.toString(),
+            style: const TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.secondary));
+    }
+  }
+
   bool showPassword = false;
   bool showCreateAccountNotification = false;
 
@@ -49,8 +89,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  LogoWidget(width: 373, height: 136),
+                  LogoWidget(width: 340, height: 136),
                 ],
               ),
               Form(
@@ -141,6 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         size: 30,
                       ),
                       text: "Sign in with Apple",
+                      onpressed: () {},
                     ),
                     const SizedBox(
                       height: 20,
@@ -151,6 +193,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 22,
                       ),
                       text: "Sign in with Google",
+                      onpressed: () {
+                        signInWithGoogle();
+                      },
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 40),
