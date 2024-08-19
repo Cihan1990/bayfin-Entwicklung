@@ -126,7 +126,7 @@ class _SalesScreenState extends State<SalesScreen> {
                                         ConnectionState.active) {
                                   return Center(
                                     child: Text(
-                                        "${snapshot.data!.first.kontostand.toString()} €"),
+                                        "${widget.kontoInformation.kontostand} €"),
                                   );
                                 } else {
                                   return const Text("No Data");
