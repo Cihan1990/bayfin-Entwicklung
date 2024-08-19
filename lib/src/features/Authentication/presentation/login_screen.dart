@@ -50,39 +50,33 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn();
-      print("Starting Google sign-in...");
 
       // Überprüfe, ob der Benutzer bereits angemeldet ist
       if (await googleSignIn.isSignedIn()) {
         await googleSignIn.signOut();
-        print("Previous sign-in session found. Signing out.");
       }
 
       // Beginn des Anmeldevorgangs
       final GoogleSignInAccount? gUser = await googleSignIn.signIn();
-      print("Google sign-in completed: ${gUser?.email}");
 
       if (gUser == null) {
         Navigator.pop(context);
-        print("User cancelled the Google sign-in.");
+
         return;
       }
 
       // Authentifizierungsdetails von der Anfrage abrufen
       final GoogleSignInAuthentication gAuth = await gUser.authentication;
-      print("Google authentication obtained.");
 
       // Erstellen eines neuen Anmeldecredentials
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: gAuth.accessToken,
         idToken: gAuth.idToken,
       );
-      print("Credential created. Signing in with Firebase...");
 
       // Anmelden mit dem Credential
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
-      print("Firebase sign-in completed: ${userCredential.user?.email}");
 
       if (userCredential.user != null) {
         Navigator.pop(context);
@@ -99,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (e) {
       Navigator.pop(context);
-      print("Error during Google sign-in: $e");
+
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
           "An error occurred: ${e.toString()}",
