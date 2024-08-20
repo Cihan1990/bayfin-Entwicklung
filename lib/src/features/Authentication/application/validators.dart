@@ -94,15 +94,12 @@ String? validateIban(String? input) {
     return 'Bitte IBAN eingeben';
   }
 
-  // Entferne alle Leerzeichen aus der IBAN
   input = input.replaceAll(' ', '');
 
-  // Längenprüfung je nach Land; für Deutschland sind es 22 Zeichen
   if (input.length != 22) {
     return "IBAN ungültig";
   }
 
-  // Prüfe das Länderkürzel (2 Buchstaben) und die Prüfziffer (2 Ziffern)
   String countryCode = input.substring(0, 2);
   if (!RegExp(r'^[A-Z]{2}$').hasMatch(countryCode)) {
     return "IBAN ungültig";
@@ -113,16 +110,13 @@ String? validateIban(String? input) {
     return "IBAN ungültig";
   }
 
-  // Verschiebe die ersten vier Zeichen nach hinten
   String rearranged = input.substring(4) + input.substring(0, 4);
 
-  // Ersetze alle Buchstaben durch Zahlen (A = 10, B = 11, ..., Z = 35)
   String numericIban = rearranged.split('').map((char) {
     int numericValue = int.tryParse(char) ?? (char.codeUnitAt(0) - 55);
     return numericValue.toString();
   }).join('');
 
-  // Modulo-97-Check für die IBAN-Nummer
   BigInt ibanInt = BigInt.parse(numericIban);
   if (ibanInt % BigInt.from(97) != BigInt.one) {
     return "IBAN ungültig";

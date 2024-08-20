@@ -12,7 +12,7 @@ class TimeBasedGreeting extends StatelessWidget {
 
     if (currentHour >= 19) {
       greeting = "Guten Abend";
-    } else if (currentHour >= 10) {
+    } else if (currentHour >= 11) {
       greeting = "Guten Tag";
     } else {
       greeting = "Guten Morgen";
