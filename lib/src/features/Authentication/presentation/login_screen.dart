@@ -1,4 +1,7 @@
+import 'dart:convert' as JSON;
+
 import 'package:bayfin/src/data/auth_repository.dart';
+import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/presentation/passwort_return_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/registration_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
@@ -8,6 +11,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -35,6 +39,43 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  Future<Map<String, String>> getGoogleProfileDetails(
+      GoogleSignInAccount googleUser) async {
+    final headers = await googleUser.authHeaders;
+    final response = await http.get(
+      Uri.parse(
+          "https://people.googleapis.com/v1/people/me?personFields=names,birthdays,genders"),
+      headers: {"Authorization": headers["Authorization"] ?? ''},
+    );
+
+    if (response.statusCode == 200) {
+      final profile = JSON.jsonDecode(response.body);
+      final name = profile["names"]?[0]["displayName"] ?? "";
+      final givenName = profile["names"]?[0]["givenName"] ?? "";
+      final familyName = profile["names"]?[0]["familyName"] ?? "";
+      final gender = profile["genders"]?[0]["formattedValue"] ?? "";
+      final birthday = profile["birthdays"]?[0]["date"] != null
+          ? "${profile["birthdays"][0]["date"]["day"]}.${profile["birthdays"][0]["date"]["month"]}.${profile["birthdays"][0]["date"]["year"]}"
+          : "";
+
+      return {
+        "name": name,
+        "vorname": givenName,
+        "nachname": familyName,
+        "anrede": gender,
+        "geburtsdatum": birthday,
+      };
+    } else {
+      return {
+        "name": "",
+        "vorname": "",
+        "nachname": "",
+        "anrede": "",
+        "geburtsdatum": ""
+      };
+    }
+  }
+
   signInWithGoogle() async {
     showDialog(
       context: context,
@@ -49,7 +90,12 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     try {
-      final GoogleSignIn googleSignIn = GoogleSignIn();
+      final GoogleSignIn googleSignIn = GoogleSignIn(scopes: [
+        'email',
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/user.birthday.read',
+        'https://www.googleapis.com/auth/user.gender.read'
+      ]);
 
       // Überprüfe, ob der Benutzer bereits angemeldet ist
       if (await googleSignIn.isSignedIn()) {
@@ -61,7 +107,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (gUser == null) {
         Navigator.pop(context);
-
         return;
       }
 
@@ -78,10 +123,32 @@ class _LoginScreenState extends State<LoginScreen> {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
 
+      final provider = Provider.of<DatabaseRepository>(context, listen: false);
+
       if (userCredential.user != null) {
+        // Google-Profilinformationen abrufen
+        final profileDetails = await getGoogleProfileDetails(gUser);
+        final anrede = profileDetails["anrede"] != null
+            ? profileDetails["anrede"] == "Male"
+                ? "Herr"
+                : "Frau"
+            : "";
+
+        await provider.regestraionDataUpload(
+          anrede,
+          profileDetails["vorname"] ?? "",
+          profileDetails["nachname"] ?? "",
+          profileDetails["geburtsdatum"] ?? "",
+          userCredential.user?.email ?? "",
+          userCredential.user?.uid ?? "",
+        );
+       
+        if(!context.mounted) return;
+
         Navigator.pop(context);
         FirebaseAnalytics.instance.logSignUp(signUpMethod: "GoogleSignIn");
       } else {
+         if(!context.mounted) return;
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
@@ -92,6 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
       }
     } catch (e) {
+       if(!context.mounted) return;
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -47,9 +47,13 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
 
   Future<void> _deleteAccount(String userId) async {
     try {
-      await context.read<AuthRepository>().deleteAccount(userId);
+
 
       await context.read<DatabaseRepository>().deleteUserData(userId);
+             if(!context.mounted) return;
+      
+      await context.read<AuthRepository>().deleteAccount(userId);
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),

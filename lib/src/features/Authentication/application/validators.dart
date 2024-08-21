@@ -34,9 +34,13 @@ String? validateGb(String? input) {
   if (input == null || input.isEmpty) {
     return 'Bitte Geburtsdatum eingeben';
   }
-  if (input.split('.').length - 1 != 2) {
-    return 'Geburtsdatum muss im Format dd.mm.yyyy sein';
+
+  final RegExp dateRegex = RegExp(r'^\d{2}\.\d{2}\.\d{4}$');
+
+  if (!dateRegex.hasMatch(input)) {
+    return 'Geburtsdatum muss im Format dd.mm.yyyy sein!';
   }
+
   return null;
 }
 
@@ -44,12 +48,21 @@ String? validateEmail(String? input) {
   if (input == null || input.isEmpty) {
     return 'Bitte E-Mail eingeben';
   }
-  if (!input.contains("@")) {
-    return 'Email muss das Zeichen "@" enthalten';
+
+  // Überprüft, ob die Eingabe eine gültige E-Mail-Adresse ist
+  final RegExp emailRegex = RegExp(
+    r'^[a-zA-Z0-9]+[a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+  );
+
+  if (!emailRegex.hasMatch(input)) {
+    return 'Bitte eine gültige E-Mail-Adresse eingeben';
   }
+
+  // Optional: Weitere Überprüfungen wie .com oder .de
   if (!(input.endsWith(".com") || input.endsWith(".de"))) {
-    return 'Email muss mit ".com" oder ".de" enden';
+    return 'E-Mail muss mit ".com" oder ".de" enden';
   }
+
   return null;
 }
 
