@@ -41,19 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> signInWithApple() async {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(
-            color: Colors.black,
-            strokeWidth: 8,
-          ),
-        );
-      },
-    );
-
     try {
+      // Requesting the Apple ID credentials
       final AuthorizationCredentialAppleID credential =
           await SignInWithApple.getAppleIDCredential(
         scopes: [
@@ -62,29 +51,36 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       );
 
+      // Check
       if (credential.identityToken == null) {
-        throw Exception("Apple Sign-In fehlgeschlagen: Token fehlt.");
+        throw Exception("Missing authorization credentials from Apple");
       }
 
+      // Creating OAuthCredential from the obtained credential
       final OAuthCredential oAuthCredential =
           OAuthProvider("apple.com").credential(
         idToken: credential.identityToken,
         accessToken: credential.authorizationCode,
       );
 
+      // Sign in to Firebase with the OAuth credential
       final UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
 
       final provider = Provider.of<DatabaseRepository>(context, listen: false);
 
       if (userCredential.user != null) {
+        // Handle optional fields from Apple ID
         final String? email = userCredential.user?.email;
         final String? uid = userCredential.user?.uid;
         final String vorname = credential.givenName ?? "";
         final String nachname = credential.familyName ?? "";
-        const String anrede = "";
+        const String anrede = ""; // Apple doesn't provide gender information
+
+        // For Apple, you might not have a birthdate or gender, so these are set to empty
         const String geburtsdatum = "";
 
+        // Upload registration data
         await provider.regestraionDataUpload(
           anrede,
           vorname,
@@ -96,15 +92,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
         if (!context.mounted) return;
 
-        Navigator.pop(context); // Pop loading dialog
-        Navigator.pop(context); // Pop login screen
+        Navigator.pop(context);
         FirebaseAnalytics.instance.logSignUp(signUpMethod: "AppleSignIn");
       } else {
-        throw Exception("Apple Sign-In hat einen null Benutzer zurückgegeben.");
+        throw Exception("Apple sign-in returned a null user.");
       }
     } catch (e) {
       if (!context.mounted) return;
-      Navigator.pop(context); // Pop loading dialog
+      Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
           "Apple sign-in error: ${e.toString()}",
