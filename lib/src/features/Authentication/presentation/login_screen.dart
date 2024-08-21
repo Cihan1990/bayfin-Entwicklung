@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -37,6 +38,81 @@ class _LoginScreenState extends State<LoginScreen> {
     _mailController.dispose();
     _pwController.dispose();
     super.dispose();
+  }
+
+  Future<void> signInWithApple() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Colors.black,
+            strokeWidth: 8,
+          ),
+        );
+      },
+    );
+
+    try {
+      final AuthorizationCredentialAppleID credential =
+          await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+
+      if (credential.identityToken == null) {
+        throw Exception("Apple Sign-In fehlgeschlagen: Token fehlt.");
+      }
+
+      final OAuthCredential oAuthCredential =
+          OAuthProvider("apple.com").credential(
+        idToken: credential.identityToken,
+        accessToken: credential.authorizationCode,
+      );
+
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
+
+      final provider = Provider.of<DatabaseRepository>(context, listen: false);
+
+      if (userCredential.user != null) {
+        final String? email = userCredential.user?.email;
+        final String? uid = userCredential.user?.uid;
+        final String vorname = credential.givenName ?? "";
+        final String nachname = credential.familyName ?? "";
+        const String anrede = "";
+        const String geburtsdatum = "";
+
+        await provider.regestraionDataUpload(
+          anrede,
+          vorname,
+          nachname,
+          geburtsdatum,
+          email ?? "",
+          uid ?? "",
+        );
+
+        if (!context.mounted) return;
+
+        Navigator.pop(context); // Pop loading dialog
+        Navigator.pop(context); // Pop login screen
+        FirebaseAnalytics.instance.logSignUp(signUpMethod: "AppleSignIn");
+      } else {
+        throw Exception("Apple Sign-In hat einen null Benutzer zurückgegeben.");
+      }
+    } catch (e) {
+      if (!context.mounted) return;
+      Navigator.pop(context); // Pop loading dialog
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          "Apple sign-in error: ${e.toString()}",
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+      ));
+    }
   }
 
   Future<Map<String, String>> getGoogleProfileDetails(
@@ -142,13 +218,13 @@ class _LoginScreenState extends State<LoginScreen> {
           userCredential.user?.email ?? "",
           userCredential.user?.uid ?? "",
         );
-       
-        if(!context.mounted) return;
+
+        if (!context.mounted) return;
 
         Navigator.pop(context);
         FirebaseAnalytics.instance.logSignUp(signUpMethod: "GoogleSignIn");
       } else {
-         if(!context.mounted) return;
+        if (!context.mounted) return;
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
@@ -159,7 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
       }
     } catch (e) {
-       if(!context.mounted) return;
+      if (!context.mounted) return;
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -282,7 +358,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         size: 30,
                       ),
                       text: "Sign in with Apple",
-                      onpressed: () {},
+                      onpressed: () {
+                        signInWithApple();
+                        print(signInWithApple);
+                      },
                     ),
                     const SizedBox(
                       height: 20,
