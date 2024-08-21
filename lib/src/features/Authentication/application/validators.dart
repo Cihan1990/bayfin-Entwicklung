@@ -5,6 +5,9 @@ String? validatePw(String? input) {
   if (input.length < 6 || input.length > 12) {
     return "Passwort muss zwischen 6 und maximal 12 Zeichen lang sein";
   }
+  if (!input.contains(RegExp(r'[A-Z]'))) {
+    return "Passwort muss mindestens einen Großbuchstaben enthalten";
+  }
   return null;
 }
 
