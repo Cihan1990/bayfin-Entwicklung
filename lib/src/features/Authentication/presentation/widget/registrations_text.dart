@@ -34,7 +34,7 @@ class RegistrationsText extends StatelessWidget {
             color: color,
             fontSize: 14,
             fontWeight: FontWeight.w400,
-            decoration: TextDecoration.underline,
+            decoration: TextDecoration.none,
             decorationThickness: 1.35,
           ),
         ),
