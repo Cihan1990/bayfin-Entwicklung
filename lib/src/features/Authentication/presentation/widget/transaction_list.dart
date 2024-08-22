@@ -1,18 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/transaction_info.dart';
 import 'package:bayfin/src/features/bank_balance/domain/umsatz.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TransactionListWidget extends StatelessWidget {
   final String userId;
   final String kontoId;
 
   const TransactionListWidget({
-    Key? key,
+    super.key,
     required this.userId,
     required this.kontoId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +34,7 @@ class TransactionListWidget extends StatelessWidget {
               firmName: u.umsatzname,
               type: u.type,
               amount: u.betrag,
+              date: u.date.toString(),
             ));
           }
 

@@ -18,9 +18,21 @@ class MockDatabase implements DatabaseRepository {
               kontostand: 3530.34),
         ],
         umsatze: [
-          Umsatz(betrag: -12.30, umsatzname: "Amazon", type: false),
-          Umsatz(betrag: -40.30, umsatzname: "Vodafone", type: false),
-          Umsatz(betrag: -56.30, umsatzname: "O2", type: false),
+          Umsatz(
+              betrag: -12.30,
+              umsatzname: "Amazon",
+              type: false,
+              date: DateTime.now().toString()),
+          Umsatz(
+              betrag: -40.30,
+              umsatzname: "Vodafone",
+              type: false,
+              date: DateTime.now().toString()),
+          Umsatz(
+              betrag: -56.30,
+              umsatzname: "O2",
+              type: false,
+              date: DateTime.now().toString()),
         ],
         userid: "1"),
   ];
@@ -109,13 +121,13 @@ class MockDatabase implements DatabaseRepository {
     // TODO: implement loadUserData
     throw UnimplementedError();
   }
-  
+
   @override
   Future<void> updateUserData(String userId, Benutzer user) {
     // TODO: implement updateUserData
     throw UnimplementedError();
   }
-  
+
   @override
   Future<void> deleteUserData(String userId) {
     // TODO: implement deleteUserData

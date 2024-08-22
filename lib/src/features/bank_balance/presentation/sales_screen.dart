@@ -152,6 +152,7 @@ class _SalesScreenState extends State<SalesScreen> {
                               firmName: u.umsatzname,
                               type: u.type,
                               amount: u.betrag,
+                              date: u.date,
                             ));
                           }
                           // FALL: Future ist komplett und hat Daten!

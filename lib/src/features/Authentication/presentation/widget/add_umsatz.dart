@@ -20,6 +20,8 @@ class _AddUmsatzState extends State<AddUmsatz> {
   late TextEditingController umzatzbezeichnungController;
   late TextEditingController umsatzsummeController;
 
+  DateTime now = DateTime.now();
+
   @override
   void initState() {
     super.initState();
@@ -72,6 +74,8 @@ class _AddUmsatzState extends State<AddUmsatz> {
                       Umsatz(
                           betrag: double.parse(umsatzsummeController.text),
                           umsatzname: umzatzbezeichnungController.text,
+                          date:
+                              '${now.day.toString().padLeft(2, '0')}.${now.month.toString().padLeft(2, '0')}.${now.year}',
                           type:
                               checkIfUmsatzIsMinus(umsatzsummeController.text)),
                       userId,

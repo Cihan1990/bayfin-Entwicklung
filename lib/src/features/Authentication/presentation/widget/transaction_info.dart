@@ -7,6 +7,7 @@ class TransactionInfo extends StatelessWidget {
   String? firmName;
   double? amount;
   bool type;
+  String date;
 
   TransactionInfo({
     super.key,
@@ -14,6 +15,7 @@ class TransactionInfo extends StatelessWidget {
     this.amount,
     this.firmName,
     this.firmLogoPath,
+    required this.date,
   });
 
   @override
@@ -33,8 +35,13 @@ class TransactionInfo extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                 )),
-            Text(
-              firmName!,
+            Column(
+              children: [
+                Text(
+                  firmName!,
+                ),
+                Text(date.toString()),
+              ],
             ),
             Text("${amount?.toStringAsFixed(2)}€",
                 style: TextStyle(

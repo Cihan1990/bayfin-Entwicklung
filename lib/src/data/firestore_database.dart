@@ -218,9 +218,8 @@ class FirestoreDatabase implements DatabaseRepository {
       for (final doc in querySnapshot.docs) {
         await doc.reference.delete();
       }
-       
+
       await _firebaseFirestore.collection('Benutzer').doc(userId).delete();
-      
     } catch (e) {
       throw Exception('Fehler beim Löschen der Daten!');
     }
