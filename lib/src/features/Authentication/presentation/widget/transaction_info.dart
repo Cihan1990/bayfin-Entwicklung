@@ -75,7 +75,7 @@ class TransactionInfo extends StatelessWidget {
               IconButton(
                 icon: const Icon(
                   Icons.delete,
-                  color: Colors.red,
+                  color: Colors.black,
                 ),
                 onPressed: onDelete,
               ),
