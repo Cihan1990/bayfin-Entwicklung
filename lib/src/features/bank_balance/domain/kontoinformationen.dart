@@ -6,20 +6,17 @@ class KontoInformation {
   String? bic;
   String bank;
   double? kontostand;
-  // double userId;
+
   DocumentReference? documentReference;
   List<Umsatz>? transactions;
-  
 
-  KontoInformation({
-    required this.bank,
-    this.bic,
-    required this.iban,
-    this.kontostand,
-    this.transactions,
-    this.documentReference
-    // required this.userId,
-  });
+  KontoInformation(
+      {required this.bank,
+      this.bic,
+      required this.iban,
+      this.kontostand,
+      this.transactions,
+      this.documentReference});
   Map<String, dynamic> toMap() {
     return {
       "bic": bic,
@@ -27,20 +24,17 @@ class KontoInformation {
       "bank": bank,
       "kontostand": kontostand,
       "transactions": transactions
-      // "userId": userId,
     };
   }
 
-
-  factory KontoInformation.fromMap(Map<String, dynamic> map, DocumentReference ref) {
+  factory KontoInformation.fromMap(
+      Map<String, dynamic> map, DocumentReference ref) {
     return KontoInformation(
-      bank: map["bank"],
-      iban: map["iban"],
-      bic: map["bic"],
-      kontostand: map["kontostand"]?.toDouble(),
-      transactions: map["transactions"],
-      documentReference: ref
-      // userId: map["userId"],
-    );
+        bank: map["bank"],
+        iban: map["iban"],
+        bic: map["bic"],
+        kontostand: map["kontostand"]?.toDouble(),
+        transactions: map["transactions"],
+        documentReference: ref);
   }
 }

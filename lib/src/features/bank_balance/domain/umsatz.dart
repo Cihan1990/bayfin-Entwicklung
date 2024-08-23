@@ -8,10 +8,17 @@ class Umsatz {
       {required this.betrag,
       required this.umsatzname,
       required this.type,
-      required this.date});
+      required this.date,
+      });
 
   Map<String, dynamic> toMap() {
-    return {"betrag": betrag, "name": umsatzname, "type": type, "date": date};
+    return {
+      "betrag": betrag,
+      "name": umsatzname,
+      "type": type,
+      "date": date,
+     
+    };
   }
 
   factory Umsatz.fromMap(Map<String, dynamic> map) {

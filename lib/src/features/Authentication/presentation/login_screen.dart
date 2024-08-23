@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
       // Sign in to Firebase with the OAuth credential
       final UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
-
+      //print(credential.givenName);
       final provider = Provider.of<DatabaseRepository>(context, listen: false);
 
       if (userCredential.user != null) {

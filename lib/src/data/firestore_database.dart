@@ -214,15 +214,37 @@ class FirestoreDatabase implements DatabaseRepository {
           .doc(userId)
           .collection('Konteninformation')
           .get();
-
-      for (final doc in querySnapshot.docs) {
-        await doc.reference.delete();
+      for (final konto in querySnapshot.docs) {
+        final umsaetze = await konto.reference.collection('Umsatz').get();
+        for (final umsatz in umsaetze.docs) {
+          await umsatz.reference.delete();
+        }
+        await konto.reference.delete();
       }
-
       await _firebaseFirestore.collection('Benutzer').doc(userId).delete();
     } catch (e) {
       throw Exception('Fehler beim Löschen der Daten!');
     }
   }
-  
+
+  @override
+  Future<void> deleteUmsatz(
+      String umsatzname, String userId, String kontoId) async {
+    try {
+      final querySnapshot = await _firebaseFirestore
+          .collection('Benutzer')
+          .doc(userId)
+          .collection('Konteninformation')
+          .doc(kontoId)
+          .collection('Umsatz')
+          .where('name', isEqualTo: umsatzname)
+          .get();
+
+      for (final doc in querySnapshot.docs) {
+        await doc.reference.delete();
+      }
+    } catch (e) {
+      print('Fehler beim Löschen des Umsatzes: $e');
+    }
+  }
 }

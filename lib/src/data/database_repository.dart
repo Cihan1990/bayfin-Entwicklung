@@ -20,5 +20,8 @@ abstract class DatabaseRepository {
       String nachname, String gebDatum, String email, String userId);
   Future<Benutzer?> loadUserData(String userID);
   Future<void> updateUserData(String userId, Benutzer user);
-  Future<void> deleteUserData(String userId,);
+  Future<void> deleteUserData(
+    String userId,
+  );
+  Future<void> deleteUmsatz(String umsatzname, String userId, String docId);
 }

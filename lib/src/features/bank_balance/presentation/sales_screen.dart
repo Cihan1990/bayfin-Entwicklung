@@ -23,6 +23,8 @@ class _SalesScreenState extends State<SalesScreen> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController umzatzbezeichnungController;
   late TextEditingController umsatzsummeController;
+  late KontoInformation kontoInformation;
+  late DatabaseRepository databaseRepository;
 
   @override
   void initState() {
@@ -37,6 +39,16 @@ class _SalesScreenState extends State<SalesScreen> {
     umzatzbezeichnungController.dispose();
 
     super.dispose();
+  }
+
+  Future<void> aktualisiereKontoInformation(String userId) async {
+    final aktualisierteKontoInfo = await databaseRepository.getKontoInfo(
+        userId, kontoInformation.documentReference!.id);
+    if (aktualisierteKontoInfo != null) {
+      setState(() {
+        kontoInformation = aktualisierteKontoInfo;
+      });
+    }
   }
 
   @override
@@ -149,12 +161,24 @@ class _SalesScreenState extends State<SalesScreen> {
                           List<TransactionInfo> transactionliste = [];
                           for (var u in umsatzliste) {
                             transactionliste.add(TransactionInfo(
+                              onDelete: () {
+                                context.read<DatabaseRepository>().deleteUmsatz(
+                                    u.umsatzname,
+                                    userId,
+                                    widget.kontoInformation.documentReference!
+                                        .id);
+
+                                /// Update Kontoinformationen mit den aktuellen umsätzen
+                                ///
+                                aktualisiereKontoInformation(userId);
+                              },
                               firmName: u.umsatzname,
                               type: u.type,
                               amount: u.betrag,
                               date: u.date,
                             ));
                           }
+
                           // FALL: Future ist komplett und hat Daten!
                           return Column(
                             children: [
