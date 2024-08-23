@@ -224,4 +224,5 @@ class FirestoreDatabase implements DatabaseRepository {
       throw Exception('Fehler beim Löschen der Daten!');
     }
   }
+  
 }
