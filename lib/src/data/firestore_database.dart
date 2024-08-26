@@ -247,4 +247,5 @@ class FirestoreDatabase implements DatabaseRepository {
       print('Fehler beim Löschen des Umsatzes: $e');
     }
   }
+  
 }

@@ -139,4 +139,10 @@ class MockDatabase implements DatabaseRepository {
     // TODO: implement deleteUmsatz
     throw UnimplementedError();
   }
+  
+  @override
+  Future<Map<String, dynamic>?> getUserData(String uid) {
+    // TODO: implement getUserData
+    throw UnimplementedError();
+  }
 }
