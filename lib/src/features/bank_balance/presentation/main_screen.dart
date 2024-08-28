@@ -171,6 +171,7 @@ class _MainScreenState extends State<MainScreen> {
                     TransactionListWidget(
                       userId: userId,
                       kontoId: widget.kontoInformation.documentReference!.id,
+                      
                     ), // Use the new widget here
                   ],
                 ),

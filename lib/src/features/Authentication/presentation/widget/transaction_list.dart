@@ -35,6 +35,10 @@ class TransactionListWidget extends StatelessWidget {
               type: u.type,
               amount: u.betrag,
               date: u.date.toString(),
+              onDelete: () async {
+                
+                await context.read<DatabaseRepository>().deleteUmsatz(u.umsatzname,userId,kontoId);
+              },
             ));
           }
 

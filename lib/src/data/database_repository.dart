@@ -23,5 +23,5 @@ abstract class DatabaseRepository {
   Future<void> deleteUserData(
     String userId,
   );
-  Future<void> deleteUmsatz(String umsatzname, String userId, String docId);
+  Future<void> deleteUmsatz(String umsatzname, String userId, String kontoId);
 }
