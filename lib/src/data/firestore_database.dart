@@ -9,6 +9,8 @@ class FirestoreDatabase implements DatabaseRepository {
 
   FirestoreDatabase(this._firebaseFirestore);
 
+
+
   @override
   Future<Benutzer?> getBenutzer(String userid) async {
     // Benutzer -> userId -> Konto
@@ -247,5 +249,4 @@ class FirestoreDatabase implements DatabaseRepository {
       print('Fehler beim Löschen des Umsatzes: $e');
     }
   }
-  
 }

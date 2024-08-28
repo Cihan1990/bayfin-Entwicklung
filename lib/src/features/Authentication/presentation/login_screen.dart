@@ -42,7 +42,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> signInWithApple() async {
     try {
-      // Requesting the Apple ID credentials
       final AuthorizationCredentialAppleID credential =
           await SignInWithApple.getAppleIDCredential(
         scopes: [
@@ -51,45 +50,41 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       );
 
-      // Check
       if (credential.identityToken == null) {
         throw Exception("Missing authorization credentials from Apple");
       }
 
-      // Creating OAuthCredential from the obtained credential
       final OAuthCredential oAuthCredential =
           OAuthProvider("apple.com").credential(
         idToken: credential.identityToken,
         accessToken: credential.authorizationCode,
       );
 
-      // Sign in to Firebase with the OAuth credential
       final UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
       //print(credential.givenName);
       final provider = Provider.of<DatabaseRepository>(context, listen: false);
 
       if (userCredential.user != null) {
-        // Handle optional fields from Apple ID
-        final String? email = userCredential.user?.email;
-        final String? uid = userCredential.user?.uid;
-        final String vorname = credential.givenName ?? "";
-        final String nachname = credential.familyName ?? "";
-        const String anrede = ""; // Apple doesn't provide gender information
+        //  Future<Benutzer?> nutzer = provider.loadUserData(userCredential.user!.uid);
+        if (userCredential.additionalUserInfo!.isNewUser) {
+          // Handle optional fields from Apple ID
+          final String? email = userCredential.user?.email;
+          final String? uid = userCredential.user?.uid;
+          final String vorname = credential.givenName ?? "";
+          final String nachname = credential.familyName ?? "";
+          const String anrede = "";
+          const String geburtsdatum = "";
 
-        // For Apple, you might not have a birthdate or gender, so these are set to empty
-        const String geburtsdatum = "";
-
-        // Upload registration data
-        await provider.regestraionDataUpload(
-          anrede,
-          vorname,
-          nachname,
-          geburtsdatum,
-          email ?? "",
-          uid ?? "",
-        );
-
+          await provider.regestraionDataUpload(
+            anrede,
+            vorname,
+            nachname,
+            geburtsdatum,
+            email ?? "",
+            uid ?? "",
+          );
+        }
         if (!context.mounted) return;
 
         Navigator.pop(context);
@@ -98,14 +93,12 @@ class _LoginScreenState extends State<LoginScreen> {
         throw Exception("Apple sign-in returned a null user.");
       }
     } catch (e) {
-      if (!context.mounted) return;
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
-          "Apple sign-in error: ${e.toString()}",
-          style: const TextStyle(color: Colors.white),
+          "Apple Sign-In abgebrochen!",
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.blueAccent,
       ));
     }
   }
@@ -168,12 +161,10 @@ class _LoginScreenState extends State<LoginScreen> {
         'https://www.googleapis.com/auth/user.gender.read'
       ]);
 
-      // Überprüfe, ob der Benutzer bereits angemeldet ist
       if (await googleSignIn.isSignedIn()) {
         await googleSignIn.signOut();
       }
 
-      // Beginn des Anmeldevorgangs
       final GoogleSignInAccount? gUser = await googleSignIn.signIn();
 
       if (gUser == null) {
@@ -181,23 +172,19 @@ class _LoginScreenState extends State<LoginScreen> {
         return;
       }
 
-      // Authentifizierungsdetails von der Anfrage abrufen
       final GoogleSignInAuthentication gAuth = await gUser.authentication;
 
-      // Erstellen eines neuen Anmeldecredentials
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: gAuth.accessToken,
         idToken: gAuth.idToken,
       );
 
-      // Anmelden mit dem Credential
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
 
       final provider = Provider.of<DatabaseRepository>(context, listen: false);
 
       if (userCredential.user != null) {
-        // Google-Profilinformationen abrufen
         final profileDetails = await getGoogleProfileDetails(gUser);
         final anrede = profileDetails["anrede"] != null
             ? profileDetails["anrede"] == "Male"
@@ -234,11 +221,11 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pop(context);
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-          "An error occurred: ${e.toString()}",
-          style: const TextStyle(color: Colors.white),
+        content: const Text(
+          "Google Sign-In abgebrochen!",
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
       ));
     }
   }

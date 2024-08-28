@@ -41,14 +41,12 @@ class _SalesScreenState extends State<SalesScreen> {
     super.dispose();
   }
 
-  Future<void> aktualisiereKontoInformation(String userId) async {
-    final aktualisierteKontoInfo = await databaseRepository.getKontoInfo(
-        userId, kontoInformation.documentReference!.id);
-    if (aktualisierteKontoInfo != null) {
-      setState(() {
-        kontoInformation = aktualisierteKontoInfo;
-      });
-    }
+  Future<void> aktualisiereKontoInformation(
+      String userId, double umsatz) async {
+    widget.kontoInformation.kontostand = widget.kontoInformation.kontostand;
+    context
+        .read<DatabaseRepository>()
+        .updateKonto(widget.kontoInformation, userId);
   }
 
   @override
@@ -170,7 +168,8 @@ class _SalesScreenState extends State<SalesScreen> {
 
                                 /// Update Kontoinformationen mit den aktuellen umsätzen
                                 ///
-                                aktualisiereKontoInformation(userId);
+
+                                aktualisiereKontoInformation(userId, u.betrag);
                               },
                               firmName: u.umsatzname,
                               type: u.type,
