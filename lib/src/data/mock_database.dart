@@ -75,74 +75,74 @@ class MockDatabase implements DatabaseRepository {
   @override
   Future<void> updateKonto(
       KontoInformation neueKontoInformation, String userid) {
-    // TODO: implement updateKonto
+   
     throw UnimplementedError();
   }
 
   @override
   Stream<List<KontoInformation>> getKontoInformation(String userid) {
-    // TODO: implement getKontoInformation
+    
     throw UnimplementedError();
   }
 
   @override
   Future<double> getKontostand(String userId) {
-    // TODO: implement getKontostand
+    
     throw UnimplementedError();
   }
 
   @override
   Future<KontoInformation> getKontoInfo(String userId, String kontoId) {
-    // TODO: implement getKontoInfo
+    
     throw UnimplementedError();
   }
 
   @override
   Stream<List<Umsatz>> getUmsatz(String userid, String kontoId) {
-    // TODO: implement getUmsatz
+    
     throw UnimplementedError();
   }
 
   @override
   Future<void> deleteKonto(String iban, String userId) {
-    // TODO: implement deleteKonto
+  
     throw UnimplementedError();
   }
 
   @override
   Future<void> regestraionDataUpload(String anrede, String vorname,
       String nachname, String gebDatum, String email, String userId) {
-    // TODO: implement regestraionDataUpload
+   
     throw UnimplementedError();
   }
 
   @override
   Future<Benutzer?> loadUserData(String userID) {
-    // TODO: implement loadUserData
+    
     throw UnimplementedError();
   }
 
   @override
   Future<void> updateUserData(String userId, Benutzer user) {
-    // TODO: implement updateUserData
+   
     throw UnimplementedError();
   }
 
   @override
   Future<void> deleteUserData(String userId) {
-    // TODO: implement deleteUserData
+   
     throw UnimplementedError();
   }
 
   @override
   Future<void> deleteUmsatz(String umsatzname, String userId, String docId) {
-    // TODO: implement deleteUmsatz
+    
     throw UnimplementedError();
   }
 
   @override
   Future<Map<String, dynamic>?> getUserData(String uid) {
-    // TODO: implement getUserData
+   
     throw UnimplementedError();
   }
 }

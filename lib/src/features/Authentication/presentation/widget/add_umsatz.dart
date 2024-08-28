@@ -1,7 +1,7 @@
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/application/validators.dart';
-import 'package:bayfin/src/features/authentication/presentation/widget/registrations_text.dart';
+import 'package:bayfin/src/features/authentication/presentation/widget/sales_and_bank_detail.dart';
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
 import 'package:bayfin/src/features/bank_balance/domain/umsatz.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +46,7 @@ class _AddUmsatzState extends State<AddUmsatz> {
         children: <Widget>[
           Padding(
               padding: const EdgeInsets.all(8),
-              child: RegistrationsText(
+              child: SalesAndBankDetail(
                 controller: umzatzbezeichnungController,
                 validator: validateUmsatzbz,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -55,7 +55,7 @@ class _AddUmsatzState extends State<AddUmsatz> {
               )),
           Padding(
               padding: const EdgeInsets.all(8),
-              child: RegistrationsText(
+              child: SalesAndBankDetail(
                   controller: umsatzsummeController,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: validateUmsatzsumme,
