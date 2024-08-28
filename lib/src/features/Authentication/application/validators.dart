@@ -85,8 +85,8 @@ String? validateName(String? input) {
 String? validateUmsatzbz(String? input) {
   if (input == null || input.isEmpty) {
     return 'Bitte Umsatzbezeichnung eingeben';
-  } else if (input.length > 20) {
-    return 'Darf max. 20 Zeichen enthalten';
+  } else if (input.length > 16) {
+    return 'Darf max. 16 Zeichen enthalten';
   }
   return null;
 }
