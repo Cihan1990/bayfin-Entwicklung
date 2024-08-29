@@ -95,7 +95,7 @@ class _MainScreenState extends State<MainScreen> {
                         SizedBox(
                           height: 40,
                           child: Text(
-                            "${user.vorname} ${user.nachname}",
+                            "${user.vorname} ${user.nachname}!",
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
                         ),
@@ -129,11 +129,24 @@ class _MainScreenState extends State<MainScreen> {
                                 if (snapshot.hasData &&
                                     snapshot.connectionState ==
                                         ConnectionState.active) {
-                                  return Center(
-                                    child: Text(
-                                      "${kontoInformation.kontostand} €",
-                                    ),
-                                  );
+                                  return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Spacer(),
+                                        Text(
+                                          "${kontoInformation.kontostand} €",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
+                                        ),
+                                        const Spacer(),
+                                        const Icon(
+                                          Icons.add_box,
+                                          size: 24,
+                                          color: Colors.black,
+                                        ),
+                                      ]);
                                 } else {
                                   return const Text("No Data");
                                 }
@@ -171,7 +184,6 @@ class _MainScreenState extends State<MainScreen> {
                     TransactionListWidget(
                       userId: userId,
                       kontoId: widget.kontoInformation.documentReference!.id,
-                      
                     ), // Use the new widget here
                   ],
                 ),
