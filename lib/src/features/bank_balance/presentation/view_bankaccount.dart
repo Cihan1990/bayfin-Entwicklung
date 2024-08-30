@@ -127,7 +127,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                     width: 200,
                     height: 40,
                     child: Text(
-                      'Girokonto',
+                      'Konten',
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ),
