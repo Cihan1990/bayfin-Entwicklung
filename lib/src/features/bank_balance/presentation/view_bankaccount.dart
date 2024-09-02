@@ -142,7 +142,9 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                   } else if (snapshot.hasError) {
                     return const Icon(Icons.error);
                   } else if (snapshot.hasData) {
-                    return BayFinButtonList(kontoInfos: snapshot.data!);
+                    return BayFinButtonList(
+                      kontoInfos: snapshot.data!,
+                    );
                   } else {
                     return const Text('Keine Kontoinformationen gefunden.');
                   }

@@ -15,7 +15,8 @@ class MockDatabase implements DatabaseRepository {
               bank: "Sparkasse",
               bic: "SOLADEST",
               iban: "DE12600501010007283095",
-              kontostand: 3530.34),
+              kontostand: 3530.34,
+              kontotype: "Girokonto"),
         ],
         umsatze: [
           Umsatz(

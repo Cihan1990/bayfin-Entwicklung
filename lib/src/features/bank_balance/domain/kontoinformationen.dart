@@ -6,7 +6,7 @@ class KontoInformation {
   String? bic;
   String bank;
   double? kontostand;
-
+  String kontotype;
   DocumentReference? documentReference;
   List<Umsatz>? transactions;
 
@@ -16,6 +16,7 @@ class KontoInformation {
       required this.iban,
       this.kontostand,
       this.transactions,
+      required this.kontotype,
       this.documentReference});
   Map<String, dynamic> toMap() {
     return {
@@ -23,7 +24,8 @@ class KontoInformation {
       "iban": iban,
       "bank": bank,
       "kontostand": kontostand,
-      "transactions": transactions
+      "transactions": transactions,
+      "kontotype": kontotype,
     };
   }
 
@@ -35,6 +37,8 @@ class KontoInformation {
         bic: map["bic"],
         kontostand: map["kontostand"]?.toDouble(),
         transactions: map["transactions"],
+         kontotype: map["kontotype"],
         documentReference: ref);
+       
   }
 }

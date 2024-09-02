@@ -7,12 +7,15 @@ import 'package:provider/provider.dart';
 
 class BayFinButtonList extends StatelessWidget {
   final List<KontoInformation> kontoInfos;
-  const BayFinButtonList({Key? key, required this.kontoInfos}) : super(key: key);
+
+  const BayFinButtonList({super.key, required this.kontoInfos});
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: kontoInfos.map((info) => _buildDismissibleCard(context, info)).toList(),
+      children: kontoInfos
+          .map((info) => _buildDismissibleCard(context, info))
+          .toList(),
     );
   }
 
@@ -20,7 +23,7 @@ class BayFinButtonList extends StatelessWidget {
     return Column(
       children: [
         Dismissible(
-          key: Key(info.iban),
+          key: Key('${info.iban}_${info.kontotype}'), // Eindeutiger Key
           background: Container(
             color: Colors.red,
             alignment: Alignment.centerRight,
@@ -29,11 +32,26 @@ class BayFinButtonList extends StatelessWidget {
           ),
           direction: DismissDirection.endToStart,
           onDismissed: (direction) async {
-            await context.read<DatabaseRepository>().deleteKonto(
-                info.iban, context.read<AuthRepository>().getUserId());
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Konto ${info.bank} gelöscht')),
-            );
+            // Versuche das Konto zu löschen
+            try {
+              await context.read<DatabaseRepository>().deleteKonto(
+                  info.iban, context.read<AuthRepository>().getUserId());
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Konto ${info.bank} gelöscht')),
+              );
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                    content: Text(
+                        'Fehler beim Löschen des Kontos ${info.bank}: $e')),
+              );
+            }
+
+            // Entferne das Konto aus der Liste
+            kontoInfos.remove(info);
+            // Fordere die UI auf, sich zu aktualisieren
+            (context as Element).markNeedsBuild();
           },
           child: SizedBox(
             width: 361,
@@ -52,8 +70,8 @@ class BayFinButtonList extends StatelessWidget {
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
                     children: [
-                      const Text(
-                        "Girokonto",
+                      Text(
+                        info.kontotype, // Kontoart anzeigen
                         textAlign: TextAlign.center,
                       ),
                       Text(
