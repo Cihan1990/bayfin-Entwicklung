@@ -33,7 +33,6 @@ class _AddUmsatzState extends State<AddUmsatz> {
   void dispose() {
     umsatzsummeController.dispose();
     umzatzbezeichnungController.dispose();
-
     super.dispose();
   }
 

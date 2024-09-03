@@ -41,28 +41,32 @@ class TransactionInfo extends StatelessWidget {
               ),
             ),
           ),
-          // Firmenname und Datum
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                textAlign: TextAlign.center,
-                firmName,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
+          
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    firmName,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    date,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                date,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.black,
-                ),
-              ),
-            ],
+            ),
           ),
-          // Betrag und Lösch-Button
+          
           Row(
             children: [
               Text(

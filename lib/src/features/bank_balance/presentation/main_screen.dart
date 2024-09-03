@@ -75,7 +75,7 @@ class _MainScreenState extends State<MainScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 0),
-                    LogoWidget(width: 217, height: 76),
+                    LogoWidget(width: 217, height: 72),
                     const SizedBox(height: 20),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -134,12 +134,13 @@ class _MainScreenState extends State<MainScreen> {
                                           MainAxisAlignment.center,
                                       children: [
                                         const Spacer(),
-                                        Text(
-                                          "${kontoInformation.kontostand} €",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge,
-                                        ),
+                                        Text("${kontoInformation.kontostand} €",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
                                         const Spacer(),
                                         const Icon(
                                           Icons.add_box,
@@ -184,7 +185,7 @@ class _MainScreenState extends State<MainScreen> {
                     TransactionListWidget(
                       userId: userId,
                       kontoId: widget.kontoInformation.documentReference!.id,
-                    ), // Use the new widget here
+                    ), 
                   ],
                 ),
               ),
