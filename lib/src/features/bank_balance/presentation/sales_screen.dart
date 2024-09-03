@@ -183,7 +183,7 @@ class _SalesScreenState extends State<SalesScreen> {
             padding: const EdgeInsets.all(12.0),
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: ElevatedButton(
+              child: IconButton(
                 onPressed: () async {
                   await showDialog<void>(
                     context: context,
@@ -214,7 +214,8 @@ class _SalesScreenState extends State<SalesScreen> {
                     ),
                   );
                 },
-                child: CircleAvatar(
+                iconSize: 48,
+                icon: CircleAvatar(
                   backgroundColor: Colors.blue.shade900,
                   radius: 24,
                   child: const Icon(
