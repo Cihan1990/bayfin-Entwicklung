@@ -136,7 +136,10 @@ class _SalesScreenState extends State<SalesScreen> {
                                         ConnectionState.active) {
                                   return Center(
                                     child: Text(
-                                        "${widget.kontoInformation.kontostand} €"),
+                                      "${widget.kontoInformation.kontostand} €",
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
+                                    ),
                                   );
                                 } else {
                                   return const Text("No Data");

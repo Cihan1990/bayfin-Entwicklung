@@ -36,7 +36,7 @@ class TransactionInfo extends StatelessWidget {
               image: DecorationImage(
                 image: firmLogoPath != null
                     ? AssetImage(firmLogoPath!)
-                    : const AssetImage("assets/images/platzhalter.jpeg"),
+                    : const AssetImage("assets/images/platzhalterfinanzen.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -46,6 +46,7 @@ class TransactionInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
+                textAlign: TextAlign.center,
                 firmName,
                 style: const TextStyle(
                   fontSize: 16,
@@ -67,9 +68,9 @@ class TransactionInfo extends StatelessWidget {
               Text(
                 "${amount.toStringAsFixed(2)}€",
                 style: TextStyle(
-                  color: type ? Colors.green : Colors.red,
+                  color: type ? Colors.green.shade700 : Colors.red.shade800,
                   fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               IconButton(

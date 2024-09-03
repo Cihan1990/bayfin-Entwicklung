@@ -138,13 +138,13 @@ class _MainScreenState extends State<MainScreen> {
                                           "${kontoInformation.kontostand} €",
                                           style: Theme.of(context)
                                               .textTheme
-                                              .bodyMedium,
+                                              .bodyLarge,
                                         ),
                                         const Spacer(),
                                         const Icon(
                                           Icons.add_box,
                                           size: 24,
-                                          color: Colors.black,
+                                          color: Colors.black87,
                                         ),
                                       ]);
                                 } else {
