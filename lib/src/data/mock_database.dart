@@ -76,74 +76,57 @@ class MockDatabase implements DatabaseRepository {
   @override
   Future<void> updateKonto(
       KontoInformation neueKontoInformation, String userid) {
-   
     throw UnimplementedError();
   }
 
   @override
   Stream<List<KontoInformation>> getKontoInformation(String userid) {
-    
     throw UnimplementedError();
   }
 
   @override
   Future<double> getKontostand(String userId) {
-    
     throw UnimplementedError();
   }
 
   @override
   Future<KontoInformation> getKontoInfo(String userId, String kontoId) {
-    
     throw UnimplementedError();
   }
 
   @override
   Stream<List<Umsatz>> getUmsatz(String userid, String kontoId) {
-    
     throw UnimplementedError();
   }
 
   @override
   Future<void> deleteKonto(String iban, String userId) {
-  
     throw UnimplementedError();
   }
 
   @override
   Future<void> regestraionDataUpload(String anrede, String vorname,
       String nachname, String gebDatum, String email, String userId) {
-   
     throw UnimplementedError();
   }
 
   @override
   Future<Benutzer?> loadUserData(String userID) {
-    
     throw UnimplementedError();
   }
 
   @override
   Future<void> updateUserData(String userId, Benutzer user) {
-   
     throw UnimplementedError();
   }
 
   @override
   Future<void> deleteUserData(String userId) {
-   
     throw UnimplementedError();
   }
 
   @override
   Future<void> deleteUmsatz(String umsatzname, String userId, String docId) {
-    
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Map<String, dynamic>?> getUserData(String uid) {
-   
     throw UnimplementedError();
   }
 }
