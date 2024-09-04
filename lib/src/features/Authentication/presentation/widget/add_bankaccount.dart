@@ -22,6 +22,7 @@ class _AddBankaccountState extends State<AddBankaccount> {
 
   @override
   void initState() {
+    super.initState();
     bankController = TextEditingController();
     ibanController = TextEditingController();
     ksController = TextEditingController();
@@ -46,7 +47,7 @@ class _AddBankaccountState extends State<AddBankaccount> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8),
-            child: BankaccountSelector(controller:basController),
+            child: BankaccountSelector(controller: basController),
           ),
           Padding(
             padding: const EdgeInsets.all(8),
@@ -85,16 +86,16 @@ class _AddBankaccountState extends State<AddBankaccount> {
                   }
                   await context.read<DatabaseRepository>().addKonto(
                         KontoInformation(
-                          bank: bankController.text,
-                          iban: ibanController.text,
-                          kontostand: kontostand,
-                          kontotype: basController.text
-                        ),
+                            bank: bankController.text,
+                            iban: ibanController.text,
+                            kontostand: kontostand,
+                            kontotype: basController.text),
                         context.read<AuthRepository>().getUserId(),
                       );
                   bankController.clear();
                   ibanController.clear();
                   ksController.clear();
+                  if (!context.mounted) return;
                   Navigator.of(context).pop();
                 }
               },
