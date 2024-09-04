@@ -2,7 +2,7 @@
 
 import 'package:bayfin/src/features/authentication/application/validators.dart';
 import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
-import 'package:bayfin/src/features/authentication/presentation/passwort_add_screen.dart';
+import 'package:bayfin/src/features/authentication/presentation/password_add_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/pronouns.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/registrations_text.dart';

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class TwelveDataService {
@@ -17,11 +18,11 @@ class TwelveDataService {
       if (data['symbol'] != null) {
         return data;
       } else {
-        print('Fehler bei der API-Antwort: ${data['message']}');
+        debugPrint('Fehler bei der API-Antwort: ${data['message']}');
         return null;
       }
     } else {
-      print('Fehler beim Abrufen der Daten: ${response.reasonPhrase}');
+      debugPrint('Fehler beim Abrufen der Daten: ${response.reasonPhrase}');
       return null;
     }
   }

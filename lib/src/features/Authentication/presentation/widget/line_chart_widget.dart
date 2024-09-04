@@ -46,11 +46,11 @@ class _LineChartWidgetState extends State<LineChartWidget> {
         });
       } else {
         // Handle API error
-        print('Failed to load data');
+        debugPrint('Failed to load data');
       }
     } catch (e) {
       // Handle network error
-      print('Error: $e');
+      debugPrint('Error: $e');
     }
   }
 

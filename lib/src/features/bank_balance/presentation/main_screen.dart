@@ -65,10 +65,10 @@ class _MainScreenState extends State<MainScreen> {
           _daxData = tempData.reversed.toList();
         });
       } else {
-        print("Fehlende oder ungültige Zeitreihen-Daten");
+        debugPrint("Fehlende oder ungültige Zeitreihen-Daten");
       }
     } else {
-      print("Fehler beim Abrufen der DAX-Daten: ${response.reasonPhrase}");
+      debugPrint("Fehler beim Abrufen der DAX-Daten: ${response.reasonPhrase}");
     }
   }
 
