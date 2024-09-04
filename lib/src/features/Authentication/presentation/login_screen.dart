@@ -232,8 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  bool showPassword = false;
-  bool showCreateAccountNotification = false;
+  bool _showCreateAccountNotification = false;
 
   @override
   Widget build(BuildContext context) {
@@ -262,7 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       mailController: _mailController,
                       pwController: _pwController,
                     ),
-                    if (showCreateAccountNotification)
+                    if (_showCreateAccountNotification)
                       Row(
                         children: [
                           Expanded(
@@ -311,11 +310,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               .loginWithEmailAndPassword(
                                   _mailController.text, _pwController.text);
                           setState(() {
-                            showCreateAccountNotification = false;
+                            _showCreateAccountNotification = false;
                           });
                         } catch (e) {
                           setState(() {
-                            showCreateAccountNotification = true;
+                            _showCreateAccountNotification = true;
                           });
                         }
                       },
