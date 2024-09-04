@@ -105,7 +105,7 @@ class MockDatabase implements DatabaseRepository {
   }
 
   @override
-  Future<void> regestraionDataUpload(String anrede, String vorname,
+  Future<void> submitRegistrationData(String anrede, String vorname,
       String nachname, String gebDatum, String email, String userId) {
     throw UnimplementedError();
   }

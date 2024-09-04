@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
           const String anrede = "";
           const String geburtsdatum = "";
 
-          await provider.regestraionDataUpload(
+          await provider.submitRegistrationData(
             anrede,
             vorname,
             nachname,
@@ -194,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 : "Frau"
             : "";
 
-        await provider.regestraionDataUpload(
+        await provider.submitRegistrationData(
           anrede,
           profileDetails["vorname"] ?? "",
           profileDetails["nachname"] ?? "",

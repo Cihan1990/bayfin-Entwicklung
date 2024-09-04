@@ -163,7 +163,7 @@ class FirestoreDatabase implements DatabaseRepository {
   }
 
   @override
-  Future<void> regestraionDataUpload(String anrede, String vorname,
+  Future<void> submitRegistrationData(String anrede, String vorname,
       String nachname, String gebDatum, String email, String userId) async {
     return _firebaseFirestore.collection("Benutzer").doc(userId).set({
       "userID": userId,

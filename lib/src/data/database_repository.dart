@@ -16,7 +16,7 @@ abstract class DatabaseRepository {
   Stream<List<KontoInformation>> getKontoInformation(String userId);
   Stream<List<Umsatz>>? getUmsatz(String userId, String kontoId);
   Future<void> deleteKonto(String iban, String userId);
-  Future<void> regestraionDataUpload(String anrede, String vorname,
+  Future<void> submitRegistrationData(String anrede, String vorname,
       String nachname, String gebDatum, String email, String userId);
   Future<Benutzer?> loadUserData(String userId);
   Future<void> updateUserData(String userId, Benutzer user);
