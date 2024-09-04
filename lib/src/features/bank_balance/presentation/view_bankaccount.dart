@@ -1,7 +1,7 @@
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
+import 'package:bayfin/src/features/Authentication/presentation/widget/add_bank_account.dart';
 import 'package:bayfin/src/features/authentication/presentation/account_edit.dart';
-import 'package:bayfin/src/features/authentication/presentation/widget/add_bankaccount.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/bayfin_buttons.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
@@ -63,7 +63,7 @@ class _ViewBankaccountState extends State<ViewBankaccount> {
                           ),
                         ),
                       ),
-                      const AddBankaccount(),
+                      const AddBankAccount(),
                     ],
                   ),
                 ),

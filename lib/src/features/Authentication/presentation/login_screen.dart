@@ -1,4 +1,4 @@
-import 'dart:convert' as JSON;
+import 'dart:convert';
 
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
@@ -63,6 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
       final UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(oAuthCredential);
       //print(credential.givenName);
+      if (!mounted) return;
       final provider = Provider.of<DatabaseRepository>(context, listen: false);
 
       if (userCredential.user != null) {
@@ -76,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
           const String anrede = "";
           const String geburtsdatum = "";
 
-          await provider.regestraionDataUpload(
+          await provider.submitRegistrationData(
             anrede,
             vorname,
             nachname,
@@ -85,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
             uid ?? "",
           );
         }
-        if (!context.mounted) return;
+        if (!mounted) return;
 
         Navigator.pop(context);
         FirebaseAnalytics.instance.logSignUp(signUpMethod: "AppleSignIn");
@@ -113,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     if (response.statusCode == 200) {
-      final profile = JSON.jsonDecode(response.body);
+      final profile = jsonDecode(response.body);
       final name = profile["names"]?[0]["displayName"] ?? "";
       final givenName = profile["names"]?[0]["givenName"] ?? "";
       final familyName = profile["names"]?[0]["familyName"] ?? "";
@@ -140,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  signInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     showDialog(
       context: context,
       builder: (context) {
@@ -168,6 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
       final GoogleSignInAccount? gUser = await googleSignIn.signIn();
 
       if (gUser == null) {
+        if (!mounted) return;
         Navigator.pop(context);
         return;
       }
@@ -181,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
-
+      if (!mounted) return;
       final provider = Provider.of<DatabaseRepository>(context, listen: false);
 
       if (userCredential.user != null) {
@@ -192,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 : "Frau"
             : "";
 
-        await provider.regestraionDataUpload(
+        await provider.submitRegistrationData(
           anrede,
           profileDetails["vorname"] ?? "",
           profileDetails["nachname"] ?? "",
@@ -201,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
           userCredential.user?.uid ?? "",
         );
 
-        if (!context.mounted) return;
+        if (!mounted) return;
 
         Navigator.pop(context);
         FirebaseAnalytics.instance.logSignUp(signUpMethod: "GoogleSignIn");
@@ -230,8 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  bool showPassword = false;
-  bool showCreateAccountNotification = false;
+  bool _showCreateAccountNotification = false;
 
   @override
   Widget build(BuildContext context) {
@@ -260,7 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       mailController: _mailController,
                       pwController: _pwController,
                     ),
-                    if (showCreateAccountNotification)
+                    if (_showCreateAccountNotification)
                       Row(
                         children: [
                           Expanded(
@@ -309,11 +310,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               .loginWithEmailAndPassword(
                                   _mailController.text, _pwController.text);
                           setState(() {
-                            showCreateAccountNotification = false;
+                            _showCreateAccountNotification = false;
                           });
                         } catch (e) {
                           setState(() {
-                            showCreateAccountNotification = true;
+                            _showCreateAccountNotification = true;
                           });
                         }
                       },
@@ -342,7 +343,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       text: "Sign in with Apple",
                       onpressed: () {
                         signInWithApple();
-                        print(signInWithApple);
+                        debugPrint("$signInWithApple");
                       },
                     ),
                     const SizedBox(

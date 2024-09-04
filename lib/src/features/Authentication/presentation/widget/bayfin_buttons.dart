@@ -36,7 +36,7 @@ class BayFinButtonList extends StatelessWidget {
             try {
               await context.read<DatabaseRepository>().deleteKonto(
                   info.iban, context.read<AuthRepository>().getUserId());
-
+              if (!context.mounted) return;
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Konto ${info.bank} gelöscht')),
               );

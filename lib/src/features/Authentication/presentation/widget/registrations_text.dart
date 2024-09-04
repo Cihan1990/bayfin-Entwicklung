@@ -3,16 +3,16 @@
 import 'package:flutter/material.dart';
 
 class RegistrationsText extends StatelessWidget {
-  String text;
-  String? hinttext;
-  TextStyle? hintstyle;
-  Color? color;
-  TextEditingController controller;
-  String? Function(String?)? validator;
-  AutovalidateMode? autovalidateMode;
-  TextInputType? keybordtype;
+  final String text;
+  final String? hinttext;
+  final TextStyle? hintstyle;
+  final Color? color;
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
+  final AutovalidateMode? autovalidateMode;
+  final TextInputType? keybordtype;
 
-  RegistrationsText(
+  const RegistrationsText(
       {super.key,
       required this.text,
       this.hintstyle,

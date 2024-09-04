@@ -14,7 +14,13 @@ class PasswortAddScreen extends StatefulWidget {
   final String geburtsdatum;
   final String pronouns;
   // Konstruktor
-  const PasswortAddScreen({super.key, required this.email, required this.vorname, required this.nachname, required this.geburtsdatum, required this.pronouns});
+  const PasswortAddScreen(
+      {super.key,
+      required this.email,
+      required this.vorname,
+      required this.nachname,
+      required this.geburtsdatum,
+      required this.pronouns});
 
   @override
   State<PasswortAddScreen> createState() => _PasswortAddScreenState();
@@ -153,11 +159,11 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
                           .read<AuthRepository>()
                           .signUpWithEmailAndPassword(
                               widget.email, _passwordField1.text);
-                      await provider.regestraionDataUpload(
+                      await provider.submitRegistrationData(
                           widget.pronouns,
                           widget.vorname,
                           widget.nachname,
-                        widget.geburtsdatum,
+                          widget.geburtsdatum,
                           widget.email,
                           authProvider.getUserId());
                     },
@@ -193,6 +199,4 @@ class _PasswortAddScreenState extends State<PasswortAddScreen> {
               )),
         ));
   }
-
-  
 }
