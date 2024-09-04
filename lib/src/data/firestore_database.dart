@@ -9,8 +9,6 @@ class FirestoreDatabase implements DatabaseRepository {
 
   FirestoreDatabase(this._firebaseFirestore);
 
-
-
   @override
   Future<Benutzer?> getBenutzer(String userid) async {
     // Benutzer -> userId -> Konto
@@ -166,7 +164,7 @@ class FirestoreDatabase implements DatabaseRepository {
   @override
   Future<void> regestraionDataUpload(String anrede, String vorname,
       String nachname, String gebDatum, String email, String userId) async {
-    final result = _firebaseFirestore.collection("Benutzer").doc(userId).set({
+    return _firebaseFirestore.collection("Benutzer").doc(userId).set({
       "userID": userId,
       "anrede": anrede,
       "vorname": vorname,
