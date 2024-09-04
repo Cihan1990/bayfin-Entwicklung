@@ -18,8 +18,6 @@ class PasswortReturnScreen extends StatefulWidget {
 class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
   bool showPassword = false;
   bool showPasswordRepeated = false;
-  final TextEditingController _passwordField1 = TextEditingController();
-  final TextEditingController _passwordField2 = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   late TextEditingController mailController;
 
@@ -86,7 +84,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                         await context
                             .read<AuthRepository>()
                             .resetPassword(mailController.text);
-                        if (mounted) {
+                        if (context.mounted) {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -94,7 +92,7 @@ class _PasswortReturnScreenState extends State<PasswortReturnScreen> {
                                       const PasswortReturnAcceptScreen()));
                         }
                       } else {
-                        print("showError");
+                        debugPrint("showError");
                       }
                     },
                   ),
