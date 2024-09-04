@@ -1,13 +1,19 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:bayfin/src/data/auth_repository.dart';
 import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
+import 'package:bayfin/src/features/authentication/presentation/widget/line_chart_widget.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/logo_widget.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/time_based_greeting.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/transaction_list.dart';
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
 import 'package:bayfin/src/features/bank_balance/presentation/sales_screen.dart';
 import 'package:bayfin/src/features/bank_balance/presentation/view_bankaccount.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -22,12 +28,48 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   late DatabaseRepository databaseRepository;
   late KontoInformation kontoInformation;
+  List<FlSpot> _daxData = [];
 
   @override
   void initState() {
     super.initState();
     kontoInformation = widget.kontoInformation;
     databaseRepository = context.read<DatabaseRepository>();
+    _fetchDaxData();
+  }
+
+  Future<void> _fetchDaxData() async {
+    const String apiKey = 'e41c778284ff4b08a957f7614384f3a1';
+    const String symbol = 'DAX';
+    final url = Uri.parse(
+      'https://api.twelvedata.com/time_series?symbol=$symbol&interval=5min&apikey=$apiKey',
+    );
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final timeSeries = data['values'] as List<dynamic>?;
+
+      if (timeSeries != null) {
+        List<FlSpot> tempData = [];
+        int index = 0;
+
+        for (var entry in timeSeries) {
+          final closePrice =
+              double.tryParse(entry['close'] as String? ?? '0') ?? 0;
+          tempData.add(FlSpot(index.toDouble(), closePrice));
+          index++;
+        }
+
+        setState(() {
+          _daxData = tempData.reversed.toList();
+        });
+      } else {
+        print("Fehlende oder ungültige Zeitreihen-Daten");
+      }
+    } else {
+      print("Fehler beim Abrufen der DAX-Daten: ${response.reasonPhrase}");
+    }
   }
 
   Future<void> aktualisiereKontoInformation(String userId) async {
@@ -158,18 +200,10 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                     const SizedBox(height: 15),
-                    Container(
+                    const SizedBox(
                       width: 361,
                       height: 226,
-                      decoration: ShapeDecoration(
-                        image: const DecorationImage(
-                          image: AssetImage('assets/images/aktienbild.png'),
-                          fit: BoxFit.fill,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
+                      child: LineChartWidget(),
                     ),
                     const SizedBox(height: 15),
                     Row(
@@ -185,7 +219,7 @@ class _MainScreenState extends State<MainScreen> {
                     TransactionListWidget(
                       userId: userId,
                       kontoId: widget.kontoInformation.documentReference!.id,
-                    ), 
+                    ),
                   ],
                 ),
               ),

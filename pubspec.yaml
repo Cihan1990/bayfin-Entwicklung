@@ -22,6 +22,8 @@ dependencies:
   google_sign_in: ^6.2.1
   sign_in_with_apple: ^6.1.2
   http: ^1.2.2
+  fl_chart: ^0.69.0
+
 flutter:
   uses-material-design: true
   assets:
