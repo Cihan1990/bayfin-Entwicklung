@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
-import 'package:bayfin/src/data/auth_repository.dart';
-import 'package:bayfin/src/data/database_repository.dart';
 import 'package:bayfin/src/features/authentication/application/validators.dart';
 import 'package:bayfin/src/features/authentication/presentation/login_screen.dart';
 import 'package:bayfin/src/features/authentication/presentation/passwort_add_screen.dart';
@@ -9,7 +7,6 @@ import 'package:bayfin/src/features/authentication/presentation/widget/logo_widg
 import 'package:bayfin/src/features/authentication/presentation/widget/pronouns.dart';
 import 'package:bayfin/src/features/authentication/presentation/widget/registrations_text.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
   // Attribute
@@ -50,8 +47,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<DatabaseRepository>(context);
-    final authProvider = Provider.of<AuthRepository>(context);
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.primary,
         body: SingleChildScrollView(
@@ -102,7 +97,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   hinttext: 'TT.MM.JJJJ',
                   validator: validateGb,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  
                 ),
                 SizedBox(height: 5),
                 SizedBox(height: 10),
