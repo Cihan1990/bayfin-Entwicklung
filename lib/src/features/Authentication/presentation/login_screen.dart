@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  signInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     showDialog(
       context: context,
       builder: (context) {
