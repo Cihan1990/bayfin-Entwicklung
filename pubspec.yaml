@@ -21,6 +21,7 @@ dependencies:
   firebase_analytics: ^11.2.1
   google_sign_in: ^6.2.1
   sign_in_with_apple: ^6.1.2
+  http: ^1.2.2
 flutter:
   uses-material-design: true
   assets:
