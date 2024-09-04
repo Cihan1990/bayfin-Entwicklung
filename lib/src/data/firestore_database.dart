@@ -3,6 +3,7 @@ import 'package:bayfin/src/features/authentication/domain/benutzer.dart';
 import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart';
 import 'package:bayfin/src/features/bank_balance/domain/umsatz.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 class FirestoreDatabase implements DatabaseRepository {
   final FirebaseFirestore _firebaseFirestore;
@@ -133,7 +134,7 @@ class FirestoreDatabase implements DatabaseRepository {
         .snapshots()
         .map((snapshot) {
       return (snapshot.docs).map((doc) {
-        print("Getting doc: ${doc.data()}");
+        debugPrint("Getting doc: ${doc.data()}");
         try {
           return Umsatz.fromMap(doc.data());
         } catch (e) {
@@ -157,7 +158,7 @@ class FirestoreDatabase implements DatabaseRepository {
         await doc.reference.delete();
       }
     } catch (e) {
-      print('Fehler beim Löschen des Kontos: $e');
+      debugPrint('Fehler beim Löschen des Kontos: $e');
     }
   }
 
@@ -185,7 +186,7 @@ class FirestoreDatabase implements DatabaseRepository {
 
       return Benutzer.fromMap2(snapshot.data() as Map<String, dynamic>);
     } catch (e) {
-      print("Error: {$e}");
+      debugPrint("Error: {$e}");
       //// Debug-Ausgabe
       return null;
     }
@@ -244,7 +245,7 @@ class FirestoreDatabase implements DatabaseRepository {
         await doc.reference.delete();
       }
     } catch (e) {
-      print('Fehler beim Löschen des Umsatzes: $e');
+      debugPrint('Fehler beim Löschen des Umsatzes: $e');
     }
   }
 }
