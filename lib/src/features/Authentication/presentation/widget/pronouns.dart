@@ -12,7 +12,7 @@ class Prounouns extends StatefulWidget {
 }
 
 class _ProunounsState extends State<Prounouns> {
-  List<String> genders = ["", "Herr", "Frau", "Divers"];
+  final List<String> genders = ["", "Herr", "Frau", "Divers"];
   late String selectedGenders = widget.controller.text;
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,6 @@ class _ProunounsState extends State<Prounouns> {
                 borderRadius: BorderRadius.circular(10)),
             child: DropdownButtonHideUnderline(
                 child: DropdownButton(
-
                     value: selectedGenders,
                     icon: const Icon(Icons.arrow_drop_down),
                     iconSize: 24,
