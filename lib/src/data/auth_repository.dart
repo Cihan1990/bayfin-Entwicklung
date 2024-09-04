@@ -8,6 +8,7 @@
    */
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 class AuthRepository {
   // Attribute
@@ -25,7 +26,7 @@ class AuthRepository {
   }
 
   String getUserId() {
-     return _firebaseAuth.currentUser?.uid ?? "";
+    return _firebaseAuth.currentUser?.uid ?? "";
   }
 
   Future<void> signUpWithEmailAndPassword(String email, String pw) {
@@ -48,17 +49,15 @@ class AuthRepository {
   Stream<User?> authStateChanges() {
     return _firebaseAuth.authStateChanges();
   }
- 
- Future<void> deleteAccount(String userId) async {
+
+  Future<void> deleteAccount(String userId) async {
     try {
       // Löscht den aktuell angemeldeten Benutzer
       await _firebaseAuth.currentUser?.delete();
     } catch (e) {
       // Hier kannst du eventuell Fehler-Handling hinzufügen
-      print('Fehler beim Löschen des Accounts: $e');
+      debugPrint('Fehler beim Löschen des Accounts: $e');
       rethrow;
     }
   }
-
-
 }
