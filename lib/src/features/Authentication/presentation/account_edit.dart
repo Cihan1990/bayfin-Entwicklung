@@ -49,8 +49,10 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
     try {
       await context.read<DatabaseRepository>().deleteUserData(userId);
       if (!context.mounted) return;
+      if (!mounted) return;
 
       await context.read<AuthRepository>().deleteAccount(userId);
+      if (!mounted) return;
 
       Navigator.pushReplacement(
         context,
@@ -175,6 +177,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
                               await context
                                   .read<DatabaseRepository>()
                                   .updateUserData(userId, updatedUser);
+                              if (!context.mounted) return;
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
