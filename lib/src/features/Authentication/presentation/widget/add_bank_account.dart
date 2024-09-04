@@ -6,14 +6,14 @@ import 'package:bayfin/src/features/bank_balance/domain/kontoinformationen.dart'
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddBankaccount extends StatefulWidget {
-  const AddBankaccount({super.key});
+class AddBankAccount extends StatefulWidget {
+  const AddBankAccount({super.key});
 
   @override
-  State<AddBankaccount> createState() => _AddBankaccountState();
+  State<AddBankAccount> createState() => _AddBankAccountState();
 }
 
-class _AddBankaccountState extends State<AddBankaccount> {
+class _AddBankAccountState extends State<AddBankAccount> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController bankController;
   late TextEditingController ibanController;
