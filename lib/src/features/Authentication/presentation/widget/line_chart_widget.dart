@@ -13,13 +13,6 @@ class LineChartWidget extends StatefulWidget {
 
 class _LineChartWidgetState extends State<LineChartWidget> {
   List<FlSpot> _spots = [];
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchData();
-  }
 
   Future<void> _fetchData() async {
     const url =
@@ -40,16 +33,11 @@ class _LineChartWidgetState extends State<LineChartWidget> {
           return FlSpot(x, y);
         }).toList();
 
-        setState(() {
-          _spots = spots;
-          _isLoading = false;
-        });
+        _spots = spots;
       } else {
-        // Handle API error
         debugPrint('Failed to load data');
       }
     } catch (e) {
-      // Handle network error
       debugPrint('Error: $e');
     }
   }
@@ -67,37 +55,44 @@ class _LineChartWidgetState extends State<LineChartWidget> {
             ),
           ),
           Expanded(
-            child: Center(
-              child: _isLoading
-                  ? const CircularProgressIndicator()
-                  : LineChart(
-                      LineChartData(
-                        lineBarsData: [
-                          LineChartBarData(
-                            spots: _spots,
-                            isCurved: true,
-                            color: Colors.blue,
-                            dotData: const FlDotData(show: false),
-                            belowBarData: BarAreaData(show: false),
-                          ),
-                        ],
-                        titlesData: FlTitlesData(
-                          leftTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              getTitlesWidget: (value, meta) {
-                                return Text(
-                                  value.toStringAsFixed(1),
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                  ),
-                                );
-                              },
-                            ),
+            child: FutureBuilder<void>(
+              future: _fetchData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else {
+                  return LineChart(
+                    LineChartData(
+                      lineBarsData: [
+                        LineChartBarData(
+                          spots: _spots,
+                          isCurved: true,
+                          color: Colors.blue,
+                          dotData: const FlDotData(show: false),
+                          belowBarData: BarAreaData(show: false),
+                        ),
+                      ],
+                      titlesData: FlTitlesData(
+                        leftTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            getTitlesWidget: (value, meta) {
+                              return Text(
+                                value.toStringAsFixed(1),
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ),
                     ),
+                  );
+                }
+              },
             ),
           ),
         ],
