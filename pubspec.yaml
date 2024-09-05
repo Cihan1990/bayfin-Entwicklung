@@ -39,6 +39,7 @@ flutter:
     - assets/images/klarnalogo.png
     - assets/images/platzhalter.jpeg
     - assets/images/platzhalterfinanzen.png
+    - assets/images/platzhalterausgaben.png
    
 flutter_icons:
   image_path: "assets/images/bayfinicon.png"

@@ -23,6 +23,19 @@ String? validateVn(String? input) {
   if (input == null || input.isEmpty) {
     return 'Bitte Vorname eingeben';
   }
+
+  // Überprüfen, ob der Vorname nur Buchstaben enthält und mindestens einen Großbuchstaben
+  final regex = RegExp(r'^[A-Za-zÄÖÜäöüß]+$');
+  final hasUppercase = input.contains(RegExp(r'[A-ZÄÖÜ]'));
+
+  if (!regex.hasMatch(input)) {
+    return 'Vorname darf nur Buchstaben enthalten';
+  }
+
+  if (!hasUppercase) {
+    return 'Vorname muss einen Großbuchstaben enthalten';
+  }
+
   return null;
 }
 
@@ -30,6 +43,19 @@ String? validateNn(String? input) {
   if (input == null || input.isEmpty) {
     return 'Bitte Nachname eingeben';
   }
+
+  // Überprüfen, ob der Nachname nur Buchstaben enthält und mindestens einen Großbuchstaben
+  final regex = RegExp(r'^[A-Za-zÄÖÜäöüß]+$');
+  final hasUppercase = input.contains(RegExp(r'[A-ZÄÖÜ]'));
+
+  if (!regex.hasMatch(input)) {
+    return 'Nachname darf nur Buchstaben enthalten';
+  }
+
+  if (!hasUppercase) {
+    return 'Nachname muss einen Großbuchstaben enthalten';
+  }
+
   return null;
 }
 
@@ -95,11 +121,16 @@ String? validateUmsatzsumme(String? input) {
   if (input == null || input.isEmpty) {
     return 'Bitte Umsatzsumme eingeben';
   }
+
+  final regex = RegExp(r'^-?\d+(\.\d+)?$');
+  if (!regex.hasMatch(input)) {
+    return 'Bitte eine gültige Zahl eingeben';
+  }
+
   return null;
 }
 
 bool checkIfUmsatzIsMinus(String umsatz) {
-  // Überprüfen, ob der String ein Minuszeichen enthält
   if (umsatz.contains('-')) {
     return false;
   } else {
@@ -154,9 +185,11 @@ String? validateKS(String? input) {
   if (input == null || input.isEmpty) {
     return 'Bitte Kontostand eingeben';
   }
-  double? kontostand = double.tryParse(input);
-  if (kontostand == null) {
+
+  final regex = RegExp(r'^-?\d+(\.\d+)?$');
+  if (!regex.hasMatch(input)) {
     return 'Kontostand muss eine Zahl sein';
   }
+
   return null;
 }

@@ -36,12 +36,12 @@ class TransactionInfo extends StatelessWidget {
               image: DecorationImage(
                 image: firmLogoPath != null
                     ? AssetImage(firmLogoPath!)
-                    : const AssetImage("assets/images/platzhalterfinanzen.png"),
+                    : const AssetImage("assets/images/platzhalterausgaben.png"),
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          
+
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -66,7 +66,7 @@ class TransactionInfo extends StatelessWidget {
               ),
             ),
           ),
-          
+
           Row(
             children: [
               Text(
