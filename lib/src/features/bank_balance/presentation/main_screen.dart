@@ -119,9 +119,8 @@ class _MainScreenState extends State<MainScreen> {
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
-                    // Logo and greeting
                     SizedBox(
-                      height: screenHeight * 0.1, // 10% of screen height
+                      height: screenHeight * 0.1,
                       child: LogoWidget(
                           width: screenWidth * 0.6, height: screenHeight * 0.1),
                     ),
@@ -151,9 +150,8 @@ class _MainScreenState extends State<MainScreen> {
                       ],
                     ),
                     const SizedBox(height: 15),
-                    // Card with kontostand and button
                     SizedBox(
-                      width: screenWidth * 0.9, // 90% of screen width
+                      width: screenWidth * 0.9,
                       child: InkWell(
                         onTap: () async {
                           bool shouldUpdate = await Navigator.push(
@@ -207,15 +205,12 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                     const SizedBox(height: 15),
-                    // Line chart - reduced size
                     SizedBox(
-                      width: screenWidth * 0.9, // 90% of screen width
-                      height:
-                          screenHeight * 0.2, // 20% of screen height (reduced)
+                      width: screenWidth * 0.9,
+                      height: screenHeight * 0.2,
                       child: const LineChartWidget(),
                     ),
                     const SizedBox(height: 15),
-                    // Last transactions
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -226,7 +221,6 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                       ],
                     ),
-                    // Ensure the transaction list is scrollable as well
                     TransactionListWidget(
                       userId: userId,
                       kontoId: widget.kontoInformation.documentReference!.id,
