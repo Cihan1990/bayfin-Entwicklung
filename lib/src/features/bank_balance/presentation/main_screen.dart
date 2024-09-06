@@ -85,6 +85,9 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final userId = context.read<AuthRepository>().getUserId();
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       appBar: AppBar(
@@ -111,117 +114,124 @@ class _MainScreenState extends State<MainScreen> {
             return const Icon(Icons.error);
           } else if (snapshot.hasData) {
             final Benutzer user = snapshot.data!;
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 0),
-                    LogoWidget(width: 217, height: 72),
-                    const SizedBox(height: 20),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(width: 10),
-                        SizedBox(
-                          width: 96,
-                          height: 20,
-                          child: TimeBasedGreeting(),
+            return Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  // Logo and greeting
+                  SizedBox(
+                    height: screenHeight * 0.1, // 10% of screen height
+                    child: LogoWidget(
+                        width: screenWidth * 0.6, height: screenHeight * 0.1),
+                  ),
+                  const SizedBox(height: 20),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: 10),
+                      SizedBox(
+                        width: 96,
+                        height: 20,
+                        child: TimeBasedGreeting(),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(width: 6),
+                      SizedBox(
+                        height: 40,
+                        child: Text(
+                          "${user.vorname} ${user.nachname}!",
+                          style: Theme.of(context).textTheme.headlineMedium,
                         ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(width: 6),
-                        SizedBox(
-                          height: 40,
-                          child: Text(
-                            "${user.vorname} ${user.nachname}!",
-                            style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  // Card with kontostand and button
+                  SizedBox(
+                    width: screenWidth * 0.9, // 90% of screen width
+                    child: InkWell(
+                      onTap: () async {
+                        bool shouldUpdate = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                SalesScreen(kontoInformation: kontoInformation),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 15),
-                    SizedBox(
-                      width: 361,
-                      child: InkWell(
-                        onTap: () async {
-                          bool shouldUpdate = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SalesScreen(
-                                  kontoInformation: kontoInformation),
-                            ),
-                          );
-                          if (shouldUpdate) {
-                            await aktualisiereKontoInformation(userId);
-                          }
-                        },
-                        child: Card(
-                          color: const Color.fromARGB(255, 180, 183, 249),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: StreamBuilder<List<KontoInformation>>(
-                              stream: context
-                                  .read<DatabaseRepository>()
-                                  .getKontoInformation(userId),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData &&
-                                    snapshot.connectionState ==
-                                        ConnectionState.active) {
-                                  return Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Spacer(),
-                                        Text("${kontoInformation.kontostand} €",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                        const Spacer(),
-                                        const Icon(
-                                          Icons.add_box,
-                                          size: 24,
-                                          color: Colors.black87,
-                                        ),
-                                      ]);
-                                } else {
-                                  return const Text("No Data");
-                                }
-                              },
-                            ),
+                        );
+                        if (shouldUpdate) {
+                          await aktualisiereKontoInformation(userId);
+                        }
+                      },
+                      child: Card(
+                        color: const Color.fromARGB(255, 180, 183, 249),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: StreamBuilder<List<KontoInformation>>(
+                            stream: context
+                                .read<DatabaseRepository>()
+                                .getKontoInformation(userId),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData &&
+                                  snapshot.connectionState ==
+                                      ConnectionState.active) {
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Spacer(),
+                                    Text("${kontoInformation.kontostand} €",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                                fontWeight: FontWeight.bold)),
+                                    const Spacer(),
+                                    const Icon(
+                                      Icons.add_box,
+                                      size: 24,
+                                      color: Colors.black87,
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                return const Text("No Data");
+                              }
+                            },
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 15),
-                    const SizedBox(
-                      width: 361,
-                      height: 226,
-                      child: LineChartWidget(),
-                    ),
-                    const SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(width: 6),
-                        Text(
-                          'Letzte Umsätze',
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                      ],
-                    ),
-                    TransactionListWidget(
+                  ),
+                  const SizedBox(height: 15),
+                  // Line chart
+                  SizedBox(
+                    width: screenWidth * 0.9, // 90% of screen width
+                    height: screenHeight * 0.3, // 30% of screen height
+                    child: const LineChartWidget(),
+                  ),
+                  const SizedBox(height: 15),
+                  // Last transactions
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(width: 6),
+                      Text(
+                        'Letzte Umsätze',
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    // Make the transaction list fill remaining space
+                    child: TransactionListWidget(
                       userId: userId,
                       kontoId: widget.kontoInformation.documentReference!.id,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             );
           } else {
