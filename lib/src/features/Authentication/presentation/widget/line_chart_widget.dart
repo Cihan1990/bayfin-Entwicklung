@@ -75,20 +75,63 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                         ),
                       ],
                       titlesData: FlTitlesData(
-                        leftTitles: AxisTitles(
+                        leftTitles: const AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: false,
+                            reservedSize: 20,
+                          ),
+                        ),
+                        topTitles: const AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: false,
+                          ),
+                        ),
+                        rightTitles: AxisTitles(
                           sideTitles: SideTitles(
                             showTitles: true,
                             getTitlesWidget: (value, meta) {
                               return Text(
                                 value.toStringAsFixed(1),
                                 style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                ),
+                              );
+                            },
+                            reservedSize: 30,
+                          ),
+                        ),
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            reservedSize: 30,
+                            getTitlesWidget: (value, meta) {
+                              return Text(
+                                value.toInt().toString(),
+                                style: const TextStyle(
                                   fontSize: 12,
+                                  color: Colors.black,
                                 ),
                               );
                             },
                           ),
                         ),
                       ),
+                      gridData: const FlGridData(show: true),
+                      borderData: FlBorderData(
+                        show: true,
+                        border: const Border(
+                          bottom: BorderSide(color: Colors.black),
+                          right: BorderSide(color: Colors.black),
+                          left: BorderSide(
+                            color: Colors.transparent,
+                          ),
+                          top: BorderSide(
+                            color: Colors.transparent,
+                          ),
+                        ),
+                      ),
+                      clipData: const FlClipData.all(),
                     ),
                   );
                 }
