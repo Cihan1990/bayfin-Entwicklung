@@ -65,6 +65,8 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                 } else {
                   return LineChart(
                     LineChartData(
+                      minY: 33,
+                      maxY: 33.9,
                       lineBarsData: [
                         LineChartBarData(
                           spots: _spots,
@@ -91,14 +93,14 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                             showTitles: true,
                             getTitlesWidget: (value, meta) {
                               return Text(
-                                value.toStringAsFixed(1),
+                                "  ${(value * 0.9).toStringAsFixed(1)}",
                                 style: const TextStyle(
                                   fontSize: 14,
                                   color: Colors.black,
                                 ),
                               );
                             },
-                            reservedSize: 30,
+                            reservedSize: 45,
                           ),
                         ),
                         bottomTitles: AxisTitles(

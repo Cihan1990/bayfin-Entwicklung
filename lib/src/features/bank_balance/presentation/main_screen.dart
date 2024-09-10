@@ -85,9 +85,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final userId = context.read<AuthRepository>().getUserId();
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       appBar: AppBar(
@@ -119,11 +116,8 @@ class _MainScreenState extends State<MainScreen> {
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: screenHeight * 0.1,
-                      child: LogoWidget(
-                          width: screenWidth * 0.6, height: screenHeight * 0.1),
-                    ),
+                    const SizedBox(height: 0),
+                    LogoWidget(width: 217, height: 72),
                     const SizedBox(height: 20),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -151,7 +145,7 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     const SizedBox(height: 15),
                     SizedBox(
-                      width: screenWidth * 0.9,
+                      width: 361,
                       child: InkWell(
                         onTap: () async {
                           bool shouldUpdate = await Navigator.push(
@@ -178,23 +172,24 @@ class _MainScreenState extends State<MainScreen> {
                                     snapshot.connectionState ==
                                         ConnectionState.active) {
                                   return Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Spacer(),
-                                      Text("${kontoInformation.kontostand} €",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                  fontWeight: FontWeight.bold)),
-                                      const Spacer(),
-                                      const Icon(
-                                        Icons.add_box,
-                                        size: 24,
-                                        color: Colors.black87,
-                                      ),
-                                    ],
-                                  );
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Spacer(),
+                                        Text("${kontoInformation.kontostand} €",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge
+                                                ?.copyWith(
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                        const Spacer(),
+                                        const Icon(
+                                          Icons.add_box,
+                                          size: 24,
+                                          color: Colors.black87,
+                                        ),
+                                      ]);
                                 } else {
                                   return const Text("No Data");
                                 }
@@ -205,10 +200,10 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                     const SizedBox(height: 15),
-                    SizedBox(
-                      width: screenWidth * 0.9,
-                      height: screenHeight * 0.2,
-                      child: const LineChartWidget(),
+                    const SizedBox(
+                      width: 350,
+                      height: 190,
+                      child: LineChartWidget(),
                     ),
                     const SizedBox(height: 15),
                     Row(
